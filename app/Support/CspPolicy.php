@@ -45,7 +45,7 @@ class CspPolicy extends BasePolicy
     {
         return $this
             ->addDirective(Directive::BASE, Keyword::SELF)
-            ->addDirective(Directive::CONNECT, Keyword::SELF)
+            ->addDirective(Directive::CONNECT, config('app.debug') ? '*' : Keyword::SELF)
             ->addDirective(Directive::DEFAULT, Keyword::SELF)
             ->addDirective(Directive::FORM_ACTION, Keyword::SELF)
             ->addDirective(Directive::IMG, [

@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\HasUUID;
+use ElipZis\Cacheable\Models\Traits\Cacheable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasUUID, HasRoles, Cacheable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +21,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
     ];
@@ -30,7 +32,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -41,8 +42,40 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
+            'id' => 'string',
+            'email_verified_at' => 'datetime:Y-m-d',
             'password' => 'hashed',
+            'created_at' => 'datetime:Y-m-d',
+            'updated_at' => 'datetime:Y-m-d',
         ];
+    }
+
+    /**
+     * The cacheable properties that should be cached.
+     *
+     * @return array
+     */
+    public function getCacheableProperties(): array {
+        $overrided = [
+            'prefix' => 'user.cache',
+        ];
+
+        return array_merge(config('cacheable'), $overrided);
+    }
+
+    /**
+     * Define otp relationship
+     */
+    public function otp()
+    {
+        return $this->hasOne(Otp::class, 'id', 'id');
+    }
+
+    /**
+     * Define team leader relationship
+     */
+    public function leader()
+    {
+        return $this->hasMany(TeamLeader::class, 'user_id', 'id');
     }
 }
