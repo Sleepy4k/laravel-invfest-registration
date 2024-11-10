@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Enums\ReportLogType;
+use App\Enums\StorageBaseType;
 use App\Enums\UploadFileType;
 use Illuminate\Support\Facades\Storage;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
@@ -10,11 +11,6 @@ use Spatie\ImageOptimizer\OptimizerChainFactory;
 trait UploadFile
 {
     use SystemLog;
-
-    /**
-     * Set path root when upload file.
-     */
-    protected $baseDisk = 'public';
 
     /**
      * Set path root when unkown file.
@@ -25,19 +21,20 @@ trait UploadFile
      * Set path for storage when upload file.
      *
      * @param string $type
+     * @param StorageBaseType $baseDisk
      *
      * @return string
      */
-    protected function storageDisk(UploadFileType $type = UploadFileType::IMAGE)
+    protected function storageDisk(UploadFileType $type = UploadFileType::IMAGE, StorageBaseType $baseDisk = StorageBaseType::PUBLIC)
     {
         try {
             $path = match ($type) {
-                UploadFileType::IMAGE => '/' . $this->baseDisk . '/' . UploadFileType::IMAGE->value . '/',
-                default => '/' . $this->baseDisk . '/' . $this->unkownPath . '/',
+                UploadFileType::IMAGE => '/' . $baseDisk . '/' . UploadFileType::IMAGE->value . '/',
+                default => '/' . $baseDisk . '/' . $this->unkownPath . '/',
             };
 
             if (!Storage::exists(explode('/', $path)[2])) {
-                Storage::copy($this->baseDisk . '/index.html', $path . 'index.html');
+                Storage::copy($baseDisk . '/index.html', $path . 'index.html');
             }
 
             return $path;
@@ -117,10 +114,11 @@ trait UploadFile
      *
      * @param UploadFileType $type
      * @param UploadedFile $file
+     * @param StorageBaseType $baseDisk
      *
      * @return string
      */
-    protected function putFile(UploadFileType $type, $file)
+    protected function putFile(UploadFileType $type, $file, StorageBaseType $baseDisk = StorageBaseType::PUBLIC)
     {
         try {
             if (auth('web')->check()) {
@@ -132,14 +130,14 @@ trait UploadFile
 
             $fileName = preg_replace('/\s+/', '_', uniqid() . '_' . date('dmY') . '_' . $clientCode . '.' . $file->getClientOriginalExtension());
 
-            if ($this->checkFile($type, $fileName, true)) {
-                return $this->putFile($type, $file);
+            if ($this->checkFile($type, $fileName, true, $baseDisk)) {
+                return $this->putFile($type, $file, $baseDisk);
             }
 
-            $file->storeAs($this->storageDisk($type), $fileName);
+            $file->storeAs($this->storageDisk($type, $baseDisk), $fileName);
 
-            if ($type === UploadFileType::IMAGE) {
-                $this->optimizeImage(storage_path('app/' . $this->storageDisk($type) . $fileName));
+            if ($type != UploadFileType::FILE) {
+                $this->optimizeImage(storage_path('app/' . $this->storageDisk($type, $baseDisk) . $fileName));
             }
 
             $fileName = $this->transformName($type, $fileName);
@@ -156,16 +154,17 @@ trait UploadFile
      *
      * @param UploadFileType $type
      * @param string $file
+     * @param StorageBaseType $baseDisk
      *
      * @return bool
      */
-    protected function deleteFile(UploadFileType $type, $file)
+    protected function deleteFile(UploadFileType $type, $file, StorageBaseType $baseDisk = StorageBaseType::PUBLIC)
     {
         try {
-            if ($this->checkFile($type, $file)) {
+            if ($this->checkFile($type, $file, $baseDisk)) {
                 $parsedFile = $this->parseImage($file);
 
-                Storage::delete($this->storageDisk($type) . $parsedFile);
+                Storage::delete($this->storageDisk($type, $baseDisk) . $parsedFile);
 
                 return true;
             }
@@ -183,23 +182,16 @@ trait UploadFile
      * @param UploadFileType $type
      * @param string $file
      * @param bool $save
+     * @param StorageBaseType $baseDisk
      *
      * @return bool
      */
-    protected function checkFile(UploadFileType $type, $file, $save = false)
+    protected function checkFile(UploadFileType $type, $file, $save = false, StorageBaseType $baseDisk = StorageBaseType::PUBLIC)
     {
         try {
-            if ($save) {
-                $parsedFile = $file;
-            } else {
-                $parsedFile = $this->parseImage($file);
-            }
+            $parsedFile = $save ? $file : $this->parseImage($file);
 
-            if (Storage::exists($this->storageDisk($type) . $parsedFile)) {
-                return true;
-            }
-
-            return false;
+            return Storage::exists($this->storageDisk($type, $baseDisk) . $parsedFile);
         } catch (\Throwable $th) {
             $this->sendReportLog(ReportLogType::ERROR, $th->getMessage());
             throw $th;
@@ -211,17 +203,14 @@ trait UploadFile
      *
      * @param UploadFileType $type
      * @param UploadedFile $file
+     * @param StorageBaseType $baseDisk
      *
      * @return string
      */
-    protected function saveSingleFile(UploadFileType $type, $file)
+    protected function saveSingleFile(UploadFileType $type, $file, StorageBaseType $baseDisk = StorageBaseType::PUBLIC)
     {
         try {
-            if (is_null($file)) {
-                return null;
-            }
-
-            return $this->putFile($type, $file);
+            return is_null($file) ? null : $this->putFile($type, $file, $baseDisk);
         } catch (\Throwable $th) {
             $this->sendReportLog(ReportLogType::ERROR, $th->getMessage());
             throw $th;
@@ -234,23 +223,24 @@ trait UploadFile
      * @param UploadFileType $type
      * @param UploadedFile $file
      * @param string $old_file
+     * @param StorageBaseType $baseDisk
      *
      * @return string
      */
-    protected function updateSingleFile(UploadFileType $type, $file, $old_file)
+    protected function updateSingleFile(UploadFileType $type, $file, $old_file, StorageBaseType $baseDisk = StorageBaseType::PUBLIC)
     {
         try {
             if (is_null($file)) {
                 return null;
             }
 
-            if (!$this->checkFile($type, $old_file)) {
-                return $this->putFile($type, $file);
+            if (!$this->checkFile($type, $old_file, $baseDisk)) {
+                return $this->putFile($type, $file, $baseDisk);
             }
 
-            $this->deleteFile($type, $old_file);
+            $this->deleteFile($type, $old_file, $baseDisk);
 
-            return $this->updateSingleFile($type, $file, $old_file);
+            return $this->updateSingleFile($type, $file, $old_file, $baseDisk);
         } catch (\Throwable $th) {
             $this->sendReportLog(ReportLogType::ERROR, $th->getMessage());
             throw $th;

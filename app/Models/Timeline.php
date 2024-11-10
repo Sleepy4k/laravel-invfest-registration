@@ -51,14 +51,6 @@ class Timeline extends Model
     }
 
     /**
-     * Get date attribute.
-     */
-    public function getDateAttribute($value)
-    {
-        return date('d F Y', strtotime($value));
-    }
-
-    /**
      * Set query to be sorted ascending by their date value
      */
     public function scopeOrderByDate($query)
