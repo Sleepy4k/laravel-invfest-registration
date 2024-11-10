@@ -16,6 +16,7 @@
         "elipzis/laravel-cacheable-model": "^0.4.1",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "realrashid/sweet-alert": "^7.2",
         "renatomarinho/laravel-page-speed": "dev-l11-compatibility",
         "spatie/laravel-csp": "^2.10",
         "spatie/laravel-image-optimizer": "^1.8",
