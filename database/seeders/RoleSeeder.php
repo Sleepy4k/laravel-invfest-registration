@@ -16,9 +16,30 @@ class RoleSeeder extends Seeder
         if (Role::query()->withoutCache()->count() == 0) {
             app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-            $roles = Role::factory()->make();
+            $roles = [
+                [
+                    'name' => 'team',
+                    'guard_name' => 'web'
+                ],
+                [
+                    'name' => 'petugas',
+                    'guard_name' => 'web'
+                ],
+                [
+                    'name' => 'admin',
+                    'guard_name' => 'web'
+                ]
+            ];
 
-            Role::insert($roles->toArray());
+            $time = now();
+            $roles = array_map(function ($role) use ($time) {
+                return array_merge($role, [
+                    'created_at' => $time,
+                    'updated_at' => $time
+                ]);
+            }, $roles);
+
+            Role::insert($roles);
         }
     }
 }
