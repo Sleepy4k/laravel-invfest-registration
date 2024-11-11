@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('competition_id')->constrained('competitions', 'id')->cascadeOnDelete();
             $table->string('name', 100);
+            $table->string('institution', 150);
             $table->timestamps();
         });
     }

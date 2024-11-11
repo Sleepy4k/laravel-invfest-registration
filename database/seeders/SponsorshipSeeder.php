@@ -14,7 +14,7 @@ class SponsorshipSeeder extends Seeder
      */
     public function run(): void
     {
-        if (config('app.debug') || config('app.env') != 'local') return;
+        if (!config('app.debug') || config('app.env') != 'local') return;
 
         if (Sponsorship::query()->withoutCache()->count() == 0) {
             $tiers = SponsorshipTier::select('id')->get();

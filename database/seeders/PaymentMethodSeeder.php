@@ -13,7 +13,7 @@ class PaymentMethodSeeder extends Seeder
      */
     public function run(): void
     {
-        if (config('app.debug') || config('app.env') != 'local') return;
+        if (!config('app.debug') || config('app.env') != 'local') return;
 
         if (PaymentMethod::query()->withoutCache()->count() == 0) {
             $methods = PaymentMethod::factory(4)->make()->toArray();

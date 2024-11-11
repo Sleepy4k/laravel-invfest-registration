@@ -13,7 +13,7 @@ class TimelineSeeder extends Seeder
      */
     public function run(): void
     {
-        if (config('app.debug') || config('app.env') != 'local') return;
+        if (!config('app.debug') || config('app.env') != 'local') return;
 
         if (Timeline::query()->withoutCache()->count() == 0) {
             $timelines = Timeline::factory(6)->make()->toArray();
