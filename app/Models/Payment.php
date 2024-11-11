@@ -3,14 +3,17 @@
 namespace App\Models;
 
 use App\Enums\PaymentStatus;
+use App\Enums\StorageBaseType;
+use App\Enums\UploadFileType;
 use App\Traits\HasUUID;
+use App\Traits\UploadFile;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    use HasFactory, HasUUID, Cacheable;
+    use HasFactory, HasUUID, Cacheable, UploadFile;
 
     /**
      * The attributes that are mass assignable.
@@ -66,5 +69,13 @@ class Payment extends Model
     public function method()
     {
         return $this->belongsTo(PaymentMethod::class, 'method_id', 'id');
+    }
+
+    /**
+     * Set proof attribute.
+     */
+    public function setProofAttribute($value)
+    {
+        $this->attributes['proof'] = $this->saveSingleFile(UploadFileType::IMAGE, $value, StorageBaseType::PRIVATE);
     }
 }

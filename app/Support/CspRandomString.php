@@ -4,7 +4,6 @@ namespace App\Support;
 
 use Illuminate\Support\Str;
 use Spatie\Csp\Nonce\NonceGenerator;
-use Illuminate\Support\Facades\Vite;
 
 class CspRandomString implements NonceGenerator
 {
@@ -15,10 +14,6 @@ class CspRandomString implements NonceGenerator
      */
     public function generate(): string
     {
-        $myNonce = Str::random(48);
-
-        Vite::useCspNonce($myNonce);
-
-        return $myNonce;
+        return Str::random(48);
     }
 }

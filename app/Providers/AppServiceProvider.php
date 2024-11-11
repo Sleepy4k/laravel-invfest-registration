@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Composers;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\RateLimiter;
@@ -15,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singletonIf(Composers\AppSettingComposer::class);
+        $this->app->singletonIf(Composers\LatestCompetitionComposer::class);
     }
 
     /**

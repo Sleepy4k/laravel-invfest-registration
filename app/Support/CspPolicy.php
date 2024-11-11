@@ -38,14 +38,17 @@ class CspPolicy extends BasePolicy
         $this
             ->addGeneralDirectives()
             ->addDirectivesForBunnyFonts()
-            ->addDirectivesForYouTube();
+            ->addDirectivesForGoogleFonts()
+            ->addDirectivesForYouTube()
+            ->addDirectivesForJsDelivrCDN()
+            ->addDirectivesForCloudflareCDN();
     }
 
     protected function addGeneralDirectives(): self
     {
         return $this
             ->addDirective(Directive::BASE, Keyword::SELF)
-            ->addDirective(Directive::CONNECT, config('app.debug') ? '*' : Keyword::SELF)
+            ->addDirective(Directive::CONNECT, Keyword::SELF)
             ->addDirective(Directive::DEFAULT, Keyword::SELF)
             ->addDirective(Directive::FORM_ACTION, Keyword::SELF)
             ->addDirective(Directive::IMG, [
@@ -59,7 +62,6 @@ class CspPolicy extends BasePolicy
                 Keyword::SELF,
                 Keyword::UNSAFE_INLINE,
                 Keyword::STRICT_DYNAMIC,
-                'www.google.com',
             ])
             ->addDirective(Directive::STYLE, [
                 Keyword::SELF,
@@ -78,8 +80,37 @@ class CspPolicy extends BasePolicy
             ->addDirective(Directive::STYLE, 'fonts.bunny.net');
     }
 
+    protected function addDirectivesForGoogleFonts(): self
+    {
+        return $this
+            ->addDirective(Directive::SCRIPT, 'fonts.googleapis.com')
+            ->addDirective(Directive::FONT, [
+                'fonts.googleapis.com',
+                'fonts.gstatic.com',
+            ])
+            ->addDirective(Directive::STYLE, [
+                'fonts.googleapis.com',
+                'fonts.gstatic.com',
+            ]);
+    }
+
     protected function addDirectivesForYouTube(): self
     {
         return $this->addDirective(Directive::FRAME, '*.youtube.com');
+    }
+
+    protected function addDirectivesForJsDelivrCDN(): self
+    {
+        return $this
+            ->addDirective(Directive::FONT, 'cdn.jsdelivr.net')
+            ->addDirective(Directive::STYLE, 'cdn.jsdelivr.net');
+    }
+
+    protected function addDirectivesForCloudflareCDN(): self
+    {
+        return $this
+            ->addDirective(Directive::FONT, 'cdnjs.cloudflare.com')
+            ->addDirective(Directive::STYLE, 'cdnjs.cloudflare.com')
+            ->addDirective(Directive::SCRIPT, 'cdnjs.cloudflare.com');
     }
 }

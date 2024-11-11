@@ -21,7 +21,7 @@ class TeamOTPVerification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(int $otp)
+    public function __construct(string $otp)
     {
         $this->otp = $otp || '#####';
     }

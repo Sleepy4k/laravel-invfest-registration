@@ -71,14 +71,6 @@ class Competition extends Model
     }
 
     /**
-     * Set the competition's slug.
-     */
-    public function setSlugAttribute($value)
-    {
-        $this->attributes['slug'] = strtolower(str_replace(' ', '-', $value));
-    }
-
-    /**
      * Get the registration fee rupiah format.
      */
     public function getRegistrationFeeRupiahAttribute()

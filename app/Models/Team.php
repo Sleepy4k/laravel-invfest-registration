@@ -19,6 +19,7 @@ class Team extends Model
     protected $fillable = [
         'competition_id',
         'name',
+        'institution',
     ];
 
     /**
@@ -78,14 +79,6 @@ class Team extends Model
     public function member()
     {
         return $this->hasMany(TeamMember::class, 'team_id', 'id');
-    }
-
-    /**
-     * Define institution relationship
-     */
-    public function institution()
-    {
-        return $this->hasOne(TeamInstitution::class, 'team_id', 'id');
     }
 
     /**

@@ -21,9 +21,7 @@ abstract class Controller
     {
         $this->sendReportLog(ReportLogType::ERROR, $error->getMessage());
 
-        return back()->withErrors([
-            'error' => $error->getMessage()
-        ])->withInput();
+        return abort(403, $error->getMessage());
     }
 
     /**
