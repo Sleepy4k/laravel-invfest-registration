@@ -1,4 +1,4 @@
-<x-layouts.frontend title="{{ getWebConfiguration()->title }}" description="{{ getWebConfiguration()->description }}">
+<x-layouts.frontend title="{{ $appSettings['title'] }}" description="{{ $appSettings['description'] }}">
     <div class="container mt-5">
         <x-frontend.card.hero />
     </div>

@@ -7,19 +7,21 @@
                         <div class="col-md-12 ps-md-0">
                             <div class="auth-form-wrapper px-4 py-5">
                                 <a href="{{ url('/') }}"
-                                    class="noble-ui-logo d-block mb-2">{{ getWebConfiguration()->title }}</a>
+                                    class="noble-ui-logo d-block mb-2">{{ $appSettings['title'] }}</a>
                                 <h5 class="text-muted fw-normal mb-4">Silahkan isi form berikut untuk mendaftar</h5>
                                 <form action="{{ route('register.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <x-input.select name="level" label="Tingkat" id="level">
                                         <option value="">Pilih Tingkat</option>
-                                        <option value="sma/smk">SMA/SMK</option>
                                         <option value="mahasiswa">Mahasiswa</option>
                                     </x-input.select>
 
                                     <x-input.select name="competition_id" label="Kompetisi" id="competition_id">
                                         <option value="">Pilih Kompetisi</option>
+                                        @foreach ($competitions as $competition)
+                                            <option value="{{ $competition->id }}">{{ $competition->name }}</option>
+                                        @endforeach
                                     </x-input.select>
                                     <x-input.text name="team_name" label="Nama Tim" value="{{ old('team_name') }}" />
                                     <x-input.text name="institution" label="Asal Institusi"
@@ -56,41 +58,10 @@
             $('#companion_name').parent().hide();
             $('#companion_card').parent().hide();
 
-            $('#level').change(function() {
-                if ($(this).val() == 'sma/smk') {
-                    $('#companion_name').parent().show();
-                    $('#companion_card').parent().show();
-                } else {
-                    $('#companion_name').parent().hide();
-                    $('#companion_card').parent().hide();
-                }
-            });
-
             $('#btn-submit').click(function() {
                 $(this).html(
                     `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
                 );
-            });
-
-            $('#level').change(function() {
-                var level = $(this).val();
-
-                $.ajax({
-                    url: "api/get-competitions",
-                    data: {
-                        level: level
-                    },
-                    success: function(result) {
-                        console.log(result.data);
-                        $('#competition_id').empty();
-                        $('#competition_id').append('<option value="">Pilih Kompetisi</option>');
-                        $.each(result.data, function(key, value) {
-                            $('#competition_id').append('<option value="' + value.id + '">' + value
-                                .name + '</option>');
-                        });
-                    }
-
-                });
             });
         </script>
     @endpush

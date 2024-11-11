@@ -1,11 +1,11 @@
 <div class="card card-hero">
     <div class="card-body p-4 text-white">
         <h2 class="text-center">
-            {{ getWebConfiguration()->title }}
+            {{ $appSettings['title'] }}
         </h2>
         <div class="d-flex justify-content-between align-items-center">
             <div class="information">
-                <h2 id="hero-heading">{{ getWebConfiguration()->heading }}</h2>
+                <h2 id="hero-heading">{{ $appSettings['heading'] }}</h2>
                 <div class="d-flex gap-3 mt-4">
                     <a href="#detail" class="btn btn-sm btn-rounded text-white btn-secondary">
                         <i class="fas fa-arrow-down"></i>
@@ -18,7 +18,7 @@
                     </a>
                 </div>
             </div>
-            <img src="{{ asset(getWebConfiguration()->mascot) }}" alt="mascot" class="mascot-image">
+            <img src="{{ isset($appSettings['mascot']) ? asset($appSettings['mascot']) : '#' }}" alt="mascot" class="mascot-image">
         </div>
     </div>
 </div>

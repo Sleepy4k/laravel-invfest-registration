@@ -4,13 +4,13 @@
         <a class="navbar-brand mx-auto mx-lg-0
             d-flex flex-row justify-content-center align-self-center"
             href="{{ route('frontend.landing') }}">
-            <img src="{{ asset(getWebConfiguration()->nav_logo) }}" alt="Logo" width="60px" height="80px" />
+            <img src="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" alt="Logo" width="60px" height="80px" />
             <div class="d-flex flex-column align-self-center justify-self-center mx-3">
                 <span class="text-blue font-weight-bold">
-                    {{ getWebConfiguration()->title }}
+                    {{ $appSettings['title'] }}
                 </span>
                 <small class="text-slogan">
-                    {{ getWebConfiguration()->slogan }}
+                    {{ $appSettings['slogan'] }}
                 </small>
             </div>
         </a>
@@ -31,7 +31,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-users"></i>
-                            {{ Auth::user()->teams->first()->team_name ?? 'Admin' }}
+                            {{ auth('web')->user()->leader->first()->team->name ?? 'Admin' }}
+                            {{-- {{ Auth::user()->teams->first()->team_name ?? 'Admin' }} --}}
                         </a>
                         <ul class="dropdown-menu border-0 shadow-sm p-2" aria-labelledby="navbarDropdownMenuLink">
                             @hasrole('admin')

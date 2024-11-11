@@ -1,7 +1,7 @@
 <div class="row my-5">
     <div class="col-md-12">
         <h2 class="text-center mb-5 text-uppercase fw-bold" style="color: var(--secondary)">
-            {{ sprintf('%s Timelines', getWebConfiguration()->title) }}</h2>
+            {{ sprintf('%s Timelines', $appSettings['title']) }}</h2>
         <div id="content_timeline">
             <ul class="timeline mx-auto">
                 @foreach ($timelines as $timeline)

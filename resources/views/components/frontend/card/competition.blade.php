@@ -3,10 +3,10 @@
         <div class="col-12 col-md-6 col-lg-4 mt-4">
             <div class="card card-competition">
                 <div class="position-relative">
-                    <img src="{{ asset($competition->poster) }}" class="card-img-top p-3" alt="{{ $competition->name }}">
+                    <img src="{{ isset($competition->poster) ? asset($competition->poster) : '#' }}" class="card-img-top p-3" alt="{{ $competition->name }}">
                     <div class="position-absolute top-0 end-0 p-3">
                         <span class="badge bg-secondary badge-competition">
-                            {{ $competition->level }}
+                            {{ $competition->level->level }}
                         </span>
                     </div>
                 </div>
