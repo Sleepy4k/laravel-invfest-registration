@@ -21,17 +21,16 @@ return Application::configure(basePath: dirname(__DIR__))
             \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
             \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
             \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class, // Note: This middleware invokes "RemoveComments::class" before it runs.
-            \RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
         ]);
 
         $middleware->redirectGuestsTo('/');
-        // $middleware->redirectTo(function (Request $request) {
-        //     $user = $request->user();
-        //     $isUserAdmin = $user->hasRole('admin') || $user->hasRole('petugas');
+        $middleware->redirectTo(function (Request $request) {
+            $user = $request->user();
+            $isUserAdmin = $user->hasRole('admin') || $user->hasRole('petugas');
 
-        //     return redirect()->route($isUserAdmin ? 'admin.dashboard' : 'team.dashboard');
-        // });
+            return redirect()->route($isUserAdmin ? 'admin.dashboard' : 'team.dashboard');
+        });
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
