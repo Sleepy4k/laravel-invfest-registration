@@ -17,7 +17,7 @@ class MediaPartnerFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->sentence(rand(2, 4)),
+            'name' => fake()->sentence(rand(2, 3)),
             'logo' => null,
             'link' => null
         ];
