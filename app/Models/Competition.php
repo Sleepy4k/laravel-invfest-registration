@@ -102,6 +102,6 @@ class Competition extends Model
      */
     public function getRegistrationFeeRupiahAttribute()
     {
-        return 'Rp ' . number_format($this->registration_fee || 0, 0, ',', '.');
+        return 'Rp ' . number_format($this->registration_fee ?? 0, 0, ',', '.');
     }
 }

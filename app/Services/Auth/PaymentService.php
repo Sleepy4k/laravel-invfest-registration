@@ -3,6 +3,7 @@
 namespace App\Services\Auth;
 
 use App\Contracts\Models;
+use App\Enums\PaymentStatus;
 use App\Services\Service;
 
 class PaymentService extends Service
@@ -23,10 +24,11 @@ class PaymentService extends Service
      */
     public function index(): array
     {
+        $user = $this->userInterface->findById(auth('web')->user()->id, ['*'], ['leader.team.competition']);
         $paymentMethods = $this->paymentMethodInterface->all();
         $team = $this->userInterface->get(['*'], true, ['leader.team.competition'], [['id', '=', auth('web')->user()->id]]);
 
-        return compact('paymentMethods', 'team');
+        return compact('paymentMethods', 'team', 'user');
     }
 
     /**
@@ -38,6 +40,12 @@ class PaymentService extends Service
      */
     public function store(array $request): void
     {
+        $request['team_id'] = auth('web')->user()->leader->first()->team->first()->id;
+        $request['status'] = PaymentStatus::PENDING;
+        $request['method_id'] = $request['payment_method_id'];
+
+        unset($request['payment_method_id']);
+
         $this->paymentInterface->create($request);
     }
 }

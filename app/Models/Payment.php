@@ -35,7 +35,7 @@ class Payment extends Model
     {
         return [
             'id' => 'string',
-            'status' => PaymentStatus::class,
+            'status' => 'string',
             'created_at' => 'datetime:Y-m-d',
             'updated_at' => 'datetime:Y-m-d',
         ];

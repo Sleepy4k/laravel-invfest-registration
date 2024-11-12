@@ -21,7 +21,7 @@ class DashboardService extends Service
      */
     public function invoke(): array
     {
-        $user = $this->userInterface->findById(auth('web')->user()->id, ['*'], ['leader.team.payment', 'leader.team.competition']);
+        $user = $this->userInterface->findById(auth('web')->user()->id, ['*'], ['leader.team.payment', 'leader.team.competition.level', 'leader.team.payment.method']);
 
         return compact('user');
     }
