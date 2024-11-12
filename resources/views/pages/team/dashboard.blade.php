@@ -1,31 +1,29 @@
-<x-layouts.dashboard-team title="Dashboard Tim {{ Auth::user()->teams->first()->team_name }}">
+<x-layouts.dashboard-team title="Dashboard Tim {{ $user->leader->first()->team->first()->name }}">
     @push('plugin-styles')
         <link rel="stylesheet" href="{{ asset('admin/assets/plugins/lightbox/css/lightbox.css') }}">
     @endpush
 
-    @if (Auth::user()->teams->first()->status == 'pending')
-        @if (Auth::user()->teams->first()->payment != null)
-            <div class="alert alert-warning">
-                <i class="fas fa-exclamation-triangle"></i>
-                Tim anda sedang dalam proses verifikasi oleh admin. Silahkan menunggu.
-                <a href="{{ 'https://api.whatsapp.com/send/?phone=' . getWebConfiguration()->phone . '&text=' . urlencode('Halo, perkenalkan saya ' . Auth::user()->teams->first()->leader_name . ' dari tim ' . Auth::user()->teams->first()->team_name . ' ingin menanyakan status verifikasi tim saya.') }}"
-                    target="_blank" class="alert-link">Hubungi
-                    Admin</a>
-            </div>
-        @else
-            <div class="alert alert-warning">
-                <i class="fas fa-exclamation-triangle"></i>
-                Anda belum melakukan pembayaran. Silahkan melakukan pembayaran terlebih dahulu.
-                <a href="{{ route('payment-team') }}" target="_blank" class="alert-link">
-                    Bayar Sekarang
-                </a>
-            </div>
-        @endif
+    @if ($user->leader->first()->team->first()->payment == null)
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            Anda belum melakukan pembayaran. Silahkan melakukan pembayaran terlebih dahulu.
+            <a href="{{ route('payment-team') }}" target="_blank" class="alert-link">
+                Bayar Sekarang
+            </a>
+        </div>
+    @elseif ($user->leader->first()->team->first()->payment->first()->status == 'pending')
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            Tim anda sedang dalam proses verifikasi oleh admin. Silahkan menunggu.
+            <a href="{{ 'https://api.whatsapp.com/send/?phone=' . $appSettings['team_name'] . ' ingin menanyakan status verifikasi tim saya.' }}"
+                target="_blank" class="alert-link">Hubungi
+                Admin</a>
+        </div>
     @else
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle"></i>
             Tim anda sudah diverifikasi oleh admin. Silahkan join grup whatsapp kami
-            <a href="{{ Auth::user()->teams->first()->competition->whatsapp_group_link }}" target="_blank"
+            <a href="{{ $user->leader->first()->team->first()->competition->first()->whatsapp_group }}" target="_blank"
                 class="alert-link">Link Grup
                 Whatsapp</a>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

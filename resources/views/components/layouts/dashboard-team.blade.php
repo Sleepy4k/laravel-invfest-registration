@@ -28,14 +28,14 @@
     <meta name="twitter:image" content="{{ asset('opengraphimg.jpg') }}">
 
 
-    <link rel="shortcut icon" href="{{ asset(getWebConfiguration()->nav_logo) }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : null }}" type="image/x-icon">
 
     <style>
         :root {
-            --primary: {{ getWebConfiguration()->primary_color }};
-            --primaryHover: {{ getWebConfiguration()->primary_color_hover }};
-            --secondary: {{ getWebConfiguration()->secondary_color }};
-            --secondaryHover: {{ getWebConfiguration()->secondary_color_hover }};
+            --primary: {{ $appSettings['primary_color'] }};
+            --primaryHover: {{ $appSettings['primary_color_hover'] }};
+            --secondary: {{$appSettings['secondary_color'] }};
+            --secondaryHover: {{ $appSettings['secondary_color_hover'] }};
         }
     </style>
     <link rel="stylesheet" href="{{ asset('frontend/css/app.css') }}?v={{ uniqid() }}">
