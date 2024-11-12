@@ -17,7 +17,7 @@ class PaymentMethodFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->sentence(rand(3, 6)),
+            'name' => fake()->sentence(rand(2, 3)),
             'logo' => null,
             'number' => rand(11111, 99999),
             'owner' => fake()->name()

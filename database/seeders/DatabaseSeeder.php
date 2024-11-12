@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             CompetitionSeeder::class,
             SponsorshipTierSeeder::class,
             SponsorshipSeeder::class,
+            PaymentMethodSeeder::class,
         ]);
     }
 }
