@@ -31,8 +31,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-users"></i>
-                            {{ auth('web')->user()->leader->first()->team->name ?? 'Admin' }}
-                            {{-- {{ Auth::user()->teams->first()->team_name ?? 'Admin' }} --}}
+                            {{ auth('web')->user()->leader->first()->team->first()->name ?? 'Admin' }}
                         </a>
                         <ul class="dropdown-menu border-0 shadow-sm p-2" aria-labelledby="navbarDropdownMenuLink">
                             @hasrole('admin')

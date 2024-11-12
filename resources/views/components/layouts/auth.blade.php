@@ -1,9 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ $attributes->get('title') }}</title>
+
+        @cspMetaTag(App\Support\CspPolicy::class)
+
         <link rel="shortcut icon" type="image/png" href="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +17,7 @@
         <link href="{{ asset('admin/assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
         @stack('plugin-styles')
 
         <style>
@@ -25,8 +29,8 @@
             }
         </style>
 
-        <link href="{{ asset('admin/css/app.css') }}?v={{ uniqid() }}" rel="stylesheet" />
-        <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}?v={{ uniqid() }}">
+        <link href="{{ asset('admin/css/app.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}">
 
         @stack('style')
     </head>

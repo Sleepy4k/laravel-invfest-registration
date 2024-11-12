@@ -6,6 +6,8 @@
 
         <title>@yield('code') @yield('title') - {{ config('app.name') }}</title>
 
+        @cspMetaTag(App\Support\CspPolicy::class)
+
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="antialiased">

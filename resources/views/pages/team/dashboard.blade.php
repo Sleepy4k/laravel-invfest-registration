@@ -19,7 +19,7 @@
                 Bayar Sekarang
             </a>
         </div>
-    @elseif($payment->status != 'pending')
+    @elseif($payment->status == 'pending')
         <div class="alert alert-warning">
             <i class="fas fa-exclamation-triangle"></i>
             Tim anda sedang dalam proses verifikasi oleh admin. Silahkan menunggu.
@@ -116,7 +116,7 @@
                         <th>Status</th>
                         <td>
                             @if($payment->status == 'pending') <span class="badge bg-warning">Pending</span>
-                            @elseif($payment->status == 'accepted') <span class="badge bg-success">Diterima</span>
+                            @elseif($payment->status == 'approve') <span class="badge bg-success">Diterima</span>
                             @else <span class="badge bg-danger">Ditolak</span> @endif
                         </td>
                     </tr>
