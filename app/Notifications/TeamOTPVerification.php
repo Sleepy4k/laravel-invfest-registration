@@ -23,7 +23,7 @@ class TeamOTPVerification extends Notification implements ShouldQueue
      */
     public function __construct(string $otp)
     {
-        $this->otp = $otp || '#####';
+        $this->otp = $otp ?? '#####';
     }
 
     /**
@@ -45,7 +45,7 @@ class TeamOTPVerification extends Notification implements ShouldQueue
                     ->subject('Verifikasi Pendaftaran Team')
                     ->line('Berikut adalah kode OTP untuk verifikasi pendaftaran team anda.')
                     ->line('Kode OTP: ' . $this->otp)
-                    ->line('Kode OTP ini akan kedaluwarsa dalam 5 menit.')
+                    ->line('Kode OTP ini akan kedaluwarsa dalam 3 jam.')
                     ->line('Jika Anda tidak meminta OTP, tidak ada tindakan lebih lanjut yang diperlukan.');
     }
 

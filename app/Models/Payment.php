@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\PaymentStatus;
-use App\Enums\StorageBaseType;
 use App\Enums\UploadFileType;
 use App\Traits\HasUUID;
 use App\Traits\UploadFile;
@@ -76,6 +75,6 @@ class Payment extends Model
      */
     public function setProofAttribute($value)
     {
-        $this->attributes['proof'] = $this->saveSingleFile(UploadFileType::IMAGE, $value, StorageBaseType::PRIVATE);
+        $this->attributes['proof'] = $this->saveSingleFile(UploadFileType::IMAGE, $value);
     }
 }

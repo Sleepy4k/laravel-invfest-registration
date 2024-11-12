@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Enums\UploadFileType;
 use App\Traits\HasUUID;
+use App\Traits\UploadFile;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TeamLeader extends Model
 {
-    use HasFactory, HasUUID, Cacheable;
+    use HasFactory, HasUUID, Cacheable, UploadFile;
 
     /**
      * The attributes that are mass assignable.
@@ -65,5 +67,13 @@ class TeamLeader extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    /**
+     * Set card attribute.
+     */
+    public function setCardAttribute($value)
+    {
+        $this->attributes['card'] = $value ? $this->saveSingleFile(UploadFileType::IMAGE, $value) : null;
     }
 }

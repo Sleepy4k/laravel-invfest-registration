@@ -11,7 +11,7 @@ class TeamRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return !auth('web')->check();
+        return true;
     }
 
     /**
@@ -22,7 +22,6 @@ class TeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data' => 'array:member,card',
             'data.*.member' => ['required', 'string', 'max:150'],
             'data.*.card' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
         ];

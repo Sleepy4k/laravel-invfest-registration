@@ -25,7 +25,7 @@ class TeamService extends Service
     {
         $data['team_id'] = auth('web')->user()->leader->first()->team->first()->id;
 
-        for ($i=0; $i < 3; $i++) {
+        for ($i=0; $i < 2; $i++) {
             $data['name'] = $request['data'][$i]['member'];
             $data['card'] = $request['data'][$i]['card'];
 

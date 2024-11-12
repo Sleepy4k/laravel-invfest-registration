@@ -22,7 +22,7 @@ class PaymentController extends Controller
     {
         try {
             if (auth('web')->user()->leader->first()->payment != null) {
-                alert('Akses dilarang', 'Kamu sudah melakukan pembayaran, silahkan menunggu dari admin', 'success');
+                toast('Pembayaran sudah dilakukan, silahkan menunggu konfirmasi dari admin', 'success');
 
                 return to_route('team.dashboard');
             }
@@ -40,6 +40,8 @@ class PaymentController extends Controller
     {
         try {
             $this->service->store($request->validated());
+
+            toast('Pembayaran berhasil, silahkan menunggu konfirmasi dari admin', 'success');
 
             return redirect()->intended(route('team.dashboard', absolute: false));
         } catch (\Throwable $th) {

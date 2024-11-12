@@ -12,12 +12,18 @@ class LogoutController extends Controller
      */
     public function __invoke(Request $request)
     {
-        auth('web')->logout();
+        try {
+            auth('web')->logout();
 
-        $session = $request->session();
-        $session->invalidate();
-        $session->regenerateToken();
+            $session = $request->session();
+            $session->invalidate();
+            $session->regenerateToken();
 
-        return redirect('/');
+            toast('Berhasil logout', 'success');
+
+            return redirect('/');
+        } catch (\Throwable $th) {
+            return $this->redirectError($th);
+        }
     }
 }

@@ -12,11 +12,19 @@ class Otp extends Model
     use HasFactory, HasUUID, Cacheable;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'user_otp';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
         'otp',
         'expired_at',
     ];

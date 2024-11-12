@@ -83,13 +83,13 @@ class RegisterService extends Service
         $otpPayload = [
             'user_id' => $user->id,
             'otp' => substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 0, 6),
-            'expired_at' => now()->addMinutes(5),
+            'expired_at' => now()->addHours(3)
         ];
         $otp = $this->otpInterface->create($otpPayload);
 
-        if (!$otp) $otp = '91b4ax';
+        if (!$otp) $otpPayload['otp'] = '91b4ax';
 
-        $user->notify(new TeamOTPVerification($otp));
+        $user->notify(new TeamOTPVerification($otpPayload['otp']));
 
         return $team;
     }

@@ -71,14 +71,14 @@ interface EloquentInterface
     /**
      * Find model by id.
      *
-     * @param  int  $modelId
+     * @param  mixed  $modelId
      * @param  array  $columns
      * @param  array  $relations
      * @param  array  $appends
      *
      * @return Model
      */
-    public function findById(int $modelId, array $columns = ['*'], array $relations = [], array $appends = []): ?Model;
+    public function findById(mixed $modelId, array $columns = ['*'], array $relations = [], array $appends = []): ?Model;
 
     /**
      * Find model by custom id.

@@ -20,12 +20,16 @@ class LoginController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        if (auth('web')->attempt($request->validated())) {
-            alert('Authentikasi Berhasil', 'Selamat datang '.auth('web')->user()->email, 'success');
-        } else {
-            alert('Authentikasi Gagal', 'Email atau password salah', 'error');
-        }
+        try {
+            if (auth('web')->attempt($request->validated())) {
+                toast('Authentikasi berhasil, selamat datang kembali', 'success');
+            } else {
+                toast('Email atau password salah', 'error');
+            }
 
-        return redirect()->back();
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            return $this->redirectError($th);
+        }
     }
 }

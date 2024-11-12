@@ -36,9 +36,9 @@ class RegisterController extends Controller
             $result = $this->service->store($request->validated());
 
             if ($result) {
-                alert('Pendaftaran berhasil', 'silahkan cek email untuk melakukan verifikasi', 'success');
+                toast('Pendaftaran berhasil, silahkan cek email untuk melakukan verifikasi');
 
-                return to_route('verification');
+                return to_route('verification.notice');
             }
         } catch (\Throwable $th) {
             return $this->redirectError($th);

@@ -51,6 +51,14 @@ class Timeline extends Model
     }
 
     /**
+     * Set date attribute.
+     */
+    public function setDateAttribute($value)
+    {
+        $this->attributes['date'] = date('Y-m-d', strtotime($value));
+    }
+
+    /**
      * Set query to be sorted ascending by their date value
      */
     public function scopeOrderByDate($query)

@@ -68,7 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function otp()
     {
-        return $this->hasOne(Otp::class, 'id', 'id');
+        return $this->hasOne(Otp::class, 'user_id', 'id');
     }
 
     /**

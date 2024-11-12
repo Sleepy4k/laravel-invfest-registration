@@ -25,33 +25,43 @@ class VerificationService extends Service
      */
     public function store(array $request): bool
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
+            $user = $this->userInterface->findById($user->id, ['*'], ['otp']);
 
-        if ($user->otp == null) {
-            alert('OTP tidak ditemukan', '', 'error');
+            if ($user->otp->otp == null) {
+                alert('OTP tidak ditemukan', '', 'error');
 
-            return false;
-        }
+                return false;
+            }
 
-        if ($user->otp != $request['otp']) {
-            alert('OTP yang anda masukan salah', '', 'error');
+            if ($user->otp->otp != $request['otp']) {
+                alert('OTP yang anda masukan salah', '', 'error');
 
-            return false;
-        }
+                return false;
+            }
 
-        if ($user->otp_expiration < now()) {
-            alert('OTP yang anda masukan sudah kadaluarsa', '', 'error');
-            $id = $this->otpInterface->findByCustomId([['otp', '=', $request['otp']]], ['id'])->id;
+            if ($user->otp->expired_at < now()) {
+                alert('OTP yang anda masukan sudah kadaluarsa', '', 'error');
+                $id = $this->otpInterface->findByCustomId([['otp', '=', $user->otp->otp]], ['id'])->id;
+                $this->otpInterface->deleteById($id);
+
+                return false;
+            }
+
+            if (!$user->hasVerifiedEmail()) {
+                $user->markEmailAsVerified();
+            }
+
+            $id = $this->otpInterface->findByCustomId([['otp', '=', $user->otp->otp]], ['id'])->id;
             $this->otpInterface->deleteById($id);
 
-            return false;
+            toast('Verifikasi email berhasil, silahkan isi data anggota tim', 'success');
+
+            return true;
+        } catch (\Throwable $th) {
+            throw $th;
         }
-
-        $user->markEmailAsVerified();
-
-        toast('Verifikasi email berhasil, silahkan isi data anggota tim', 'success');
-
-        return true;
     }
 
     /**
@@ -63,18 +73,22 @@ class VerificationService extends Service
      */
     public function show(string $id, string $hash): bool
     {
-        $user = $this->userInterface->findById($id);
+        try {
+            $user = $this->userInterface->findById($id);
 
-        if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
-            return false;
+            if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
+                return false;
+            }
+
+            $user->markEmailAsVerified();
+
+            Auth::login($user);
+
+            toast('Verifikasi email berhasil, silahkan isi data anggota tim', 'success');
+
+            return true;
+        } catch (\Throwable $th) {
+            throw $th;
         }
-
-        $user->markEmailAsVerified();
-
-        Auth::login($user);
-
-        toast('Verifikasi email berhasil, silahkan isi data anggota tim', 'success');
-
-        return true;
     }
 }

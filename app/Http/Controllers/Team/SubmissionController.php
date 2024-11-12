@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Team;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\TeamRequest;
-use App\Services\Auth\TeamService;
+use App\Http\Requests\Team\SubmissionRequest;
+use App\Services\Team\SubmissionService;
 
-class TeamController extends Controller
+class SubmissionController extends Controller
 {
     /**
      * Create a new controller instance.
      */
     public function __construct(
-        private TeamService $service
+        private SubmissionService $service
     ) {}
 
     /**
@@ -20,20 +20,20 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return view('pages.auth.team-member');
+        return view('pages.team.work');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TeamRequest $request)
+    public function store(SubmissionRequest $request)
     {
         try {
             $this->service->store($request->validated());
 
-            toast('Pendaftaran berhasil, silahkan melakukan pembayaran untuk menyelesaikan pendaftaran', 'success');
+            toast('Berhasil', 'Karya berhasil ditambahkan, semoga sukses!', 'success');
 
-            return to_route('payment-team');
+            return back();
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

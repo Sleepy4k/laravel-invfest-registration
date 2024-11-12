@@ -24,15 +24,19 @@ class ViewServiceProvider extends ServiceProvider
             'pages.landing',
             'pages.auth.login',
             'pages.auth.register',
+            'pages.team.dashboard',
 
             'components.layouts.auth',
             'components.layouts.frontend',
+            'components.layouts.dashboard-team',
 
             'components.frontend.footer',
             'components.frontend.navbar',
             'components.frontend.timeline',
             'components.frontend.card.hero',
             'components.frontend.card.information',
+
+            'vendor.mail.html.header',
         ], Composers\AppSettingComposer::class);
 
         view()->composer('components.frontend.footer', Composers\LatestCompetitionComposer::class);
