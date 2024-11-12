@@ -5,7 +5,7 @@ namespace App\Traits;
 use App\Enums\ReportLogType;
 use App\Enums\UploadFileType;
 use Illuminate\Support\Facades\Storage;
-use Spatie\ImageOptimizer\OptimizerChainFactory;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 trait UploadFile
 {
@@ -39,7 +39,7 @@ trait UploadFile
             };
 
             if (!Storage::exists(explode('/', $path)[1])) {
-                Storage::copy($this->baseDisk . '/index.html', $path . 'index.html');
+                Storage::disk('public')->copy('index.html', rtrim($path, '/') . '/index.html');
             }
 
             return $path;
@@ -59,8 +59,7 @@ trait UploadFile
     protected function optimizeImage($file)
     {
         try {
-            $optimizerChain = OptimizerChainFactory::create();
-            $optimizerChain->optimize($file);
+            ImageOptimizer::optimize($file);
 
             return true;
         } catch (\Throwable $th) {
@@ -142,7 +141,7 @@ trait UploadFile
 
             $file->storeAs($this->storageDisk($type), $fileName);
 
-            if ($type === UploadFileType::IMAGE || $type === UploadFileType::SETTING) {
+            if ($type !== UploadFileType::FILE->value) {
                 $this->optimizeImage(storage_path('app\\public\\' . $this->storageDisk($type) . $fileName));
             }
 

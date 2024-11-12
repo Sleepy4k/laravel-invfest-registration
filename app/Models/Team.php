@@ -88,4 +88,12 @@ class Team extends Model
     {
         return $this->hasOne(TeamCompanion::class, 'team_id', 'id');
     }
+
+    /**
+     * Get the submission for the team.
+     */
+    public function submission()
+    {
+        return $this->hasOne(Submission::class, 'team_id', 'id');
+    }
 }

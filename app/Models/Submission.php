@@ -61,8 +61,11 @@ class Submission extends Model
         return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 
-    public function setZipFileAttribute($value)
+    /**
+     * Set file attribute
+     */
+    public function setFileAttribute($value)
     {
-        $this->attributes['zip_file'] = $value ? $this->saveSingleFile(UploadFileType::FILE, $value) : null;
+        $this->attributes['file'] = $value ? $this->saveSingleFile(UploadFileType::FILE, $value) : null;
     }
 }

@@ -20,7 +20,7 @@ class SubmissionController extends Controller
      */
     public function index()
     {
-        return view('pages.team.work');
+        return view('pages.team.work', $this->service->index());
     }
 
     /**

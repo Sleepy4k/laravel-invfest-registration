@@ -11,8 +11,21 @@ class SubmissionService extends Service
      * Model contract constructor.
      */
     public function __construct(
+        private Models\UserInterface $userInterface,
         private Models\SubmissionInterface $submissionInterface
     ) {}
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return array
+     */
+    public function index(): array
+    {
+        $user = $this->userInterface->findById(auth('web')->user()->id, ['*'], ['leader.team.payment', 'leader.team.submission']);
+
+        return compact('user');
+    }
 
     /**
      * Store a newly created resource in storage.
