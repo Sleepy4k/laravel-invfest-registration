@@ -7,12 +7,12 @@
                         <div class="col-md-12 ps-md-0">
                             <div class="auth-form-wrapper px-4 py-5">
                                 <a href="{{ url('/') }}" class="noble-ui-logo d-block mb-2">Pembayaran Tim
-                                    {{ Auth::user()->teams->first()->team_name }}
+                                    {{ $user->leader->first()->team->first()->name }}
                                 </a>
                                 <h5 class="text-muted fw-normal mb-4">Silahkan lakukan pembayaran untuk melanjutkan
                                     pendaftaran sebesar
                                     <b class="text-primary">
-                                        {{ Auth::user()->teams->first()->competition->registration_fee_rupiah }}
+                                        {{ $user->leader->first()->team->first()->competition->registration_fee_rupiah }}
                                     </b>
                                 </h5>
 
@@ -36,7 +36,7 @@
                                 <form action="{{ route('payment-team.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" name="team_id" value="{{ Auth::user()->teams->first()->id }}">
+                                    <input type="hidden" name="team_id" value="{{ $user->leader->first()->team->first()->id }}">
                                     <x-input.select name="payment_method_id" value=""
                                         label="Pilih Metode Pembayaran">
                                         <option value="">Pilih Metode Pembayaran</option>
