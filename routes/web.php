@@ -9,7 +9,7 @@ use App\Http\Controllers\Frontend;
 Route::get('/', [Frontend\LandingController::class, 'index'])->name('frontend.landing');
 Route::get('/competition/{slug}', [Frontend\CompetitionController::class, 'show'])->name('frontend.competition.show');
 
-Route::get('/email/verify', [Auth\VerificationController::class, 'index'])->name('verification');
+Route::get('/email/verify', [Auth\VerificationController::class, 'index'])->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', [Auth\VerificationController::class, 'show'])->name('verification.verify');
 Route::post('/email/verification-check', [Auth\VerificationController::class, 'store'])->name('verification.send');
 
@@ -31,12 +31,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/payment-team', [Auth\PaymentController::class, 'index'])->name('payment-team');
         Route::post('/payment-team', [Auth\PaymentController::class, 'store'])->name('payment-team.store');
 
-        Route::prefix('team')->name('team.')->group(function () {
-            Route::get('/dashboard', function () { return dd('team dashboard'); })->name('dashboard');
-
-            // Route::get('/dashboard', [Team\DashboardController::class, 'index'])->name('dashboard');
-            // Route::get('/karya', [Team\WorkController::class, 'index'])->name('work');
-            // Route::post('/karya', [Team\WorkController::class, 'store'])->name('work.store');
+        Route::middleware('verified')->prefix('team')->name('team.')->group(function () {
+            Route::get('/dashboard', Team\DashboardController::class)->name('dashboard');
+            Route::get('/karya', [Team\SubmissionController::class, 'index'])->name('work');
+            Route::post('/karya', [Team\SubmissionController::class, 'store'])->name('work.store');
         });
     });
 
