@@ -24,6 +24,12 @@ return Application::configure(basePath: dirname(__DIR__))
             \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
         ]);
 
+        $middleware->alias([
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+        ]);
+
         $middleware->redirectGuestsTo('/');
         $middleware->redirectTo(function (Request $request) {
             $user = $request->user();
