@@ -19,6 +19,8 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/register', [Auth\RegisterController::class, 'index'])->name('register');
     Route::post('/register', [Auth\RegisterController::class, 'store'])->name('register.store');
+
+    Route::get('/competition', [Frontend\CompetitionController::class, 'index'])->name('frontend.competition.index');
 });
 
 Route::middleware('auth')->group(function () {
