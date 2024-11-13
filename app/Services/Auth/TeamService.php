@@ -23,11 +23,16 @@ class TeamService extends Service
      */
     public function store(array $request): void
     {
-        $data['team_id'] = auth('web')->user()->leader->first()->team->first()->id;
+        if (!isset($request['data']) || count($request['data']) == 0) return;
 
-        for ($i=0; $i < 2; $i++) {
+        $data['team_id'] = auth('web')->user()->leader->first()->team->first()->id;
+        $total = count($request['data']) > 2 ? 2 : count($request['data']);
+
+        for ($i=0; $i < $total; $i++) {
+            if (!isset($request['data'][$i]['member'])) continue;
+
             $data['name'] = $request['data'][$i]['member'];
-            $data['card'] = $request['data'][$i]['card'];
+            $data['card'] = $request['data'][$i]['card'] ?? null;
 
             $this->teamMemberInterface->create($data);
         }
