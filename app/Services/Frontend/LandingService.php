@@ -24,7 +24,7 @@ class LandingService extends Service
      */
     public function index(): array
     {
-        $competitions = $this->competitionInterface->get(['name', 'slug', 'level_id', 'registration_fee'], false, ['level']);
+        $competitions = $this->competitionInterface->get(['name', 'slug', 'level_id', 'poster', 'registration_fee'], false, ['level']);
         $timelines = $this->timelineInterface->get(['title', 'description', 'date']);
         $partners = $this->partnerInterface->get(['name', 'logo']);
         $sponsors = $this->sponsorInterface->get(['name', 'logo']);

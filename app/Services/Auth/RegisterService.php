@@ -18,6 +18,7 @@ class RegisterService extends Service
         private Models\TeamInterface $teamInterface,
         private Models\TeamLeaderInterface $teamLeaderInterface,
         private Models\CompetitionInterface $competitionInterface,
+        private Models\CompetitionLevelInterface $competitionLevelInterface,
     ) {}
 
     /**
@@ -27,9 +28,9 @@ class RegisterService extends Service
      */
     public function index(): array
     {
-        $competitions = $this->competitionInterface->all(['id', 'name']);
+        $levels = $this->competitionLevelInterface->all(['id', 'level']);
 
-        return compact('competitions');
+        return compact('levels');
     }
 
     /**

@@ -22,8 +22,8 @@ class TeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data.*.member' => ['required', 'string', 'max:150'],
-            'data.*.card' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
+            'data.*.member' => ['nullable', 'string', 'max:150'],
+            'data.*.card' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
         ];
     }
 

@@ -15,6 +15,18 @@ class CompetitionController extends Controller
     ) {}
 
     /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        try {
+            return response()->json($this->service->index());
+        } catch (\Throwable $th) {
+            return response()->json(['competitions' => []]);
+        }
+    }
+
+    /**
      * Display the specified resource.
      */
     public function show(string $slug)

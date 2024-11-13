@@ -37,10 +37,7 @@ class AppSettingComposer
             'slogan' => 'InvFest',
             'heading' => 'InvFest',
             'description' => 'InvFest',
-            'footer_description' => 'InvFest',
-            'footer_copyrigth' => 'InvFest',
             'deadline' => '2024-11-20',
-            'email' => 'invfest@gmail.com',
             'phone' => '081234567890',
             'primary_color' => '#0A3578',
             'primary_color_hover' => '#154FAA',
@@ -48,9 +45,9 @@ class AppSettingComposer
             'secondary_color_hover' => '#0168D7',
             'twibbon_link' => 'https://invfest.my.id',
             'instagram' => 'https://instagram.com/invfest',
-            'mascot' => null,
-            'twibbon' => null,
             'nav_logo' => null,
+            'twibbon' => null,
+            'mascot' => null,
         ];
     }
 

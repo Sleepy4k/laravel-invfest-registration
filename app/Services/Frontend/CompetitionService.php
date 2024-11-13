@@ -13,6 +13,18 @@ class CompetitionService extends Service
     ) {}
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return array
+     */
+    public function index(): array
+    {
+        $competitions = $this->competitionInterface->all(['id', 'name']);
+
+        return compact('competitions');
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param string $slug
@@ -21,7 +33,7 @@ class CompetitionService extends Service
      */
     public function show(string $slug): array
     {
-        $competition = $this->competitionInterface->findByCustomId([['slug', '=', $slug]], ['name', 'slug', 'level_id', 'registration_fee'], ['level']);
+        $competition = $this->competitionInterface->findByCustomId([['slug', '=', $slug]], ['name', 'slug', 'level_id', 'poster', 'registration_fee'], ['level']);
 
         if (empty($competition) || $competition == null) throw new ErrorException('Data not found, please make sure data is valid');
 
