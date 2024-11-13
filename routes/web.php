@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Frontend;
 
 Route::get('/', [Frontend\LandingController::class, 'index'])->name('frontend.landing');
+Route::get('/competition/list', [Frontend\CompetitionController::class, 'index'])->name('frontend.competition.index');
 Route::get('/competition/{slug}', [Frontend\CompetitionController::class, 'show'])->name('frontend.competition.show');
 
 Route::get('/email/verify', [Auth\VerificationController::class, 'index'])->name('verification.notice');
@@ -19,8 +20,6 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/register', [Auth\RegisterController::class, 'index'])->name('register');
     Route::post('/register', [Auth\RegisterController::class, 'store'])->name('register.store');
-
-    Route::get('/competition', [Frontend\CompetitionController::class, 'index'])->name('frontend.competition.index');
 });
 
 Route::middleware('auth')->group(function () {
