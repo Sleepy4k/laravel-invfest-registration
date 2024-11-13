@@ -2,11 +2,28 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="title" content="InvFest 9.0">
+        <meta name="description" content="InvFest">
+        <meta name="keywords" content="lomba, lomba ui/ux, lomba ngoding">
+        <meta name="robots" content="index, follow">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="language" content="English">
 
-        <title>@yield('code') @yield('title') - {{ config('app.name') }}</title>
+        <title>@yield('code') @yield('title') - InvFest 9.0</title>
 
         @cspMetaTag(App\Support\CspPolicy::class)
+
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="InvFest 9.0">
+        <meta property="og:description" content="InvFest">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="twitter:domain" content="{{ url()->current() }}">
+        <meta property="twitter:url" content="{{ url()->current() }}">
+        <meta name="twitter:title" content="InvFest 9.0">
+        <meta name="twitter:description" content="InvFest">
 
         <script src="https://cdn.tailwindcss.com"></script>
     </head>

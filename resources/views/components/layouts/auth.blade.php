@@ -7,6 +7,19 @@
 
         @cspMetaTag(App\Support\CspPolicy::class)
 
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ $title }}">
+        <meta property="og:description" content="{{ $description ?? '' }}">
+        <meta property="og:image" content="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="twitter:domain" content="{{ url()->current() }}">
+        <meta property="twitter:url" content="{{ url()->current() }}">
+        <meta name="twitter:title" content="{{ $title }}">
+        <meta name="twitter:description" content="{{ $description ?? '' }}">
+        <meta name="twitter:image" content="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}">
+
         <link rel="shortcut icon" type="image/png" href="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com">

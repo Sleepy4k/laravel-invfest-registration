@@ -7,10 +7,10 @@
             <div class="information align-self-start p-4">
                 <p class="info-desc">{!! $appSettings['description'] !!}</p>
                 <br>
-                <a href="{{ route('register') }}" class="btn btn-secondary btn-secondary mt-3  px-5">
+                <a href="{{ route('register') }}" class="btn btn-secondary btn-secondary mt-3 px-5 me-3">
                     Daftar
                 </a>
-                <button type="button" class="btn border border-1 border-white text-white mt-3  px-5"
+                <button type="button" class="btn border border-1 border-white text-white mt-3 px-5"
                     data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <i class="fas fa-video"></i>
                     Tutorial Pendaftaran

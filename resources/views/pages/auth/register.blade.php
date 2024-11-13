@@ -14,14 +14,13 @@
                                     @csrf
                                     <x-input.select name="level" label="Tingkat" id="level">
                                         <option value="">Pilih Tingkat</option>
-                                        <option value="mahasiswa">Mahasiswa</option>
+                                        @foreach ($levels as $level)
+                                            <option value="{{ $level->id }}">{{ $level->level }}</option>
+                                        @endforeach
                                     </x-input.select>
 
                                     <x-input.select name="competition_id" label="Kompetisi" id="competition_id">
                                         <option value="">Pilih Kompetisi</option>
-                                        @foreach ($competitions as $competition)
-                                            <option value="{{ $competition->id }}">{{ $competition->name }}</option>
-                                        @endforeach
                                     </x-input.select>
                                     <x-input.text name="team_name" label="Nama Tim" value="{{ old('team_name') }}" />
                                     <x-input.text name="institution" label="Asal Institusi"
@@ -55,13 +54,46 @@
 
     @push('custom-scripts')
         <script>
-            $('#companion_name').parent().hide();
-            $('#companion_card').parent().hide();
+            $('#companion_name').parent().show();
+            $('#companion_card').parent().show();
+
+            $('#level').change(function() {
+                if ($(this).val()?.toLowerCase() == 'universitas') {
+                    $('#companion_name').parent().hide();
+                    $('#companion_card').parent().hide();
+                } else {
+                    $('#companion_name').parent().show();
+                    $('#companion_card').parent().show();
+                }
+            });
 
             $('#btn-submit').click(function() {
                 $(this).html(
                     `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
                 );
+            });
+
+            $('#level').change(function() {
+                var selectedLevelId = $(this).val();
+                var competitionSelect = $('#competition_id');
+
+                competitionSelect.empty();
+                competitionSelect.append('<option value="">Pilih Kompetisi</option>');
+
+                if (selectedLevelId) {
+                    $.ajax({
+                        url: '{{ route("frontend.competition.index") }}',
+                        type: 'GET',
+                        data: {
+                            level_id: selectedLevelId
+                        },
+                        success: function(result) {
+                            data.forEach(function(competition) {
+                                competitionSelect.append('<option value="' + competition.id + '">' + competition.name + '</option>');
+                            });
+                        }
+                    });
+                }
             });
         </script>
     @endpush
