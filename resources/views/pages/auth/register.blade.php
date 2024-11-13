@@ -31,9 +31,9 @@
                                         value="{{ old('leader_phone') }}" />
                                     <x-input.file name="leader_card" label="Kartu Identitas Ketua"
                                         value="{{ old('leader_card') }}" />
-                                    <x-input.text name="companion_name" label="Nama Pendamping" id="companion_name"
+                                    <x-input.text name="companion_name" label="Nama Pendamping (Hanya untuk SMA/SMK)" id="companion_name"
                                         value="{{ old('companion_name') }}" />
-                                    <x-input.file name="companion_card" label="Kartu Identitas Pendamping"
+                                    <x-input.file name="companion_card" label="Kartu Identitas Pendamping (Hanya untuk SMA/SMK)"
                                         id="companion_card" />
                                     <x-input.text name="email" label="Email Ketua" type="email"
                                         value="{{ old('email') }}" />
@@ -54,16 +54,16 @@
 
     @push('custom-scripts')
         <script>
-            $('#companion_name').parent().show();
-            $('#companion_card').parent().show();
+            $('#companion_name').parent().hide();
+            $('#companion_card').parent().hide();
 
             $('#level').change(function() {
-                if ($(this).val()?.toLowerCase() == 'universitas') {
-                    $('#companion_name').parent().hide();
-                    $('#companion_card').parent().hide();
-                } else {
+                if ($(this).find('option:selected')?.text()?.toLowerCase() == 'umum') {
                     $('#companion_name').parent().show();
                     $('#companion_card').parent().show();
+                } else {
+                    $('#companion_name').parent().hide();
+                    $('#companion_card').parent().hide();
                 }
             });
 
@@ -82,13 +82,14 @@
 
                 if (selectedLevelId) {
                     $.ajax({
-                        url: '{{ route("frontend.competition.index") }}',
+                        url: 'competition/list',
                         type: 'GET',
                         data: {
-                            level_id: selectedLevelId
+                            level: selectedLevelId,
+                            platform: '{{ config("app.url") }}'
                         },
                         success: function(result) {
-                            data.forEach(function(competition) {
+                            result.competitions.forEach(function(competition) {
                                 competitionSelect.append('<option value="' + competition.id + '">' + competition.name + '</option>');
                             });
                         }
