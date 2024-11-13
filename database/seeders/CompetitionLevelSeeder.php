@@ -16,8 +16,11 @@ class CompetitionLevelSeeder extends Seeder
         if (CompetitionLevel::query()->withoutCache()->count() == 0) {
             $levels = [
                 [
-                    'level' => 'universitas'
-                ]
+                    'level' => 'Universitas'
+                ],
+                [
+                    'level' => 'Umum'
+                ],
             ];
 
             $time = now();

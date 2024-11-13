@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
+            UserSeeder::class,
             MediaPartnerSeeder::class,
             TimelineSeeder::class,
             CompetitionLevelSeeder::class,
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             SponsorshipTierSeeder::class,
             SponsorshipSeeder::class,
             PaymentMethodSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }

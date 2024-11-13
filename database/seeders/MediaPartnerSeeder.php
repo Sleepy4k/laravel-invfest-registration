@@ -16,12 +16,48 @@ class MediaPartnerSeeder extends Seeder
         if (!config('app.debug') || config('app.env') != 'local') return;
 
         if (MediaPartner::query()->withoutCache()->count() == 0) {
-            $partners = MediaPartner::factory(6)->make()->toArray();
+            $partners = [
+                [
+                    'name' => 'HIMA TUP',
+                ],
+                [
+                    'name' => 'BEM KEMA',
+                ],
+                [
+                    'name' => 'DPM KEMA',
+                ],
+                [
+                    'name' => 'SIRCLE',
+                ],
+                [
+                    'name' => 'HEXACOM',
+                ],
+                [
+                    'name' => 'FUTSAL TUP',
+                ],
+                [
+                    'name' => 'E-SPORT TUP',
+                ],
+                [
+                    'name' => 'HMIF UNSOED',
+                ],
+                [
+                    'name' => 'HMPE UNSOED',
+                ],
+                [
+                    'name' => 'INFOLOMBAIT',
+                ],
+                [
+                    'name' => 'SOEDIRMANTECHNOPHORIA',
+                ]
+            ];
 
             $time = now();
             $partners = array_map(function ($partner) use ($time) {
                 return array_merge($partner, [
                     'id' => Str::uuid(),
+                    'logo' => 'https://pengajuan-dosenlb.telkomuniversity.ac.id/assets/images/telu_logo.png',
+                    'link' => null,
                     'created_at' => $time,
                     'updated_at' => $time
                 ]);

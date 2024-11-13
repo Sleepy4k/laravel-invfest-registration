@@ -18,7 +18,6 @@ class SponsorshipFactory extends Factory
     {
         return [
             'name' => fake()->sentence(rand(2, 3)),
-            'logo' => null,
             'link' => null
         ];
     }

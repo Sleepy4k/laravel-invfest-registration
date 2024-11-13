@@ -20,13 +20,14 @@ class SponsorshipSeeder extends Seeder
             $tiers = SponsorshipTier::select('id')->get();
             if ($tiers->isEmpty()) return;
 
-            $sponsorships = Sponsorship::factory(6)->make()->toArray();
+            $sponsorships = Sponsorship::factory(4)->make()->toArray();
 
             $time = now();
             $sponsorships = array_map(function ($sponsorship) use ($time, $tiers) {
                 return array_merge($sponsorship, [
                     'id' => Str::uuid(),
                     'tier_id' => $tiers->random()->id,
+                    'logo' => 'https://pengajuan-dosenlb.telkomuniversity.ac.id/assets/images/telu_logo.png',
                     'created_at' => $time,
                     'updated_at' => $time
                 ]);
