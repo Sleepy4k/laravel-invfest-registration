@@ -27,10 +27,12 @@ class ViewServiceProvider extends ServiceProvider
             'pages.team.dashboard',
             'pages.team.work',
 
+            'components.layouts.admin',
             'components.layouts.auth',
             'components.layouts.frontend',
             'components.layouts.dashboard-team',
 
+            'components.admin.sidebar',
             'components.frontend.footer',
             'components.frontend.navbar',
             'components.frontend.timeline',
