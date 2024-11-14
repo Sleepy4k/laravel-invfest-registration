@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth;
-use App\Http\Controllers\Team;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Auth;
 use App\Http\Controllers\Frontend;
+use App\Http\Controllers\Team;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Frontend\LandingController::class, 'index'])->name('frontend.landing');
 Route::get('/competition/list', [Frontend\CompetitionController::class, 'index'])->name('frontend.competition.index');
@@ -40,23 +40,21 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', function () { return dd('admin dashboard'); })->name('dashboard');
-
         Route::middleware('role:petugas|admin')->group(function () {
-            // Route::get('/dashboard', [Admin\DashboardController::class, 'index'])->name('dashboard');
-            // Route::resource('team', Admin\TeamController::class);
+            Route::get('/dashboard', Admin\DashboardController::class)->name('dashboard');
+            Route::resource('team', Admin\TeamController::class);
         });
 
         Route::middleware('role:admin')->group(function () {
-            // Route::get('/website-configuration', [Admin\WebConfigurationController::class, 'index'])->name('website-configuration.index');
-            // Route::put('/website-configuration/{id}', [Admin\WebConfigurationController::class, 'update'])->name('website-configuration.update');
+            Route::get('/website-configuration', [Admin\TeamController::class, 'index'])->name('website-configuration.index');
+            Route::put('/website-configuration/{id}', [Admin\TeamController::class, 'update'])->name('website-configuration.update');
 
-            // Route::resource('competition', Admin\CompetitionController::class);
-            // Route::resource('timeline', Admin\TimelineController::class);
-            // Route::resource('payment-method', Admin\PaymentMethodController::class);
-            // Route::resource('sponsor', Admin\SponsorController::class);
-            // Route::resource('media-partner', Admin\MediaPartnerController::class);
-            // Route::resource('work', Admin\WorkController::class);
+            Route::resource('competition', Admin\TeamController::class);
+            Route::resource('timeline', Admin\TeamController::class);
+            Route::resource('payment-method', Admin\TeamController::class);
+            Route::resource('sponsor', Admin\TeamController::class);
+            Route::resource('media-partner', Admin\TeamController::class);
+            Route::resource('work', Admin\TeamController::class);
         });
     });
 });
