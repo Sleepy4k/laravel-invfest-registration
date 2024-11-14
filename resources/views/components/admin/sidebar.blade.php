@@ -1,7 +1,8 @@
 <nav class="sidebar">
     <div class="sidebar-header">
-
-        <img src="{{ asset(getWebConfiguration()->nav_logo) }}" class="sidebar-brand" width="40">
+        <a href="{{ url('/') }}">
+            <img src="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" class="sidebar-brand" width="40">
+        </a>
         <div class="sidebar-toggler not-active">
             <span></span>
             <span></span>

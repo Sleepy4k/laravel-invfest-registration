@@ -31,35 +31,39 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-users"></i>
-                            {{ auth('web')->user()->leader->first()->team->first()->name ?? 'Admin' }}
+                            @role('team')
+                                {{ auth('web')->user()->leader->first()->team->first()->name ?? '#####' }}
+                            @else
+                                Admin
+                            @endrole
                         </a>
                         <ul class="dropdown-menu border-0 shadow-sm p-2" aria-labelledby="navbarDropdownMenuLink">
-                            @hasrole('admin')
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                        <i class="fas fa-tachometer-alt"></i>
-                                        Dashboard
-                                    </a>
-                                </li>
-                            @else
+                            @role('team')
                                 <li>
                                     <a class="dropdown-item" href="{{ route('team.dashboard') }}">
                                         <i class="fas fa-tachometer-alt"></i>
                                         Dashboard
                                     </a>
                                 </li>
+                            @else
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                                        <i class="fas fa-sign-out-alt"></i>
-                                        Logout
+                                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                        <i class="fas fa-tachometer-alt"></i>
+                                        Dashboard
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
                                 </li>
-                            @endhasrole
+                            @endrole
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
                         </ul>
                     </li>
                 @endguest

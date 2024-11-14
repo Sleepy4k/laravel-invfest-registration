@@ -3,12 +3,10 @@
         <link href="{{ asset('admin/assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
     @endpush
 
-
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
-            <h4 class="mb-3 mb-md-0">Selamat Datang, {{ Auth::user()->roles->first()->name }}</h4>
+            <h4 class="mb-3 mb-md-0">Selamat Datang, {{ $name }}</h4>
         </div>
-
     </div>
 
     <div class="row">
@@ -23,7 +21,7 @@
                             <div class="row">
                                 <div class="col-6 col-md-12 col-xl-5">
                                     <h3 class="mb-2">
-                                        {{ \App\Models\Team::count() }}
+                                        {{ $totalTeam }}
                                     </h3>
                                 </div>
                             </div>
@@ -39,7 +37,7 @@
                             <div class="row">
                                 <div class="col-6 col-md-12 col-xl-5">
                                     <h3 class="mb-2">
-                                        {{ \App\Models\Team::where('status', 'pending')->count() }}
+                                        {{ $totalTeamPending }}
                                     </h3>
                                 </div>
                             </div>
@@ -55,7 +53,7 @@
                             <div class="row">
                                 <div class="col-6 col-md-12 col-xl-5">
                                     <h3 class="mb-2">
-                                        {{ \App\Models\Sponsor::count() }}
+                                        {{ $totalSponsorship }}
                                     </h3>
                                 </div>
                             </div>
@@ -71,7 +69,7 @@
                             <div class="row">
                                 <div class="col-6 col-md-12 col-xl-5">
                                     <h3 class="mb-2">
-                                        {{ \App\Models\MediaPartner::count() }}
+                                        {{ $totalMediaPartner }}
                                     </h3>
                                 </div>
                             </div>
@@ -82,17 +80,17 @@
         </div>
         <div class="col-12">
             <div class="row flex-grow-1">
-                @foreach (\App\Models\Competition::all() as $item)
+                @foreach ($competitions as $competition)
                     <div class="col-md-3 grid-margin ">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-baseline mb-2">
-                                    <h6 class="card-title mb-0">Jumlah Pendaftar Terverifikasi {{ $item->name }}</h6>
+                                    <h6 class="card-title mb-0">Jumlah Pendaftar Terverifikasi {{ $competition->name }}</h6>
                                 </div>
                                 <div class="row">
                                     <div class="col-6 col-md-12 col-xl-5">
                                         <h3 class="mb-2">
-                                            {{ \App\Models\Team::where('competition_id', $item->id)->where('status', 'accepted')->count() }}
+                                            {{ $competition->teams_count }}
                                         </h3>
                                     </div>
                                 </div>

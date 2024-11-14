@@ -19,7 +19,7 @@
         <meta name="twitter:description" content="{{ $description ?? '' }}">
         <meta name="twitter:image" content="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}">
 
-        <link rel="shortcut icon" type="image/png" href="{{ asset(getWebConfiguration()->nav_logo) }}" />
+        <link rel="shortcut icon" type="image/png" href="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,10 +32,10 @@
 
         <style>
             :root {
-                --primary: {{ getWebConfiguration()->primary_color }};
-                --primaryHover: {{ getWebConfiguration()->primary_color_hover }};
-                --secondary: {{ getWebConfiguration()->secondary_color }};
-                --secondaryHover: {{ getWebConfiguration()->secondary_color_hover }};
+                --primary: {{ $appSettings['primary_color'] }};
+                --primaryHover: {{ $appSettings['primary_color_hover'] }};
+                --secondary: {{$appSettings['secondary_color'] }};
+                --secondaryHover: {{ $appSettings['secondary_color_hover'] }};
             }
         </style>
 
