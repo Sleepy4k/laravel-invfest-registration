@@ -1,16 +1,15 @@
 <x-layouts.admin title="Timeline">
-    @push('plugin-styles')
-        <link rel="stylesheet" href="{{ asset('admin/assets/plugins/lightbox/css/lightbox.css') }}">
-    @endpush
-
-
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="#">Timeline</a></li>
+                <li class="breadcrumb-item active">
+                    <a href="{{ route('admin.timeline.index') }}">Timeline</a>
+                </li>
             </ol>
         </nav>
-        <a href="{{ route('admin.timeline.create') }}" class="btn btn-primary btn-sm ml-auto mb-3">Tambah Timeline</a>
+        <a href="{{ route('admin.timeline.create') }}" class="btn btn-primary btn-sm ml-auto mb-3">
+            Tambah Timeline
+        </a>
     </div>
 
     <div class="row">
@@ -35,9 +34,9 @@
                                 <td>{{ $timeline->description }}</td>
                                 <td>
                                     <a href="{{ route('admin.timeline.edit', $timeline->id) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
+                                        class="btn btn-warning btn-sm me-2">Edit</a>
                                     <a href="{{ route('admin.timeline.show', $timeline->id) }}"
-                                        class="btn btn-info btn-sm">Detail</a>
+                                        class="btn btn-info btn-sm me-2">Detail</a>
                                     <form action="{{ route('admin.timeline.destroy', $timeline->id) }}"
                                         method="POST" class="d-inline">
                                         @csrf
@@ -53,15 +52,4 @@
             </x-admin.card>
         </div>
     </div>
-
-    @push('plugin-scripts')
-        <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox-plus-jquery.min.js') }}"></script>
-
-        <script>
-            lightbox.option({
-                'resizeDuration': 200,
-                'wrapAround': true
-            })
-        </script>
-    @endpush
 </x-layouts.admin>

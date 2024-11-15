@@ -6,7 +6,7 @@
             <img src="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" alt="Logo"
                 width="60px" height="80px" />
             <div class="d-flex flex-column align-self-center justify-self-center mx-3">
-                <span class="text-blue font-weight-bold">
+                <span class="text-judul font-weight-bold">
                     {{ $appSettings['title'] }}
                 </span>
                 <small class="text-slogan">

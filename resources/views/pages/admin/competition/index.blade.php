@@ -72,7 +72,7 @@
     </div>
 
     @push('plugin-scripts')
-        <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox-plus-jquery.min.js') }}"></script>
+        <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox.js') }}"></script>
 
         <script>
             lightbox.option({

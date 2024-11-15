@@ -31,7 +31,7 @@
                 </p>
                 <div class="d-flex gap-4">
                     <a href="{{ isset($appSettings['twibbon_link']) ? asset($appSettings['twibbon_link']) : '#' }}"
-                        class="btn btn-sm btn-rounded border border-1 border-primary text-white">
+                        class="btn btn-sm btn-rounded border border-1 border-white text-white">
                         Unduh Twibbon
                     </a>
                 </div>

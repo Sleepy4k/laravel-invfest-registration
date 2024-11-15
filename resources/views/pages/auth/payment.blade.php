@@ -1,4 +1,9 @@
 <x-layouts.auth title="Pembayaran">
+    @php
+        $team = $user?->leader?->first()?->team?->first();
+        $competition = $team?->competition?->first();
+    @endphp
+
     <div class="page-content d-flex align-items-center justify-content-center">
         <div class="row w-100 mx-0 auth-page">
             <div class="col-md-6 col-xl-3 mx-auto">
@@ -7,12 +12,12 @@
                         <div class="col-md-12 ps-md-0">
                             <div class="auth-form-wrapper px-4 py-5">
                                 <a href="{{ url('/') }}" class="noble-ui-logo d-block mb-2">Pembayaran Tim
-                                    {{ $user->leader->first()->team->first()->name }}
+                                    {{ $team->name }}
                                 </a>
                                 <h5 class="text-muted fw-normal mb-4">Silahkan lakukan pembayaran untuk melanjutkan
                                     pendaftaran sebesar
                                     <b class="text-primary">
-                                        {{ $user->leader->first()->team->first()->competition->registration_fee_rupiah }}
+                                        {{ $competition->registration_fee_rupiah }}
                                     </b>
                                 </h5>
 
@@ -36,7 +41,7 @@
                                 <form action="{{ route('payment-team.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" name="team_id" value="{{ $user->leader->first()->team->first()->id }}">
+                                    <input type="hidden" name="team_id" value="{{ $team->id }}">
                                     <x-input.select name="payment_method_id" value=""
                                         label="Pilih Metode Pembayaran">
                                         <option value="">Pilih Metode Pembayaran</option>

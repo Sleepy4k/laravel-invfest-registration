@@ -1,5 +1,12 @@
-<x-layouts.dashboard-team title="Dashboard Tim {{ $user->leader->first()->team->first()->name }}">
-    @if ($user->leader->first()->team->first()->payment->first()->status == 'pending')
+@php
+    $leader = $user->leader?->first();
+    $team = $leader?->team?->first();
+    $payment = $team->payment?->first();
+    $submission = $team->submission?->first();
+@endphp
+
+<x-layouts.dashboard-team title="Dashboard Tim {{ $team->name }}">
+    @if ($payment->status == 'pending')
         <div class="alert alert-warning">
             <i class="fas fa-exclamation-triangle"></i>
             Tim anda sedang dalam proses verifikasi oleh admin. Silahkan menunggu. <a
@@ -21,13 +28,13 @@
                 {{ $diff->d }} hari, {{ $diff->h }} jam, {{ $diff->i }} menit, dan {{ $diff->s }}
                 detik.
             </div>
-            @if ($user->leader->first()->team->first()->submission != null)
+            @if ($submission != null)
                 <div class="alert alert-success">
                     <i class="fas fa-check-circle"></i>
                     Karya anda telah dikirimkan, semoga sukses!
                 </div>
-                <x-input.text label="Judul Karya" value="{{ $user->leader->first()->team->first()->submission->first()->title }}" readonly />
-                <a href="{{ $user->leader->first()->team->first()->submission->first()->file }}" target="_blank"
+                <x-input.text label="Judul Karya" value="{{ $submission->title }}" readonly />
+                <a href="{{ $submission->file }}" target="_blank"
                     class="btn btn-primary btn-sm">
                     Unduh Karya
                 </a>
@@ -36,7 +43,7 @@
                     id="form-work">
                     @csrf
                     <x-input.text label="Judul Karya" name="title"
-                        value="{{ $user->leader->first()->team->first()->submission?->first()->title ?? '' }}" />
+                        value="{{ $submission->title ?? '' }}" />
                     <x-input.text label="Zip Karya" name="zip_file" type="file" />
                     <x-button.primary class="float-end" type="submit">
                         Kirim Karya
@@ -48,13 +55,13 @@
                 <i class="fas fa-exclamation-triangle"></i>
                 Deadline pengumpulan karya telah berakhir.
             </div>
-            @if ($user->leader->first()->team->first()->submission != null)
+            @if ($submission != null)
                 <div class="alert alert-success">
                     <i class="fas fa-check-circle"></i>
                     Karya anda telah dikirimkan, semoga sukses!
                 </div>
-                <x-input.text label="Judul Karya" value="{{ $user->leader->first()->team->first()->submission->first()->title }}" readonly />
-                <a href="{{ $user->leader->first()->team->first()->submission->first()->file }}" target="_blank"
+                <x-input.text label="Judul Karya" value="{{ $submission->title }}" readonly />
+                <a href="{{ $submission->file }}" target="_blank"
                     class="btn btn-primary btn-sm">
                     Unduh Karya
                 </a>

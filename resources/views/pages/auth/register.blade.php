@@ -15,7 +15,7 @@
                                     <x-input.select name="level" label="Tingkat" id="level">
                                         <option value="">Pilih Tingkat</option>
                                         @foreach ($levels as $level)
-                                            <option value="{{ $level->id }}">{{ $level->level }}</option>
+                                            <option value="{{ $level->id }}" id="{{ $level->level }}">{{ $level->display_as }}</option>
                                         @endforeach
                                     </x-input.select>
 
@@ -43,6 +43,11 @@
                                     <x-button.primary class="w-100 mb-3" type="submit" id="btn-submit">
                                         Daftar Tim
                                     </x-button.primary>
+                                    <a href="{{ route('login') }}">
+                                        <x-button.primary-outline class="w-100 mb-3" type="button">
+                                            Masuk
+                                        </x-button.primary-outline>
+                                    </a>
                                 </form>
                             </div>
                         </div>
@@ -58,7 +63,7 @@
             $('#companion_card').parent().hide();
 
             $('#level').change(function() {
-                if ($(this).find('option:selected')?.text()?.toLowerCase() == 'umum') {
+                if ($(this).find('option:selected')?.attr('id')?.toLowerCase() === 'umum') {
                     $('#companion_name').parent().show();
                     $('#companion_card').parent().show();
                 } else {
@@ -82,8 +87,9 @@
 
                 if (selectedLevelId) {
                     $.ajax({
-                        url: 'competition/list',
+                        url: '{{ route("frontend.competition.index") }}',
                         type: 'GET',
+                        dataType: 'json',
                         data: {
                             level: selectedLevelId,
                             platform: '{{ config("app.url") }}'

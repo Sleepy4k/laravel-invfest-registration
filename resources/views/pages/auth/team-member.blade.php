@@ -24,6 +24,7 @@
                                     <x-button.primary class="w-100 mb-3" type="submit">
                                         Lanjutkan ke Pembayaran
                                     </x-button.primary>
+                                    <span style="color: red;">* Minimal memiliki 1 anggota team selain ketua team</span>
                                 </form>
                             </div>
                         </div>

@@ -10,14 +10,14 @@
         <meta property="og:type" content="website">
         <meta property="og:title" content="{{ $title }}">
         <meta property="og:description" content="{{ $description ?? '' }}">
-        <meta property="og:image" content="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}">
+        <meta property="og:image" content="{{ asset('images/banner.png') }}">
 
         <meta name="twitter:card" content="summary_large_image">
         <meta property="twitter:domain" content="{{ url()->current() }}">
         <meta property="twitter:url" content="{{ url()->current() }}">
         <meta name="twitter:title" content="{{ $title }}">
         <meta name="twitter:description" content="{{ $description ?? '' }}">
-        <meta name="twitter:image" content="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}">
+        <meta name="twitter:image" content="{{ asset('images/banner.png') }}">
 
         <link rel="shortcut icon" type="image/png" href="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" />
 
@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <script src="{{ asset('frontend/js/script.js') }}"></script>
+        <script src="{{ asset('js/warning.js') }}"></script>
         <script src="{{ asset('admin/js/app.js') }}"></script>
         <script src="{{ asset('admin/assets/plugins/feather-icons/feather.min.js') }}"></script>
         <script src="{{ asset('admin/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>

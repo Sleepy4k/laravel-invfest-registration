@@ -1,10 +1,10 @@
 <x-layouts.admin title="Karya Peserta">
-
-
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="#">Tim Peserta</a></li>
+                <li class="breadcrumb-item active">
+                    <a href="{{ route('admin.work.index') }}">Karya Peserta</a>
+                </li>
             </ol>
         </nav>
     </div>
@@ -30,11 +30,11 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $work->team->competition->name }}</td>
-                                <td>{{ $work->team->team_name }}</td>
+                                <td>{{ $work->team->name }}</td>
                                 <td>{{ $work->team->institution }}</td>
                                 <td>{{ $work->title }}</td>
                                 <td>
-                                    <a href="{{ $work->zip_file }}" target="_blank" class="btn btn-sm btn-primary">
+                                    <a href="{{ $work->file ?? '#' }}" target="_blank" class="btn btn-sm btn-primary">
                                         <i data-feather="download"></i>
                                         Download
                                         Karya
@@ -48,15 +48,19 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <form action="{{ route('admin.work.update', $work->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="is_reviewed" value="1">
-                                        <button type="submit" class="btn btn-sm btn-success">
-                                            <i data-feather="check"></i>
-                                            Tandai Sudah Direview
-                                        </button>
-                                    </form>
+                                    @if ($work->is_reviewed)
+                                        <span>-</span>
+                                    @else
+                                        <form action="{{ route('admin.work.update', $work->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="is_reviewed" value="1">
+                                            <button type="submit" class="btn btn-sm btn-success">
+                                                <i data-feather="check"></i>
+                                                Tandai Sudah Direview
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                         @endforeach
                     </x-slot>

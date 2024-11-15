@@ -1,8 +1,4 @@
 <x-layouts.admin title="Dashboard">
-    @push('plugin-styles')
-        <link href="{{ asset('admin/assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
-    @endpush
-
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
             <h4 class="mb-3 mb-md-0">Selamat Datang, {{ $name }}</h4>
@@ -100,19 +96,5 @@
                 @endforeach
             </div>
         </div>
-    </div> <!-- row -->
-
-
-
-
-    @push('plugin-scripts')
-        <script src="{{ asset('admin/assets/plugins/flatpickr/flatpickr.min.js') }}"></script>
-        <script src="{{ asset('admin/assets/plugins/apexcharts/apexcharts.min.js') }}"></script>
-    @endpush
-
-    @push('custom-scripts')
-        <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
-    @endpush
-
-
+    </div>
 </x-layouts.admin>

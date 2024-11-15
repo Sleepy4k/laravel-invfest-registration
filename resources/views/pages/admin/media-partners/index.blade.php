@@ -3,11 +3,12 @@
         <link rel="stylesheet" href="{{ asset('admin/assets/plugins/lightbox/css/lightbox.css') }}">
     @endpush
 
-
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="#">Media Partner</a></li>
+                <li class="breadcrumb-item active">
+                    <a href="{{ route('admin.media-partner.index') }}">Media Partner</a>
+                </li>
             </ol>
         </nav>
         <a href="{{ route('admin.media-partner.create') }}" class="btn btn-primary btn-sm ml-auto mb-3">Tambah Media
@@ -39,10 +40,10 @@
                                             class="img-table-lightbox">
                                     </a>
                                 </td>
-                                <td>{{ $mediapartner->link }}</td>
+                                <td>{{ $mediapartner->link ?? '-' }}</td>
                                 <td>
                                     <a href="{{ route('admin.media-partner.edit', $mediapartner->id) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
+                                        class="btn btn-warning btn-sm me-2">Edit</a>
                                     <form action="{{ route('admin.media-partner.destroy', $mediapartner->id) }}"
                                         method="POST" class="d-inline">
                                         @csrf
@@ -60,13 +61,13 @@
     </div>
 
     @push('plugin-scripts')
-        <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox-plus-jquery.min.js') }}"></script>
+        <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox.js') }}"></script>
 
         <script>
             lightbox.option({
                 'resizeDuration': 200,
                 'wrapAround': true
-            })
+            });
         </script>
     @endpush
 </x-layouts.admin>

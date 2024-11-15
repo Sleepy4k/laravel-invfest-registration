@@ -3,11 +3,12 @@
         <link rel="stylesheet" href="{{ asset('admin/assets/plugins/lightbox/css/lightbox.css') }}">
     @endpush
 
-
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="#">Metode Pembayaran</a></li>
+                <li class="breadcrumb-item active">
+                    <a href="{{ route('admin.payment-method.index') }}">Metode Pembayaran</a>
+                </li>
             </ol>
         </nav>
         <a href="{{ route('admin.payment-method.create') }}" class="btn btn-primary btn-sm ml-auto mb-3">Tambah Metode</a>
@@ -28,23 +29,23 @@
                         </tr>
                     </x-slot>
                     <x-slot name="tbody">
-                        @foreach ($paymentMethods as $paymentMethod)
+                        @foreach ($methods as $method)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $paymentMethod->name }}</td>
+                                <td>{{ $method->name }}</td>
                                 <td>
-                                    <a href="{{ asset($paymentMethod->logo) }}" data-lightbox="payment-methods"
-                                        data-title="{{ $paymentMethod->name }}">
-                                        <img src="{{ asset($paymentMethod->logo) }}" alt="{{ $paymentMethod->name }}"
+                                    <a href="{{ isset($method->logo) ? asset($method->logo) : '#' }}" data-lightbox="payment-methods"
+                                        data-title="{{ $method->name }}">
+                                        <img src="{{ isset($method->logo) ? asset($method->logo) : '#' }}" alt="{{ $method->name }}"
                                             class="img-table-lightbox">
                                     </a>
                                 </td>
-                                <td>{{ $paymentMethod->number }}</td>
-                                <td>{{ $paymentMethod->owner }}</td>
+                                <td>{{ $method->number }}</td>
+                                <td>{{ $method->owner }}</td>
                                 <td>
-                                    <a href="{{ route('admin.payment-method.edit', $paymentMethod->id) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('admin.payment-method.destroy', $paymentMethod->id) }}"
+                                    <a href="{{ route('admin.payment-method.edit', $method->id) }}"
+                                        class="btn btn-warning btn-sm me-2">Edit</a>
+                                    <form action="{{ route('admin.payment-method.destroy', $method->id) }}"
                                         method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
@@ -61,7 +62,7 @@
     </div>
 
     @push('plugin-scripts')
-        <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox-plus-jquery.min.js') }}"></script>
+        <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox.js') }}"></script>
 
         <script>
             lightbox.option({

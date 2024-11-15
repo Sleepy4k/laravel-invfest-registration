@@ -5,10 +5,13 @@
     @endpush
 
     @php
-        $team = $user->leader->first()->team->first();
-        $payment = $team->payment->first();
-        $competition = $team->competition->first();
-        $leader = $user->leader->first();
+        $leader = $user->leader?->first();
+        $team = $leader?->team?->first();
+        $payment = $team->payment?->first();
+        $paymentMethod = $payment?->method?->first();
+        $competition = $team?->competition?->first();
+        $competitionLevel = $competition?->level?->first();
+        $companion = $team?->companion?->first();
     @endphp
 
     @if(is_null($payment))
@@ -49,7 +52,7 @@
                     </tr>
                     <tr>
                         <th>Tingkat</th>
-                        <td> {{ $competition->level->first()->level == 'sma/smk' ? 'SMA/SMK' : 'Mahasiswa' }}
+                        <td> {{ $competitionLevel->display_as }}
                         </td>
                     </tr>
                     <tr>
@@ -94,11 +97,25 @@
                             </ul>
                         </td>
                     </tr>
+                    @if ($companion != null)
+                        <tr>
+                            <th>Nama Pembimbing</th>
+                            <td>{{ $companion->name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Kartu Identitas Pembmbing</th>
+                            <td>
+                                <a href="{{ isset($companion->card) ? asset($companion->card) : '#' }}"
+                                    data-title="Kartu Identitas {{ $companion->name }}">
+                                    Kartu Identitas Pembimbing </a>
+                            </td>
+                        </tr>
+                    @endif
                     <tr>
                         <th>Metode Pembayaran</th>
                         <td>
-                            {{ $payment->method->first()->name }}
-                            {{ $payment->method->first()->number ? ' - ' . $payment->method->first()->owner : '' }}
+                            {{ $paymentMethod->name }}
+                            {{ $paymentMethod->number ? ' - ' . $paymentMethod->owner : '' }}
                         </td>
                     </tr>
                     <tr>
@@ -126,9 +143,7 @@
     @endif
 
     @push('plugin-scripts')
-        <script
-            src="{{ asset('admin/assets/plugins/lightbox/js/lightbox-plus-jquery.min.js') }}">
-        </script>
+        <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox.js') }}"></script>
         <script>
             lightbox.option({
                 'resizeDuration': 200,

@@ -5,7 +5,7 @@
         <div class="information">
             <h1 class="text-primary">{{ $competition->name }}</h1>
             <p class="text-muted m-0">Biaya Pendaftaran: {{ $competition->registration_fee_rupiah }}</p>
-            <p class="text-muted m-0">Level: {{ $competition->level->level }}</p>
+            <p class="text-muted m-0">Level: {{ $competition->level->display_as }}</p>
             <a href="{{ route('register') }}" class="btn btn-primary mt-3 w-100">
                 Daftar Kompetisi
             </a>

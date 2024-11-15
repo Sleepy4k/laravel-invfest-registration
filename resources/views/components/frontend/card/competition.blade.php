@@ -7,7 +7,7 @@
                         class="card-img-top p-3" alt="{{ $competition->name }}">
                     <div class="position-absolute top-0 end-0 p-3">
                         <span class="badge bg-secondary badge-competition">
-                            {{ $competition->level->level }}
+                            {{ $competition->level->display_as }}
                         </span>
                     </div>
                 </div>

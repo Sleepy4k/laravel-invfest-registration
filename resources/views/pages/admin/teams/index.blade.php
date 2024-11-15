@@ -2,7 +2,9 @@
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="#">Tim Peserta</a></li>
+                <li class="breadcrumb-item active">
+                    <a href="{{ route('admin.team.index') }}">Tim Peserta</a>
+                </li>
             </ol>
         </nav>
     </div>
@@ -29,23 +31,22 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $team->competition->name }}</td>
-                                <td>{{ $team->level }}</td>
-                                <td>{{ $team->team_name }}</td>
+                                <td>{{ $team->competition->level->display_as }}</td>
+                                <td>{{ $team->name }}</td>
                                 <td>{{ $team->institution }}</td>
-                                <td>{{ $team->leader_name }}</td>
+                                <td>{{ $team->leader->name }}</td>
                                 <td>
                                     @if ($team->payment != null && $team->payment->proof != null)
-                                        <img src="{{ asset($team->payment->proof) }}" alt="Bukti Pembayaran"
+                                        <img src="{{ isset($team->payment->proof) ? asset($team->payment->proof) : '#' }}" alt="Bukti Pembayaran"
                                             class="img-table-lightbox" width="100">
                                     @else
                                         <span>Belum Bayar</span>
                                     @endif
-
                                 </td>
                                 <td>
-                                    @if ($team->status == 'pending')
+                                    @if ($team->payment != null && $team->payment->status == 'pending')
                                         <span class="badge bg-warning">Pending</span>
-                                    @elseif($team->status == 'accepted')
+                                    @elseif($team->payment != null && $team->payment->status == 'approve')
                                         <span class="badge bg-success">Diterima</span>
                                     @else
                                         <span class="badge bg-danger">Ditolak</span>
@@ -53,7 +54,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('admin.team.show', $team->id) }}"
-                                        class="btn btn-primary btn-sm">Detail</a>
+                                        class="btn btn-primary btn-sm me-2">Detail</a>
                                     <form action="{{ route('admin.team.destroy', $team->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf
@@ -69,7 +70,4 @@
             </x-admin.card>
         </div>
     </div>
-
-    @push('plugin-scripts')
-    @endpush
 </x-layouts.admin>
