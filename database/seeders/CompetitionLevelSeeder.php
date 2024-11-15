@@ -16,10 +16,12 @@ class CompetitionLevelSeeder extends Seeder
         if (CompetitionLevel::query()->withoutCache()->count() == 0) {
             $levels = [
                 [
-                    'level' => 'Universitas'
+                    'level' => 'universitas',
+                    'display_as' => 'Universitas'
                 ],
                 [
-                    'level' => 'Umum'
+                    'level' => 'umum',
+                    'display_as' => 'SMA/SMK atau Universitas'
                 ],
             ];
 

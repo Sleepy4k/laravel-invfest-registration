@@ -17,29 +17,29 @@ class CompetitionSeeder extends Seeder
         if (!config('app.debug') || config('app.env') != 'local') return;
 
         if (Competition::query()->withoutCache()->count() == 0) {
-            $levelUnivId = CompetitionLevel::select('id')->where('level', 'Universitas')->first()?->id ?? null;
-            $levelUmumId = CompetitionLevel::select('id')->where('level', 'Umum')->first()?->id ?? null;
+            $levelUnivId = CompetitionLevel::select('id')->where('level', 'universitas')->first()?->id ?? null;
+            $levelUmumId = CompetitionLevel::select('id')->where('level', 'umum')->first()?->id ?? null;
 
             $competitions = [
                 [
                     'name' => 'Bisnis Plan',
                     'description' => 'yo nda tau',
                     'registration_fee' => rand(1000000, 10000000),
-                    'whatsapp_group' => null,
+                    'whatsapp_group' => 'https://chat.whatsapp.com/Dgy7hr3kGgA12Viar76MNz',
                     'level_id' => $levelUnivId
                 ],
                 [
                     'name' => 'UI/UX Design',
                     'description' => 'yo nda tau',
                     'registration_fee' => rand(1000000, 10000000),
-                    'whatsapp_group' => null,
+                    'whatsapp_group' => 'https://chat.whatsapp.com/Db40YbqbHtI2JXE2yz6lsh',
                     'level_id' => $levelUmumId
                 ],
                 [
                     'name' => 'Web Programming',
                     'description' => 'yo nda tau',
                     'registration_fee' => rand(1000000, 10000000),
-                    'whatsapp_group' => null,
+                    'whatsapp_group' => 'https://chat.whatsapp.com/HGgeI625VED8Xg857KNWGS',
                     'level_id' => $levelUmumId
                 ],
             ];

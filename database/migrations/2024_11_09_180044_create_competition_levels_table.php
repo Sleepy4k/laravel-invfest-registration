@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('competition_levels', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('level', 30);
+            $table->string('display_as', 150);
             $table->timestamps();
         });
     }

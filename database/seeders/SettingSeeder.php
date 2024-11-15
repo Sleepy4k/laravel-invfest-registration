@@ -41,19 +41,19 @@ class SettingSeeder extends Seeder
                 ],
                 [
                     'key' => 'primary_color',
-                    'value' => '#0A3578',
+                    'value' => '#2e2d2d',
                 ],
                 [
                     'key' => 'primary_color_hover',
-                    'value' => '#154FAA',
+                    'value' => '#fffdfa',
                 ],
                 [
                     'key' => 'secondary_color',
-                    'value' => '#007BFF',
+                    'value' => '#eeba2b',
                 ],
                 [
                     'key' => 'secondary_color_hover',
-                    'value' => '#0168D7',
+                    'value' => '#2e2d2d',
                 ],
                 [
                     'key' => 'twibbon_link',
@@ -68,7 +68,7 @@ class SettingSeeder extends Seeder
             $files = [
                 [
                     'key' => 'nav_logo',
-                    'value' => 'https://pengajuan-dosenlb.telkomuniversity.ac.id/assets/images/telu_logo.png',
+                    'value' => asset('images/logo.png'),
                 ],
                 [
                     'key' => 'twibbon',

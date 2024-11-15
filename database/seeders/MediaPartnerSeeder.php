@@ -56,7 +56,7 @@ class MediaPartnerSeeder extends Seeder
             $partners = array_map(function ($partner) use ($time) {
                 return array_merge($partner, [
                     'id' => Str::uuid(),
-                    'logo' => 'https://pengajuan-dosenlb.telkomuniversity.ac.id/assets/images/telu_logo.png',
+                    'logo' => asset('images/logo.png'),
                     'link' => null,
                     'created_at' => $time,
                     'updated_at' => $time

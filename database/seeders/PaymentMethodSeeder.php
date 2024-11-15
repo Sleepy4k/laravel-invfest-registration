@@ -18,7 +18,7 @@ class PaymentMethodSeeder extends Seeder
         if (PaymentMethod::query()->withoutCache()->count() == 0) {
             $methods = [
                 [
-                    'name' => 'BANK NEGARA INDONESIA (BNI)',
+                    'name' => 'BANK NEGARA INDONESIA',
                     'logo' => 'https://i.pinimg.com/originals/36/38/43/36384348ef9d7bfff66da6da9e975d56.png',
                     'number' => '1901714200',
                     'owner' => 'Siti Madina Halim Siregar'
