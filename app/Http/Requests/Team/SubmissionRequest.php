@@ -44,17 +44,4 @@ class SubmissionRequest extends FormRequest
             'zip_file.extensions' => 'File karya harus berupa file dengan ekstensi file rar atau zip.',
         ];
     }
-
-    /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'team_id' => auth('web')->user()->leader->first()->team->first()->id,
-            'is_reviewed' => false,
-        ]);
-    }
 }

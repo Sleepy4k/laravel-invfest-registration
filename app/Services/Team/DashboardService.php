@@ -21,7 +21,16 @@ class DashboardService extends Service
      */
     public function invoke(): array
     {
-        $user = $this->userInterface->findById(auth('web')->user()->id, ['*'], ['leader.team.payment', 'leader.team.competition.level', 'leader.team.payment.method']);
+        $uid = auth('web')->user()->id;
+        $user = $this->userInterface->findById($uid, ['id'], [
+            'leader:id,team_id,user_id,name,phone,card',
+            'leader.team:id,competition_id,name,institution',
+            'leader.team.companion:id,team_id,name,card',
+            'leader.team.payment:id,team_id,method_id,proof,status',
+            'leader.team.payment.method:id,name,number,owner',
+            'leader.team.competition:id,name,level_id,whatsapp_group',
+            'leader.team.competition.level:id,display_as'
+        ]);
 
         return compact('user');
     }

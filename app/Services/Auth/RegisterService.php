@@ -17,6 +17,7 @@ class RegisterService extends Service
         private Models\OtpInterface $otpInterface,
         private Models\TeamInterface $teamInterface,
         private Models\TeamLeaderInterface $teamLeaderInterface,
+        private Models\TeamCompanionInterface $teamCompanionInterface,
         private Models\CompetitionInterface $competitionInterface,
         private Models\CompetitionLevelInterface $competitionLevelInterface,
     ) {}
@@ -28,7 +29,7 @@ class RegisterService extends Service
      */
     public function index(): array
     {
-        $levels = $this->competitionLevelInterface->all(['id', 'level']);
+        $levels = $this->competitionLevelInterface->all(['id', 'level', 'display_as']);
 
         return compact('levels');
     }
@@ -65,12 +66,26 @@ class RegisterService extends Service
             return false;
         }
 
+        if ($request['companion_name'] != null) {
+            $companionPayload = [
+                'team_id' => $team->id,
+                'name' => $request['companion_name'],
+                'card' => $request['companion_card'],
+            ];
+            $companion = $this->teamCompanionInterface->create($companionPayload);
+
+            if (!$companion) {
+                alert('Pendaftaran Gagal', 'system gagal memproses data pembimbing', 'error');
+                return false;
+            }
+        }
+
         $leaderPayload = [
             'team_id' => $team->id,
             'user_id' => $user->id,
             'name' => $request['leader_name'],
             'phone' => $request['leader_phone'],
-            'card' => $request['leader_card'],
+            'card' => $request['leader_card'] ?? null,
         ];
         $leader = $this->teamLeaderInterface->create($leaderPayload);
 

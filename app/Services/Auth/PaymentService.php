@@ -24,11 +24,15 @@ class PaymentService extends Service
      */
     public function index(): array
     {
-        $user = $this->userInterface->findById(auth('web')->user()->id, ['*'], ['leader.team.competition']);
-        $paymentMethods = $this->paymentMethodInterface->all();
-        $team = $this->userInterface->get(['*'], true, ['leader.team.competition'], [['id', '=', auth('web')->user()->id]]);
+        $uid = auth('web')->user()->id;
+        $paymentMethods = $this->paymentMethodInterface->all(['id', 'name', 'number', 'owner', 'logo']);
+        $user = $this->userInterface->findById($uid, ['id'], [
+            'leader:id,team_id,user_id',
+            'leader.team:id,competition_id,name',
+            'leader.team.competition:id,registration_fee'
+        ]);
 
-        return compact('paymentMethods', 'team', 'user');
+        return compact('paymentMethods', 'user');
     }
 
     /**

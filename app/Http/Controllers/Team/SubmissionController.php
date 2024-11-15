@@ -31,8 +31,6 @@ class SubmissionController extends Controller
         try {
             $this->service->store($request->validated());
 
-            toast('Berhasil', 'Karya berhasil ditambahkan, semoga sukses!', 'success');
-
             return back();
         } catch (\Throwable $th) {
             return $this->redirectError($th);

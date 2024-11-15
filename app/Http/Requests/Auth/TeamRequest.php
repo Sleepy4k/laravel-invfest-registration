@@ -22,6 +22,8 @@ class TeamRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'data.0.member' => ['required', 'string', 'max:150'],
+            'data.0.card' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
             'data.*.member' => ['nullable', 'string', 'max:150'],
             'data.*.card' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
         ];
@@ -35,6 +37,14 @@ class TeamRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'data.0.member.required' => 'Anggota tim harus di isi.',
+            'data.0.member.string' => 'Anggota tim harus berupa string.',
+            'data.0.member.max' => 'Anggota tim tidak boleh melebihi 150 karakter.',
+            'data.0.card.required' => 'Kartu pelajar/kartu mahasiswa anggota tim harus diunggah.',
+            'data.0.card.image' => 'Kartu pelajar/kartu mahasiswa anggota tim harus berupa gambar.',
+            'data.0.card.mimes' => 'Kartu pelajar/kartu mahasiswa anggota tim harus berupa gambar dengan format jpg, jpeg, atau png.',
+            'data.0.card.extensions' => 'Kartu pelajar/kartu mahasiswa anggota tim harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
+            'data.0.card.max' => 'Kartu pelajar/kartu mahasiswa anggota tim tidak boleh lebih dari 8 MB.',
             'data.*.member.required' => 'Anggota tim harus di isi.',
             'data.*.member.string' => 'Anggota tim harus berupa string.',
             'data.*.member.max' => 'Anggota tim tidak boleh melebihi 150 karakter.',

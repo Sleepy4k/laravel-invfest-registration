@@ -21,13 +21,17 @@ class LoginController extends Controller
     public function store(LoginRequest $request)
     {
         try {
-            if (auth('web')->attempt($request->validated())) {
-                toast('Authentikasi berhasil, selamat datang kembali', 'success');
-            } else {
+            if (!auth('web')->attempt($request->validated())) {
                 toast('Email atau password salah', 'error');
+                return back();
             }
 
-            return redirect()->back();
+            toast('Authentikasi berhasil, selamat datang kembali', 'success');
+
+            $user = auth('web')->user();
+            $isUserAdmin = $user->hasRole('admin') || $user->hasRole('petugas');
+
+            return redirect()->route($isUserAdmin ? 'admin.dashboard' : 'team.dashboard');
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

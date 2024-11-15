@@ -18,6 +18,7 @@ class CompetitionLevel extends Model
      */
     protected $fillable = [
         'level',
+        'display_as'
     ];
 
     /**

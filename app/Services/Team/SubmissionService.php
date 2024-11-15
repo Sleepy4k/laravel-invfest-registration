@@ -22,7 +22,13 @@ class SubmissionService extends Service
      */
     public function index(): array
     {
-        $user = $this->userInterface->findById(auth('web')->user()->id, ['*'], ['leader.team.payment', 'leader.team.submission']);
+        $uid = auth('web')->user()->id;
+        $user = $this->userInterface->findById($uid, ['*'], [
+            'leader:id,team_id,user_id',
+            'leader.team:id',
+            'leader.team.payment:team_id,status',
+            'leader.team.submission:team_id,title,file'
+        ]);
 
         return compact('user');
     }
@@ -37,7 +43,15 @@ class SubmissionService extends Service
     public function store(array $request): void
     {
         try {
+            $request['team_id'] = auth('web')->user()->leader?->first()->team?->first()?->id ?? null;
+            if ($request['team_id'] == null) {
+                alert('Gagal', 'Karya gagal ditambahkan, silahkan refresh halaman anda', 'error');
+                return;
+            }
+
             $this->submissionInterface->create($request);
+
+            alert('Berhasil', 'Karya berhasil ditambahkan, semoga sukses!', 'success');
         } catch (\Exception $e) {
             throw new \Exception($e);
         }

@@ -341,11 +341,11 @@ class EloquentRepository implements EloquentInterface
     /**
      * Update existing model.
      *
-     * @param  int  $modelId
+     * @param  mixed  $modelId
      * @param  array  $payload
      * @return Model
      */
-    public function update(int $modelId, array $payload): bool
+    public function update(mixed $modelId, array $payload): bool
     {
         $transaction = $this->wrapIntoTransaction(function () use ($modelId, $payload) {
             return $this->model->query()->findOrFail($modelId)->update($payload);

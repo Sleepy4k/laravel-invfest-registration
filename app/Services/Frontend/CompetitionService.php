@@ -19,9 +19,6 @@ class CompetitionService extends Service
      */
     public function index(): array
     {
-        $platform = request('platform', null);
-        if ($platform == null || $platform != config('app.url')) return [];
-
         $level = request('level', '####');
 
         $competitions = $this->competitionInterface->all(['id', 'name'], [], [['level_id', '=', $level]]);
