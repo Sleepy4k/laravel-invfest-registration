@@ -23749,7 +23749,7 @@ body {
 .noble-ui-logo {
     font-weight: 700;
     font-size: 25px;
-    color: #000865;
+    color: #eeba2b;
 }
 
 .noble-ui-logo span {
@@ -23758,7 +23758,7 @@ body {
 }
 
 .noble-ui-logo:hover {
-    color: #000865;
+    color: #2e2d2d;
 }
 
 .noble-ui-logo.logo-light {

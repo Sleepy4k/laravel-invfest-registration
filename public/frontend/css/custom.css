@@ -75,8 +75,15 @@ nav .list_menu_link .nav-link.active {
     color: white;
 }
 
+.text-judul, .text-slogan {
+    color: #2e2d2d;
+}
+
+.text-judul:hover, .text-slogan:hover {
+    color: #eeba2b;
+}
+
 .text-slogan {
-    color: #25aae1;
     font-size: 10px;
 }
 
