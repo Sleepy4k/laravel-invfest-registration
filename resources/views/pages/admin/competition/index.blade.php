@@ -6,7 +6,9 @@
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="#">Manajemen Kompetisi</a></li>
+                <li class="breadcrumb-item active">
+                    <a href="{{ route('admin.competition.index') }}">Manajemen Kompetisi</a>
+                </li>
             </ol>
         </nav>
         <a href="{{ route('admin.competition.create') }}" class="btn btn-primary btn-sm ml-auto mb-3">Tambah Kompetisi</a>
@@ -33,28 +35,28 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $competition->name }}</td>
-                                <td>{{ $competition->level }}</td>
+                                <td>{{ $competition->level->display_as }}</td>
                                 <td>
-                                    <a href="{{ asset($competition->poster) }}" class="d-block" data-lightbox="poster"
+                                    <a href="{{ isset($competition->poster) ? asset($competition->poster) : '#' }}" class="d-block" data-lightbox="poster"
                                         data-title="{{ $competition->name }}">
-                                        <img src="{{ asset($competition->poster) }}" alt="{{ $competition->name }}"
+                                        <img src="{{ isset($competition->poster) ? asset($competition->poster) : '#' }}" alt="{{ $competition->name }}"
                                             class="img-table-lightbox">
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ asset($competition->guidebook) }}" class="btn btn-primary btn-sm"
+                                    <a href="{{ isset($competition->guidebook) ? asset($competition->guidebook) : '#' }}" class="btn btn-primary btn-sm"
                                         target="_blank">Lihat</a>
                                 </td>
                                 <td>
-                                    <a href="{{ $competition->whatsapp_group_link }}" class="btn btn-primary btn-sm"
+                                    <a href="{{ $competition->whatsapp_group ?? '#' }}" class="btn btn-primary btn-sm"
                                         target="_blank">Lihat</a>
                                 </td>
                                 <td>{{ $competition->registration_fee_rupiah }}</td>
                                 <td>
                                     <a href="{{ route('admin.competition.edit', $competition->id) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
+                                        class="btn btn-warning btn-sm me-2">Edit</a>
                                     <a href="{{ route('admin.competition.show', $competition->id) }}"
-                                        class="btn btn-info btn-sm">Detail</a>
+                                        class="btn btn-info btn-sm me-2">Detail</a>
                                     <form action="{{ route('admin.competition.destroy', $competition->id) }}"
                                         method="POST" class="d-inline">
                                         @csrf

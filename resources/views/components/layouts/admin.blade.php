@@ -25,12 +25,12 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
-        <link href="{{ asset('admin/assets/fonts/feather-font/css/iconfont.css') }}" rel="stylesheet" />
-        <link href="{{ asset('admin/assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" />
+        <link href="{{ asset('admin/assets/fonts/feather-font/css/iconfont.css') }}" rel="stylesheet" nonce="{{ csp_nonce() }}" />
+        <link href="{{ asset('admin/assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" nonce="{{ csp_nonce() }}" />
 
         @stack('plugin-styles')
 
-        <style>
+        <style nonce="{{ csp_nonce() }}">
             :root {
                 --primary: {{ $appSettings['primary_color'] }};
                 --primaryHover: {{ $appSettings['primary_color_hover'] }};
@@ -39,8 +39,8 @@
             }
         </style>
 
-        <link href="{{ asset('admin/css/app.css') }}" rel="stylesheet" />
-        <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}">
+        <link href="{{ asset('admin/css/app.css') }}" rel="stylesheet" nonce="{{ csp_nonce() }}" />
+        <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}" nonce="{{ csp_nonce() }}">
 
         @stack('style')
     </head>
@@ -59,14 +59,14 @@
             </div>
         </div>
 
-        <script src="{{ asset('js/warning.js') }}"></script>
-        <script src="{{ asset('admin/js/app.js') }}"></script>
-        <script src="{{ asset('admin/assets/plugins/feather-icons/feather.min.js') }}"></script>
-        <script src="{{ asset('admin/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+        <script src="{{ asset('js/warning.js') }}" nonce="{{ csp_nonce() }}"></script>
+        <script src="{{ asset('admin/js/app.js') }}" nonce="{{ csp_nonce() }}"></script>
+        <script src="{{ asset('admin/assets/plugins/feather-icons/feather.min.js') }}" nonce="{{ csp_nonce() }}"></script>
+        <script src="{{ asset('admin/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}" nonce="{{ csp_nonce() }}"></script>
 
         @stack('plugin-scripts')
 
-        <script src="{{ asset('admin/assets/js/template.js') }}"></script>
+        <script src="{{ asset('admin/assets/js/template.js') }}" nonce="{{ csp_nonce() }}"></script>
 
         @stack('custom-scripts')
     </body>

@@ -29,7 +29,7 @@
 
         <link rel="shortcut icon" href="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" type="image/x-icon">
 
-        <style>
+        <style nonce="{{ csp_nonce() }}">
             :root {
                 --primary: {{ $appSettings['primary_color'] }};
                 --primaryHover: {{ $appSettings['primary_color_hover'] }};
@@ -37,9 +37,9 @@
                 --secondaryHover: {{ $appSettings['secondary_color_hover'] }};
             }
         </style>
-        <link rel="stylesheet" href="{{ asset('frontend/css/app.css') }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/timeline.css') }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
+        <link rel="stylesheet" href="{{ asset('frontend/css/app.css') }}" nonce="{{ csp_nonce() }}">
+        <link rel="stylesheet" href="{{ asset('frontend/css/timeline.css') }}" nonce="{{ csp_nonce() }}">
+        <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}" nonce="{{ csp_nonce() }}">
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
@@ -57,10 +57,10 @@
 
         <x-frontend.footer />
 
-        <script src="{{ asset('js/jquery.slim.min.js') }}"></script>
-        <script src="{{ asset('frontend/js/app.js') }}"></script>
-        <script src="{{ asset('js/warning.js') }}"></script>
-        <script>
+        <script src="{{ asset('js/jquery.slim.min.js') }}" nonce="{{ csp_nonce() }}"></script>
+        <script src="{{ asset('frontend/js/app.js') }}" nonce="{{ csp_nonce() }}"></script>
+        <script src="{{ asset('js/warning.js') }}" nonce="{{ csp_nonce() }}"></script>
+        <script nonce="{{ csp_nonce() }}">
             $(document).ready(function() {
                 $('.back-to-top').click(function() {
                     $('html, body').animate({

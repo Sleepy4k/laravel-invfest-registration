@@ -2,7 +2,9 @@
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Manajemen Kompetisi</a></li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('admin.competition.index') }}">Manajemen Kompetisi</a>
+                </li>
                 <li class="breadcrumb-item active">{{ $competition->name }}</li>
             </ol>
         </nav>
@@ -14,7 +16,7 @@
             <x-admin.card title="{{ $competition->name }}">
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="{{ asset($competition->poster) }}" alt="image" class="img-fluid">
+                        <img src="{{ isset($competition->poster) ? asset($competition->poster) : '#' }}" alt="image" class="img-fluid">
                     </div>
                     <div class="col-md-8">
                         <table class="table">
@@ -24,7 +26,7 @@
                             </tr>
                             <tr>
                                 <th>Tingkat</th>
-                                <td>{{ $competition->level }}</td>
+                                <td>{{ $competition->level->display_as }}</td>
                             </tr>
                             <tr>
                                 <th>Deskripsi</th>
@@ -37,14 +39,14 @@
                             <tr>
                                 <th>Guide Book</th>
                                 <td>
-                                    <a href="{{ asset($competition->guidebook) }}" class="btn btn-primary btn-sm"
+                                    <a href="{{ isset($competition->guidebook) ? asset($competition->guidebook) : '#' }}" class="btn btn-primary btn-sm"
                                         target="_blank">Lihat</a>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Link Grup Whatsapp</th>
                                 <td>
-                                    <a href="{{ $competition->whatsapp_group_link }}" class="btn btn-primary btn-sm"
+                                    <a href="{{ $competition->whatsapp_group }}" class="btn btn-primary btn-sm"
                                         target="_blank">Lihat</a>
                                 </td>
                             </tr>
@@ -55,5 +57,4 @@
             </x-admin.card>
         </div>
     </div>
-
 </x-layouts.admin>
