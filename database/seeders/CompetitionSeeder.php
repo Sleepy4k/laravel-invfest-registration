@@ -49,7 +49,7 @@ class CompetitionSeeder extends Seeder
                 return array_merge($competition, [
                     'id' => Str::uuid(),
                     'slug' => Str::slug($competition['name']),
-                    'poster' => 'https://pengajuan-dosenlb.telkomuniversity.ac.id/assets/images/telu_logo.png',
+                    'poster' => asset('images/logo.png'),
                     'guidebook' => null,
                     'created_at' => $time,
                     'updated_at' => $time

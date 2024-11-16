@@ -15,12 +15,12 @@ class UserSeeder extends Seeder
         if (User::query()->withoutCache()->count() == 0) {
             $users = [
                 [
-                    'email' => 'admin@invfest.my.id',
+                    'email' => 'admin@invfest.id',
                     'password' => 'Invfest09@TUP2024*!',
                     'role' => 'admin'
                 ],
                 [
-                    'email' => 'petugas@invfest.my.id',
+                    'email' => 'petugas@invfest.id',
                     'password' => 'Invfest09@HMIF2024^&',
                     'role' => 'petugas'
                 ]

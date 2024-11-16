@@ -57,7 +57,7 @@ class SettingSeeder extends Seeder
                 ],
                 [
                     'key' => 'twibbon_link',
-                    'value' => 'https://invfest.my.id',
+                    'value' => 'https://invfest.id',
                 ],
                 [
                     'key' => 'instagram',
@@ -72,11 +72,11 @@ class SettingSeeder extends Seeder
                 ],
                 [
                     'key' => 'twibbon',
-                    'value' => 'https://pengajuan-dosenlb.telkomuniversity.ac.id/assets/images/telu_logo.png',
+                    'value' => asset('images/logo.png'),
                 ],
                 [
                     'key' => 'mascot',
-                    'value' => 'https://pengajuan-dosenlb.telkomuniversity.ac.id/assets/images/telu_logo.png',
+                    'value' => asset('images/logo.png'),
                 ],
             ];
 
