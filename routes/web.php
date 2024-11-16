@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
 
         Route::middleware('role:admin')->group(function () {
             Route::resource('work', Admin\SubmissionController::class)->only(['index', 'update']);
-            Route::resource('competition', Admin\TeamController::class);
+            Route::resource('competition', Admin\CompetitionController::class);
             Route::resource('timeline', Admin\TimelineController::class);
             Route::resource('sponsor', Admin\SponsorshipController::class)->except('show');
             Route::resource('media-partner', Admin\MediaPartnerController::class)->except('show');
