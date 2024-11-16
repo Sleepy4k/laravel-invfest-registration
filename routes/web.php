@@ -10,11 +10,13 @@ Route::get('/', [Frontend\LandingController::class, 'index'])->name('frontend.la
 Route::get('/competition/{slug}', [Frontend\CompetitionController::class, 'show'])->name('frontend.competition.show');
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [Auth\LoginController::class, 'index'])->name('login');
-    Route::post('/login', [Auth\LoginController::class, 'store'])->name('login.store');
+    Route::resource('login', Auth\LoginController::class)
+        ->only(['index', 'store'])
+        ->name('index', 'login');
 
-    Route::get('/register', [Auth\RegisterController::class, 'index'])->name('register');
-    Route::post('/register', [Auth\RegisterController::class, 'store'])->name('register.store');
+    Route::resource('register', Auth\RegisterController::class)
+        ->only(['index', 'store'])
+        ->name('index', 'register');
 
     Route::get('/competition/list', [Frontend\CompetitionController::class, 'index'])->name('frontend.competition.index');
 });
@@ -30,16 +32,22 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::middleware('verified')->group(function () {
-            Route::get('/team-members', [Auth\TeamController::class, 'index'])->name('team-members');
-            Route::post('/team-members', [Auth\TeamController::class, 'store'])->name('team-members.store');
+            Route::resource('team-members', Auth\TeamController::class)
+                ->only(['index', 'store'])
+                ->name('index', 'team-members');
 
-            Route::get('/payment-team', [Auth\PaymentController::class, 'index'])->name('payment-team');
-            Route::post('/payment-team', [Auth\PaymentController::class, 'store'])->name('payment-team.store');
+            Route::resource('payment-team', Auth\PaymentController::class)
+                ->only(['index', 'store'])
+                ->name('index', 'payment-team');
 
             Route::prefix('team')->name('team.')->group(function () {
                 Route::get('/dashboard', Team\DashboardController::class)->name('dashboard');
-                Route::get('/karya', [Team\SubmissionController::class, 'index'])->name('work');
-                Route::post('/karya', [Team\SubmissionController::class, 'store'])->name('work.store');
+                Route::resource('karya', Auth\PaymentController::class)
+                    ->only(['index', 'store'])
+                    ->names([
+                        'index' => 'work',
+                        'store' => 'work.store'
+                    ]);
             });
         });
     });
@@ -51,15 +59,15 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::middleware('role:admin')->group(function () {
-            Route::get('/website-configuration', [Admin\TeamController::class, 'index'])->name('website-configuration.index');
-            Route::put('/website-configuration/{id}', [Admin\TeamController::class, 'update'])->name('website-configuration.update');
-
+            Route::resource('work', Admin\SubmissionController::class)->only(['index', 'update']);
             Route::resource('competition', Admin\TeamController::class);
             Route::resource('timeline', Admin\TimelineController::class);
-            Route::resource('payment-method', Admin\PaymentMethodController::class)->except('show');
             Route::resource('sponsor', Admin\SponsorshipController::class)->except('show');
             Route::resource('media-partner', Admin\MediaPartnerController::class)->except('show');
-            Route::resource('work', Admin\SubmissionController::class)->only(['index', 'update']);
+            Route::resource('payment-method', Admin\PaymentMethodController::class)->except('show');
+            Route::resource('website-configuration', Admin\SettingController::class)
+                ->only(['index', 'store'])
+                ->parameter('website-configuration', 'id');
         });
     });
 });
