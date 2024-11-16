@@ -5,23 +5,24 @@
                 width: 100%;
                 height: 200px;
                 border-radius: 5px;
-                background: {{ getWebConfiguration()->primary_color }};
+                background: {{ $settings['primary_color'] }};
             }
 
             #color-picker-secondary {
                 width: 100%;
                 height: 200px;
                 border-radius: 5px;
-                background: {{ getWebConfiguration()->secondary_color }};
+                background: {{ $settings['secondary_color'] }};
             }
         </style>
     @endpush
 
-
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Manajemen Website</a></li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('admin.website-configuration.index') }}">Manajemen Website</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">Konfigruasi</li>
             </ol>
         </nav>
@@ -30,64 +31,53 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <x-admin.card title="Data Konfigurasi">
-                <form action="{{ route('admin.website-configuration.update', $webConfiguration->id) }}" method="POST"
+                <form action="{{ route('admin.website-configuration.store') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                             <h5 class="mb-3">Konfigurasi Umum</h5>
-                            <x-input.text name="title" label="Title Website" value="{{ $webConfiguration->title }}" />
+                            <x-input.text name="title" label="Title Website" value="{{ $settings['title'] }}" />
                             <x-input.text name="slogan" label="Slogan Website"
-                                value="{{ $webConfiguration->slogan }}" />
+                                value="{{ $settings['slogan'] }}" />
                             <x-input.text name="heading" label="Heading Website"
-                                value="{{ $webConfiguration->heading }}" />
+                                value="{{ $settings['heading'] }}" />
                             <x-input.textarea name="description" label="Deskripsi Website"
-                                value="{{ $webConfiguration->description }}" />
-                            <img src="{{ asset($webConfiguration->nav_logo) }}" alt="{{ $webConfiguration->title }}"
+                                value="{{ $settings['description'] }}" />
+                            <img src="{{ asset($settings['nav_logo']) }}" alt="{{ $settings['title'] }}"
                                 class="img-fluid mb-3" id="nav_logo_image" width="100">
                             <x-input.file name="nav_logo" label="Logo Navigasi"
-                                value="{{ $webConfiguration->nav_logo }}" id="nav_logo" />
-                            <img src="{{ asset($webConfiguration->footer_logo) }}"
-                                alt="{{ $webConfiguration->title }}" class="img-fluid mb-3" id="footer_logo_image"
-                                width="100">
-                            <x-input.file name="footer_logo" label="Logo Footer"
-                                value="{{ $webConfiguration->footer_logo }}" id="footer_logo" />
-                            <x-input.text name="footer_description" label="Deskripsi Footer"
-                                value="{{ $webConfiguration->footer_description }}" />
-                            <x-input.text name="footer_copyrigth" label="Copyrigth Footer"
-                                value="{{ $webConfiguration->footer_copyrigth }}" />
+                                value="{{ $settings['nav_logo'] }}" id="nav_logo" />
                             <h5 class="mb-3">Konfigurasi Kontak</h5>
                             <x-input.text name="phone" label="Nomor Telepon"
-                                value="{{ $webConfiguration->phone }}" />
-                            <x-input.text name="email" label="Email" value="{{ $webConfiguration->email }}" />
+                                value="{{ $settings['phone'] }}" />
                             <x-input.text name="instagram" label="Instagram"
-                                value="{{ $webConfiguration->instagram }}" />
+                                value="{{ $settings['instagram'] }}" />
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                             <h5 class="mb-3">Konfigurasi Event</h5>
                             <x-input.datetime name="deadline" label="Deadline Event"
-                                value="{{ $webConfiguration->deadline }}" value="{{ $webConfiguration->deadline }}" />
-                            <img src="{{ asset($webConfiguration->twibbon) }}" alt="{{ $webConfiguration->title }}"
+                                value="{{ $settings['deadline'] }}" />
+                            <img src="{{ asset($settings['twibbon']) }}" alt="{{ $settings['title'] }}"
                                 class="img-fluid mb-3" width="200" id="twibbon_image">
-                            <x-input.file name="twibbon" label="Twibbon Event" value="{{ $webConfiguration->twibbon }}"
+                            <x-input.file name="twibbon" label="Twibbon Event" value="{{ $settings['twibbon'] }}"
                                 id="twibbon" />
                             <x-input.text name="twibbon_link" label="Link Twibbon"
-                                value="{{ $webConfiguration->twibbon_link }}" />
-                            <img src="{{ asset($webConfiguration->mascot) }}" alt="{{ $webConfiguration->title }}"
+                                value="{{ $settings['twibbon_link'] }}" />
+                            <img src="{{ asset($settings['mascot']) }}" alt="{{ $settings['title'] }}"
                                 class="img-fluid mb-3" width="200" id="mascot_image">
-                            <x-input.file name="mascot" label="Mascot Event" value="{{ $webConfiguration->mascot }}"
+                            <x-input.file name="mascot" label="Mascot Event" value="{{ $settings['mascot'] }}"
                                 id="mascot" />
                             <h5 class="mb-3">Konfigurasi Tema</h5>
                             <div id="color-picker-primary" class="mb-3"></div>
                             <x-input.text name="primary_color" label="Warna Utama"
-                                value="{{ $webConfiguration->primary_color }}" id="primary_color" />
+                                value="{{ $settings['primary_color'] }}" id="primary_color" />
                             <div id="color-picker-primary-hover" class="mb-3"></div>
                             <x-input.text name="primary_color_hover" label="Warna Utama Hover"
-                                value="{{ $webConfiguration->primary_color_hover }}" id="primary_color_hover" />
+                                value="{{ $settings['primary_color_hover'] }}" id="primary_color_hover" />
                             <div id="color-picker-secondary" class="mb-3"></div>
                             <x-input.text name="secondary_color" label="Warna Sekunder"
-                                value="{{ $webConfiguration->secondary_color }}" id="secondary_color" />
+                                value="{{ $settings['secondary_color'] }}" id="secondary_color" />
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
@@ -135,7 +125,6 @@
                     $('#mascot_image').attr('src', reader.result);
                 }
             });
-
 
             $('#primary_color').on('keyup', function() {
                 $('#color-picker-primary').css('background', $(this).val());
