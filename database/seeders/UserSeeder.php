@@ -29,6 +29,7 @@ class UserSeeder extends Seeder
             array_map(function ($user) {
                 $role = $user['role'];
                 unset($user['role']);
+                $user['email_verified_at'] = now();
 
                 User::create($user)->assignRole($role);
             }, $users);
