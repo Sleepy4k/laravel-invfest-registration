@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use App\Enums\UploadFileType;
-use App\Traits\HasUUID;
-use App\Traits\UploadFile;
+use App\Observers\TeamMemberObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy(TeamMemberObserver::class)]
 class TeamMember extends Model
 {
-    use HasFactory, HasUUID, Cacheable, UploadFile;
+    use HasFactory, Cacheable;
 
     /**
      * The attributes that are mass assignable.
@@ -57,13 +57,5 @@ class TeamMember extends Model
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id', 'id');
-    }
-
-    /**
-     * Set card attribute.
-     */
-    public function setCardAttribute($value)
-    {
-        $this->attributes['card'] = $value ? $this->saveSingleFile(UploadFileType::IMAGE, $value) : null;
     }
 }

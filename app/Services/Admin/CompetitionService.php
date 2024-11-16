@@ -2,10 +2,19 @@
 
 namespace App\Services\Admin;
 
+use App\Contracts\Models;
 use App\Services\Service;
 
 class CompetitionService extends Service
 {
+    /**
+     * Model contract constructor.
+     */
+    public function __construct(
+        private Models\CompetitionInterface $competitionInterface,
+        private Models\CompetitionLevelInterface $competitionLevelInterface,
+    ) {}
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +22,9 @@ class CompetitionService extends Service
      */
     public function index(): array
     {
-        return [];
+        $competitions = $this->competitionInterface->all(['id', 'level_id', 'name', 'poster', 'guidebook', 'whatsapp_group', 'registration_fee'], ['level:id,display_as']);
+
+        return compact('competitions');
     }
 
     /**
@@ -23,7 +34,9 @@ class CompetitionService extends Service
      */
     public function create(): array
     {
-        return [];
+        $levels = $this->competitionLevelInterface->all(['id','display_as']);
+
+        return compact('levels');
     }
 
     /**
@@ -35,55 +48,66 @@ class CompetitionService extends Service
      */
     public function store(array $request): void
     {
-        //
+        $this->competitionInterface->create($request);
+
+        toast('Kompetisi berhasil ditambahkan', 'success');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param string $id
      *
      * @return array
      */
-    public function show(int $id): array
+    public function show(string $id): array
     {
-        return [];
+        $competition = $this->competitionInterface->findById($id, ['id', 'level_id', 'name', 'description', 'poster', 'guidebook', 'whatsapp_group', 'registration_fee'], ['level:id,display_as']);
+
+        return compact('competition');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param string $id
      *
      * @return array
      */
-    public function edit(int $id): array
+    public function edit(string $id): array
     {
-        return [];
+        $levels = $this->competitionLevelInterface->all(['id','display_as']);
+        $competition = $this->competitionInterface->findById($id, ['id', 'level_id', 'name', 'description', 'poster', 'guidebook', 'whatsapp_group', 'registration_fee'], ['level:id,display_as']);
+
+        return compact('levels', 'competition');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param array $request
-     * @param int $id
+     * @param string $id
      *
      * @return void
      */
-    public function update(array $request, int $id): void
+    public function update(array $request, string $id): void
     {
-        //
+        $this->competitionInterface->update($id, $request);
+
+        toast('Kompetisi berhasil diperbarui', 'success');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param string $id
      *
      * @return void
      */
-    public function destroy(int $id): void
+    public function destroy(string $id): void
     {
-        //
+        $this->competitionInterface->deleteById($id);
+
+        toast('Kompetisi berhasil dihapus', 'success');
     }
 }

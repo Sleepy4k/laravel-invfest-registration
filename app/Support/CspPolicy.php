@@ -52,7 +52,6 @@ class CspPolicy extends BasePolicy
             ->addDirective(Directive::DEFAULT, Keyword::SELF)
             ->addDirective(Directive::FORM_ACTION, Keyword::SELF)
             ->addDirective(Directive::IMG, [
-                Keyword::UNSAFE_INLINE,
                 '*',
                 'data:',
             ])

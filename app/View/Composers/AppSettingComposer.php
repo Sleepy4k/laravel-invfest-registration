@@ -43,7 +43,7 @@ class AppSettingComposer
             'primary_color_hover' => '#154FAA',
             'secondary_color' => '#007BFF',
             'secondary_color_hover' => '#0168D7',
-            'twibbon_link' => 'https://invfest.my.id',
+            'twibbon_link' => 'https://invfest.id',
             'instagram' => 'https://instagram.com/invfest',
             'nav_logo' => null,
             'twibbon' => null,

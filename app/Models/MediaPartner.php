@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use App\Enums\UploadFileType;
-use App\Traits\HasUUID;
-use App\Traits\UploadFile;
+use App\Observers\MediaPartnerObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy(MediaPartnerObserver::class)]
 class MediaPartner extends Model
 {
-    use HasFactory, HasUUID, Cacheable, UploadFile;
+    use HasFactory, Cacheable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,13 +49,5 @@ class MediaPartner extends Model
         ];
 
         return array_merge(config('cacheable'), $overrided);
-    }
-
-    /**
-     * Set logo attribute.
-     */
-    public function setLogoAttribute($value)
-    {
-        $this->attributes['logo'] = $value ? $this->saveSingleFile(UploadFileType::IMAGE, $value) : null;
     }
 }

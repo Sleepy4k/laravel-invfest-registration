@@ -5,7 +5,7 @@ namespace App\Enums;
 enum UploadFileType: string
 {
     case FILE = 'files';
-    case IMAGE = 'images';
+    case IMAGE = 'photos';
     case SETTING = 'settings';
 
     /**

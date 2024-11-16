@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use App\Traits\HasUUID;
+use App\Observers\OtpObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy(OtpObserver::class)]
 class Otp extends Model
 {
-    use HasFactory, HasUUID, Cacheable;
+    use HasFactory, Cacheable;
 
     /**
      * The table associated with the model.

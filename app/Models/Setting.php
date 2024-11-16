@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use App\Traits\HasUUID;
+use App\Observers\SettingObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy(SettingObserver::class)]
 class Setting extends Model
 {
-    use HasFactory, HasUUID, Cacheable;
+    use HasFactory, Cacheable;
 
     /**
      * The attributes that are mass assignable.

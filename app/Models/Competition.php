@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use App\Enums\UploadFileType;
-use App\Traits\HasUUID;
-use App\Traits\UploadFile;
+use App\Observers\CompetitionObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
+#[ObservedBy(CompetitionObserver::class)]
 class Competition extends Model
 {
-    use HasFactory, HasUUID, Cacheable, UploadFile;
+    use HasFactory, Cacheable;
 
     /**
      * The attributes that are mass assignable.
@@ -71,30 +70,6 @@ class Competition extends Model
     public function team()
     {
         return $this->hasMany(Team::class, 'competition_id', 'id');
-    }
-
-    /**
-     * Set poster attribute.
-     */
-    public function setPosterAttribute($value)
-    {
-        $this->attributes['poster'] = $value ? $this->saveSingleFile(UploadFileType::IMAGE, $value) : null;
-    }
-
-    /**
-     * Set guidebook attribute.
-     */
-    public function setGuidebookAttribute($value)
-    {
-        $this->attributes['guidebook'] = $value ? $this->saveSingleFile(UploadFileType::FILE, $value) : null;
-    }
-
-    /**
-     * Set the competition's slug.
-     */
-    public function setSlugAttribute($value)
-    {
-        $this->attributes['slug'] = Str::slug($value);
     }
 
     /**

@@ -5,7 +5,7 @@ namespace App\Http\Requests\Admin\Competition;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,8 @@ class UpdateRequest extends FormRequest
             'slug' => ['required', 'string', 'unique:competitions,slug'],
             'level_id' => ['required', 'string', 'exists:competition_levels,id'],
             'description' => ['required', 'string'],
-            'poster' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
-            'guidebook' => ['nullable', 'file', 'mimes:doc,docx,pdf', 'extensions:doc,docx,pdf', 'max:8192'],
+            'poster' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
+            'guidebook' => ['required', 'file', 'mimes:doc,docx,pdf', 'extensions:doc,docx,pdf', 'max:8192'],
             'registration_fee' => ['required', 'numeric'],
             'whatsapp_group' => ['required', 'string', 'max:255']
         ];
@@ -53,10 +53,12 @@ class UpdateRequest extends FormRequest
             'level_id.exists' => 'Tingkat kompetisi tidak ditemukan.',
             'description.required' => 'Deskripsi kompetisi harus diisi.',
             'description.string' => 'Deskripsi kompetisi harus berupa string.',
+            'poster.required' => 'Poster kompetisi tidak boleh kosong',
             'poster.image' => 'Poster kompetisi harus berupa gambar',
             'poster.mimes' => 'Poster kompetisi harus berupa gambar dengan format jpeg, png, atau jpg.',
             'poster.extensions' => 'Poster kompetisi harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
             'poster.max' => 'Poster kompetisi tidak boleh lebih dari 8MB',
+            'guidebook.required' => 'Guidebook kompetisi tidak boleh kosong',
             'guidebook.file' => 'Guidebook kompetisi harus berupa file',
             'guidebook.mimes' => 'Guidebook kompetisi harus berupa file dengan format doc, docx, atau pdf.',
             'guidebook.extensions' => 'Guidebook kompetisi harus berupa file dengan ekstensi file doc, docx, atau pdf.',

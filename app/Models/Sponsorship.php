@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use App\Enums\UploadFileType;
-use App\Traits\HasUUID;
-use App\Traits\UploadFile;
+use App\Observers\SponsorshipObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy(SponsorshipObserver::class)]
 class Sponsorship extends Model
 {
-    use HasFactory, HasUUID, Cacheable, UploadFile;
+    use HasFactory, Cacheable;
 
     /**
      * The attributes that are mass assignable.
@@ -58,13 +58,5 @@ class Sponsorship extends Model
     public function tier()
     {
         return $this->belongsTo(SponsorshipTier::class, 'tier_id', 'id');
-    }
-
-    /**
-     * Set logo attribute.
-     */
-    public function setLogoAttribute($value)
-    {
-        $this->attributes['logo'] = $value ? $this->saveSingleFile(UploadFileType::IMAGE, $value) : null;
     }
 }

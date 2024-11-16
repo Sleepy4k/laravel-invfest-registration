@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use App\Traits\HasUUID;
+use App\Observers\TimelineObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy(TimelineObserver::class)]
 class Timeline extends Model
 {
-    use HasFactory, HasUUID, Cacheable;
+    use HasFactory, Cacheable;
 
     /**
      * The attributes that are mass assignable.
@@ -48,14 +50,6 @@ class Timeline extends Model
         ];
 
         return array_merge(config('cacheable'), $overrided);
-    }
-
-    /**
-     * Set date attribute.
-     */
-    public function setDateAttribute($value)
-    {
-        $this->attributes['date'] = date('Y-m-d', strtotime($value));
     }
 
     /**
