@@ -34,7 +34,7 @@ class CompetitionService extends Service
      */
     public function show(string $slug): array
     {
-        $competition = $this->competitionInterface->findByCustomId([['slug', '=', $slug]], ['name', 'slug', 'level_id', 'poster', 'registration_fee'], ['level']);
+        $competition = $this->competitionInterface->findByCustomId([['slug', '=', $slug]], ['name', 'slug', 'level_id', 'poster', 'registration_fee', 'guidebook', 'description'], ['level:id,display_as']);
 
         if (empty($competition) || $competition == null) throw new ErrorException('Data not found, please make sure data is valid');
 

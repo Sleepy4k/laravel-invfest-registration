@@ -24,10 +24,10 @@ class LandingService extends Service
      */
     public function index(): array
     {
-        $competitions = $this->competitionInterface->get(['name', 'slug', 'level_id', 'poster', 'registration_fee'], false, ['level:id,display_as']);
-        $timelines = $this->timelineInterface->get(['title', 'description', 'date']);
-        $partners = $this->partnerInterface->get(['name', 'logo']);
-        $sponsors = $this->sponsorInterface->get(['name', 'logo']);
+        $competitions = $this->competitionInterface->all(['name', 'slug', 'level_id', 'poster', 'registration_fee'], ['level:id,display_as']);
+        $timelines = $this->timelineInterface->all(['title', 'description', 'date'], [], [], 'date', false);
+        $partners = $this->partnerInterface->all(['name', 'logo']);
+        $sponsors = $this->sponsorInterface->all(['name', 'logo']);
 
         return compact('competitions', 'timelines', 'partners', 'sponsors');
     }

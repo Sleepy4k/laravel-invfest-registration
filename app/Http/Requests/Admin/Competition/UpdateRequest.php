@@ -24,7 +24,6 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:150'],
-            'slug' => ['required', 'string', 'unique:competitions,slug'],
             'level_id' => ['required', 'string', 'exists:competition_levels,id'],
             'description' => ['required', 'string'],
             'poster' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],

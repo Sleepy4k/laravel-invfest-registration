@@ -106,7 +106,13 @@ trait UploadFile
     {
         try {
             $parse = parse_url($file);
-            $name = explode('/', $parse['path'])[3];
+            $pathSegments = explode('/', $parse['path'] ?? '');
+            $name = null;
+
+            $total = count($pathSegments);
+            if ($total > 0 && isset($pathSegments[$total - 1])) {
+                $name = $pathSegments[$total - 1];
+            }
 
             return $name;
         } catch (\Throwable $th) {
