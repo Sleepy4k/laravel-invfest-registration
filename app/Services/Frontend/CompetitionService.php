@@ -20,7 +20,6 @@ class CompetitionService extends Service
     public function index(): array
     {
         $level = request('level', '####');
-
         $competitions = $this->competitionInterface->all(['id', 'name'], [], [['level_id', '=', $level]]);
 
         return compact('competitions');

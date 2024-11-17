@@ -7,6 +7,7 @@ use Spatie\Csp\Keyword;
 use Spatie\Csp\Directive;
 use Illuminate\Http\Request;
 use Spatie\Csp\Policies\Policy as BasePolicy;
+use Spatie\Csp\Scheme;
 use Symfony\Component\HttpFoundation\Response;
 
 class CspPolicy extends BasePolicy
@@ -41,7 +42,8 @@ class CspPolicy extends BasePolicy
             ->addDirectivesForGoogleFonts()
             ->addDirectivesForYouTube()
             ->addDirectivesForJsDelivrCDN()
-            ->addDirectivesForCloudflareCDN();
+            ->addDirectivesForCloudflareCDN()
+            ->addDirectivesForTailwindcssCDN();
     }
 
     protected function addGeneralDirectives(): self
@@ -53,22 +55,22 @@ class CspPolicy extends BasePolicy
             ->addDirective(Directive::FORM_ACTION, Keyword::SELF)
             ->addDirective(Directive::IMG, [
                 '*',
-                'data:',
+                Scheme::DATA,
             ])
             ->addDirective(Directive::MEDIA, Keyword::SELF)
             ->addDirective(Directive::OBJECT, Keyword::NONE)
             ->addDirective(Directive::SCRIPT, [
                 Keyword::SELF,
                 Keyword::UNSAFE_INLINE,
-                Keyword::STRICT_DYNAMIC,
             ])
             ->addDirective(Directive::STYLE, [
                 Keyword::SELF,
                 Keyword::UNSAFE_INLINE,
             ])
+            ->addDirective(Directive::FONT, Keyword::SELF)
+            ->addDirective(Directive::FRAME, Keyword::SELF)
             ->addDirective(Directive::UPGRADE_INSECURE_REQUESTS, Value::NO_VALUE)
-            ->addDirective(Directive::BLOCK_ALL_MIXED_CONTENT, Value::NO_VALUE)
-            ->addNonceForDirective(Directive::SCRIPT);
+            ->addDirective(Directive::BLOCK_ALL_MIXED_CONTENT, Value::NO_VALUE);
     }
 
     protected function addDirectivesForBunnyFonts(): self
@@ -111,5 +113,13 @@ class CspPolicy extends BasePolicy
             ->addDirective(Directive::FONT, 'cdnjs.cloudflare.com')
             ->addDirective(Directive::STYLE, 'cdnjs.cloudflare.com')
             ->addDirective(Directive::SCRIPT, 'cdnjs.cloudflare.com');
+    }
+
+    protected function addDirectivesForTailwindcssCDN(): self
+    {
+        return $this
+            ->addDirective(Directive::FONT, 'cdn.tailwindcss.com')
+            ->addDirective(Directive::STYLE, 'cdn.tailwindcss.com')
+            ->addDirective(Directive::SCRIPT, 'cdn.tailwindcss.com');
     }
 }
