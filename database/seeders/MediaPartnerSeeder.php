@@ -13,8 +13,6 @@ class MediaPartnerSeeder extends Seeder
      */
     public function run(): void
     {
-        if (!config('app.debug') || config('app.env') != 'local') return;
-
         if (MediaPartner::query()->withoutCache()->count() == 0) {
             $partners = [
                 [

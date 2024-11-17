@@ -14,8 +14,6 @@ class CompetitionSeeder extends Seeder
      */
     public function run(): void
     {
-        if (!config('app.debug') || config('app.env') != 'local') return;
-
         if (Competition::query()->withoutCache()->count() == 0) {
             $levelUnivId = CompetitionLevel::select('id')->where('level', 'universitas')->first()?->id ?? null;
             $levelUmumId = CompetitionLevel::select('id')->where('level', 'umum')->first()?->id ?? null;
