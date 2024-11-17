@@ -22,6 +22,7 @@ class ViewServiceProvider extends ServiceProvider
     {
         view()->composer([
             'pages.landing',
+            'pages.health-up',
             'pages.auth.login',
             'pages.auth.register',
             'pages.team.dashboard',
