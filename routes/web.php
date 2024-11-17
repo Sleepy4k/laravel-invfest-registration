@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
 
             Route::prefix('team')->name('team.')->group(function () {
                 Route::get('/dashboard', Team\DashboardController::class)->name('dashboard');
-                Route::resource('karya', Auth\PaymentController::class)
+                Route::resource('karya', Team\SubmissionController::class)
                     ->only(['index', 'store'])
                     ->names([
                         'index' => 'work',
