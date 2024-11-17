@@ -11,14 +11,14 @@ Route::get('/competition/{slug}', [Frontend\CompetitionController::class, 'show'
 
 Route::middleware('guest')->group(function () {
     Route::resource('login', Auth\LoginController::class)
-        ->only(['index', 'store'])
-        ->name('index', 'login');
+    ->only(['index', 'store'])
+    ->name('index', 'login');
 
     Route::resource('register', Auth\RegisterController::class)
-        ->only(['index', 'store'])
-        ->name('index', 'register');
+    ->only(['index', 'store'])
+    ->name('index', 'register');
 
-    Route::get('/competition/list', [Frontend\CompetitionController::class, 'index'])->name('frontend.competition.index');
+    Route::get('/competition', [Frontend\CompetitionController::class, 'index'])->name('frontend.competition.index');
 });
 
 Route::middleware('auth')->group(function () {
