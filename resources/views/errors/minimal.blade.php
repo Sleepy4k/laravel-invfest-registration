@@ -26,6 +26,18 @@
         <meta name="twitter:description" content="InvFest">
 
         <script src="https://cdn.tailwindcss.com"></script>
+
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Figtree', 'ui-sans-serif', 'system-ui', 'sans-serif', "Apple Color Emoji", "Segoe UI Emoji"],
+                        }
+                    }
+                }
+            }
+        </script>
     </head>
     <body class="antialiased">
         <div class="flex items-center justify-center min-h-screen p-5 text-indigo-100 bg-gray-800">
