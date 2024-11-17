@@ -29,11 +29,17 @@ class TeamController extends Controller
     public function store(TeamRequest $request)
     {
         try {
-            $this->service->store($request->validated());
+            $result = $this->service->store($request->validated());
 
-            toast('Pendaftaran berhasil, silahkan melakukan pembayaran untuk menyelesaikan pendaftaran', 'success');
+            if ($result) {
+                toast('Pendaftaran berhasil, silahkan melakukan pembayaran untuk menyelesaikan pendaftaran', 'success');
 
-            return to_route('payment-team');
+                return to_route('payment-team');
+            }
+
+            toast('Pendaftaran gagal, silahkan coba lagi', 'error');
+
+            return back()->withInput();
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

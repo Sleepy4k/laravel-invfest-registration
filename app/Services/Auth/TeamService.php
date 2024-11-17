@@ -19,22 +19,27 @@ class TeamService extends Service
      *
      * @param array $request
      *
-     * @return void
+     * @return bool
      */
-    public function store(array $request): void
+    public function store(array $request): bool
     {
-        if (!isset($request['data']) || count($request['data']) == 0) return;
+        if (!isset($request['data']) || count($request['data']) == 0) return false;
 
-        $data['team_id'] = auth('web')->user()->leader->first()->team->first()->id;
+        $data['team_id'] = auth('web')->user()?->leader?->first()?->team?->first()?->id;
+        if ($data['team_id'] == null) return false;
+
         $total = count($request['data']) > 2 ? 2 : count($request['data']);
 
         for ($i=0; $i < $total; $i++) {
-            if (!isset($request['data'][$i]['member'])) continue;
+            $name = htmlspecialchars($request['data'][$i]['member'] ?? '', ENT_QUOTES, 'UTF-8');
+            if (!isset($name)) continue;
 
-            $data['name'] = $request['data'][$i]['member'];
+            $data['name'] = $name;
             $data['card'] = $request['data'][$i]['card'] ?? null;
 
             $this->teamMemberInterface->create($data);
         }
+
+        return true;
     }
 }

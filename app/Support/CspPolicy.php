@@ -104,7 +104,8 @@ class CspPolicy extends BasePolicy
     {
         return $this
             ->addDirective(Directive::FONT, 'cdn.jsdelivr.net')
-            ->addDirective(Directive::STYLE, 'cdn.jsdelivr.net');
+            ->addDirective(Directive::STYLE, 'cdn.jsdelivr.net')
+            ->addDirective(Directive::SCRIPT, 'cdn.jsdelivr.net');
     }
 
     protected function addDirectivesForCloudflareCDN(): self

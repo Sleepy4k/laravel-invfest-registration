@@ -63,7 +63,7 @@ class TeamService extends Service
                 return;
             }
 
-            $this->paymentInterface->update($payment->id, $request['status']);
+            $this->paymentInterface->update($payment->id, ['status' => $request['status']]);
             $user = $this->userInterface->get(['*'], true, [], [['email', '=', $request['email']]]);
 
             if ($request['status'] == PaymentStatus::APPROVE->value) {

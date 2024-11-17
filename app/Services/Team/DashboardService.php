@@ -22,7 +22,7 @@ class DashboardService extends Service
     public function invoke(): array
     {
         $uid = auth('web')->user()->id;
-        $user = $this->userInterface->findById($uid, ['id'], [
+        $user = $this->userInterface->findById($uid, ['id', 'email'], [
             'leader:id,team_id,user_id,name,phone,card',
             'leader.team:id,competition_id,name,institution',
             'leader.team.companion:id,team_id,name,card',

@@ -29,19 +29,19 @@ class VerificationService extends Service
             $user = Auth::user();
             $user = $this->userInterface->findById($user->id, ['*'], ['otp']);
 
-            if ($user->otp->otp == null) {
+            if ($user?->otp?->otp == null) {
                 alert('OTP tidak ditemukan', '', 'error');
 
                 return false;
             }
 
-            if ($user->otp->otp != $request['otp']) {
+            if ($user?->otp?->otp != $request['otp']) {
                 alert('OTP yang anda masukan salah', '', 'error');
 
                 return false;
             }
 
-            if ($user->otp->expired_at < now()) {
+            if ($user?->otp?->expired_at < now()) {
                 alert('OTP yang anda masukan sudah kadaluarsa', '', 'error');
                 $id = $this->otpInterface->findByCustomId([['otp', '=', $user->otp->otp]], ['id'])->id;
                 $this->otpInterface->deleteById($id);
