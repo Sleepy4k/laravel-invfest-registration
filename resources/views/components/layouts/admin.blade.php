@@ -6,6 +6,10 @@
 
         <title>Admin - {{ $title ?? '' }}</title>
 
+        <meta property="csp-nonce" content="{{ csp_nonce() }}">
+
+        @cspMetaTag(App\Support\CspPolicy::class)
+
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:type" content="website">
         <meta property="og:title" content="{{ $title }}">
