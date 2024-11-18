@@ -25,7 +25,7 @@ class TeamService extends Service
     {
         if (!isset($request['data']) || count($request['data']) == 0) return false;
 
-        $data['team_id'] = auth('web')->user()?->leader?->first()?->team?->first()?->id;
+        $data['team_id'] = auth('web')->user()?->leader?->first()?->team?->id;
         if ($data['team_id'] == null) return false;
 
         $total = count($request['data']) > 2 ? 2 : count($request['data']);

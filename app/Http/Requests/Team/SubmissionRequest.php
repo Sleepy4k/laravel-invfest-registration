@@ -23,7 +23,7 @@ class SubmissionRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:200'],
-            'zip_file' => ['required', 'file', 'mimes:zip,rar', 'extensions:zip,rar'],
+            'zip_file' => ['required', 'file', 'mimes:doc,docx,pdf', 'extensions:doc,docx,pdf'],
         ];
     }
 
@@ -40,8 +40,8 @@ class SubmissionRequest extends FormRequest
             'title.max' => 'Judul karya tidak boleh lebih dari 200 karakter.',
             'zip_file.required' => 'File karya tidak boleh kosong.',
             'zip_file.file' => 'File karya harus berupa file.',
-            'zip_file.mimes' => 'File karya harus berupa file dengan format rar atau zip.',
-            'zip_file.extensions' => 'File karya harus berupa file dengan ekstensi file rar atau zip.',
+            'zip_file.mimes' => 'File karya harus berupa file dengan format doc, docx atau pdf.',
+            'zip_file.extensions' => 'File karya harus berupa file dengan ekstensi file doc, docx atau pdf.',
         ];
     }
 }

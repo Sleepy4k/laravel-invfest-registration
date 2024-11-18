@@ -23,7 +23,7 @@ class SubmissionService extends Service
     public function index(): array
     {
         $uid = auth('web')->user()->id;
-        $user = $this->userInterface->findById($uid, ['*'], [
+        $user = $this->userInterface->findById($uid, ['id'], [
             'leader:id,team_id,user_id',
             'leader.team:id',
             'leader.team.payment:team_id,status',
@@ -43,7 +43,7 @@ class SubmissionService extends Service
     public function store(array $request): void
     {
         try {
-            $request['team_id'] = auth('web')->user()->leader?->first()->team?->first()?->id ?? null;
+            $request['team_id'] = auth('web')->user()->leader?->first()?->team?->id ?? null;
             if ($request['team_id'] == null) {
                 alert('Gagal', 'Karya gagal ditambahkan, silahkan refresh halaman anda', 'error');
                 return;

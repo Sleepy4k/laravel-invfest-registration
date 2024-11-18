@@ -26,7 +26,12 @@ class TeamService extends Service
      */
     public function index(): array
     {
-        $teams = $this->teamInterface->all(['id', 'name', 'institution', 'competition_id'], ['competition:id,name,level_id', 'competition.level:id,display_as', 'payment:team_id,proof,status', 'leader:team_id,name']);
+        $teams = $this->teamInterface->all(['id', 'name', 'institution', 'competition_id'], [
+            'competition:id,name,level_id',
+            'competition.level:id,display_as',
+            'payment:team_id,proof,status',
+            'leader:team_id,name'
+        ]);
 
         return compact('teams');
     }
@@ -40,8 +45,17 @@ class TeamService extends Service
      */
     public function show(string $id): array
     {
-        $team = $this->teamInterface->get(['id', 'name', 'institution', 'competition_id'], true, ['competition:id,whatsapp_group', 'competition.level:id,level', 'payment.method', 'leader.user', 'member:team_id,name,card'], [['id', '=', $id]]);
         $status = PaymentStatus::class;
+        $team = $this->teamInterface->findById($id, ['id', 'competition_id', 'name', 'institution'], [
+            'competition:id,level_id,whatsapp_group',
+            'competition.level:id,level',
+            'payment:id,team_id,method_id,proof,status',
+            'payment.method:id,name,owner,number',
+            'leader:id,user_id,team_id,name,phone,card',
+            'leader.user:id,email',
+            'member:team_id,name,card',
+            'companion:id,team_id,name,card'
+        ]);
 
         return compact('team', 'status');
     }

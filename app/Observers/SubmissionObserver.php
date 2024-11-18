@@ -21,7 +21,7 @@ class SubmissionObserver
         }
 
         $submission->file = $submission->file
-            ? $this->saveSingleFile(UploadFileType::IMAGE, $submission->file)
+            ? $this->saveSingleFile(UploadFileType::FILE, $submission->file)
             : null;
     }
 
@@ -35,12 +35,12 @@ class SubmissionObserver
 
             if ($oldFile == null) {
                 $submission->file = $submission->file
-                    ? $this->saveSingleFile(UploadFileType::IMAGE, $submission->file)
+                    ? $this->saveSingleFile(UploadFileType::FILE, $submission->file)
                     : null;
             } else {
                 $submission->file = $submission->file
-                    ? $this->updateSingleFile(UploadFileType::IMAGE, $submission->file, $oldFile)
-                    : $this->deleteFile(UploadFileType::IMAGE, $oldFile);
+                    ? $this->updateSingleFile(UploadFileType::FILE, $submission->file, $oldFile)
+                    : $this->deleteFile(UploadFileType::FILE, $oldFile);
             }
         }
     }
@@ -51,7 +51,7 @@ class SubmissionObserver
     public function deleting(Submission $submission): void
     {
         $submission->file
-            ? $this->deleteFile(UploadFileType::IMAGE, $submission->file)
+            ? $this->deleteFile(UploadFileType::FILE, $submission->file)
             : null;
     }
 }

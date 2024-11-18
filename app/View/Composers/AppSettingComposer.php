@@ -32,22 +32,23 @@ class AppSettingComposer
      */
     protected function defaultSettings(): array
     {
+        $logo = asset('images/logo.png');
         return [
-            'title' => 'InvFest',
-            'slogan' => 'InvFest',
-            'heading' => 'InvFest',
-            'description' => 'InvFest',
-            'deadline' => '2024-11-20',
-            'phone' => '081234567890',
-            'primary_color' => '#0A3578',
-            'primary_color_hover' => '#154FAA',
-            'secondary_color' => '#007BFF',
-            'secondary_color_hover' => '#0168D7',
-            'twibbon_link' => 'https://invfest.id',
-            'instagram' => 'https://instagram.com/invfest',
-            'nav_logo' => null,
-            'twibbon' => null,
-            'mascot' => null,
+            'title' => 'INVFEST X IST 9.0',
+            'slogan' => 'Spark the Vision, Light the World',
+            'heading' => 'Time to Shine: Spark the Vision, Light the World, panggilan buat kamu yang siap tampil all-out! Saatnya menunjukkan inovasi yang bisa menginspirasi dan membawa perubahan nyata. Ini waktunya kamu bersinar dengan ide segar yang bisa menginspirasi dan mengubah dunia',
+            'description' => 'INVFEST X ISF 9.0 ini merupakan gabungan keren antara Informatics Innovation Festival (INVFEST) dan Informatics Sport Festival (ISF)! Acara tahunan ini adalah kompetisi teknologi nasional yang digelar oleh Himpunan Mahasiswa Teknik Informatika, tempat kamu bisa berkreasi dan bersaing di bidang teknologi, e-sports, dan olahraga. INVFEST X ISF 9.0 memiliki tema Time to Shine: Spark the Vision, Light the World, panggilan buat kamu yang siap tampil all-out! Saatnya menunjukkan inovasi yang bisa menginspirasi dan membawa perubahan nyata. Ini waktunya kamu bersinar dengan ide segar yang bisa menginspirasi dan mengubah dunia',
+            'deadline' => '2024-12-13',
+            'phone' => '6281234567890',
+            'primary_color' => '#2e2d2d',
+            'primary_color_hover' => '#eeba2b',
+            'secondary_color' => '#eeba2b',
+            'secondary_color_hover' => '#2e2d2d',
+            'twibbon_link' => 'https://bit.ly/TWIBBON_INVFESTXISF',
+            'instagram' => 'https://www.instagram.com/official.invfestxisf',
+            'nav_logo' => $logo,
+            'twibbon' => $logo,
+            'mascot' => $logo,
         ];
     }
 
