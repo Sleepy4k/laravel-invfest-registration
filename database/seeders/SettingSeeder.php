@@ -17,7 +17,7 @@ class SettingSeeder extends Seeder
             $settings = [
                 [
                     'key' => 'title',
-                    'value' => 'InvFest 9.0',
+                    'value' => 'INVFEST X IST 9.0',
                 ],
                 [
                     'key' => 'slogan',
@@ -25,19 +25,19 @@ class SettingSeeder extends Seeder
                 ],
                 [
                     'key' => 'heading',
-                    'value' => 'Dive into the Metaverse, where Creativity and Athletic Thecnology collide for limitless exploration',
+                    'value' => 'Time to Shine: Spark the Vision, Light the World, panggilan buat kamu yang siap tampil all-out! Saatnya menunjukkan inovasi yang bisa menginspirasi dan membawa perubahan nyata. Ini waktunya kamu bersinar dengan ide segar yang bisa menginspirasi dan mengubah dunia',
                 ],
                 [
                     'key' => 'description',
-                    'value' => 'InvFest (Informatics Innovation Festival) adalah acara kompetisi nasional Dies Natalis dari Program Studi S1 Teknik Informatika Telkom University Purwokerto ke 9, Tema ini mengajak untuk menjelajahi metaverse, dimana kreativitas dan teknologi yang terkait dengan olahraga bersatu untuk menciptakan pengalaman eksplorasi yang tak terbatas',
+                    'value' => 'INVFEST X ISF 9.0 ini merupakan gabungan keren antara Informatics Innovation Festival (INVFEST) dan Informatics Sport Festival (ISF)! Acara tahunan ini adalah kompetisi teknologi nasional yang digelar oleh Himpunan Mahasiswa Teknik Informatika, tempat kamu bisa berkreasi dan bersaing di bidang teknologi, e-sports, dan olahraga. INVFEST X ISF 9.0 memiliki tema Time to Shine: Spark the Vision, Light the World, panggilan buat kamu yang siap tampil all-out! Saatnya menunjukkan inovasi yang bisa menginspirasi dan membawa perubahan nyata. Ini waktunya kamu bersinar dengan ide segar yang bisa menginspirasi dan mengubah dunia',
                 ],
                 [
                     'key' => 'deadline',
-                    'value' => '2024-12-07',
+                    'value' => '2024-12-13',
                 ],
                 [
                     'key' => 'phone',
-                    'value' => '081234567890',
+                    'value' => '6281234567890',
                 ],
                 [
                     'key' => 'primary_color',
@@ -45,7 +45,7 @@ class SettingSeeder extends Seeder
                 ],
                 [
                     'key' => 'primary_color_hover',
-                    'value' => '#fffdfa',
+                    'value' => '#eeba2b',
                 ],
                 [
                     'key' => 'secondary_color',
@@ -57,7 +57,7 @@ class SettingSeeder extends Seeder
                 ],
                 [
                     'key' => 'twibbon_link',
-                    'value' => 'https://invfest.id',
+                    'value' => 'https://bit.ly/TWIBBON_INVFESTXISF',
                 ],
                 [
                     'key' => 'instagram',

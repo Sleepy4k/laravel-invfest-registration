@@ -22,21 +22,21 @@ class CompetitionSeeder extends Seeder
                 [
                     'name' => 'Bisnis Plan',
                     'description' => 'yo nda tau',
-                    'registration_fee' => rand(1000000, 10000000),
+                    'registration_fee' => 50000,
                     'whatsapp_group' => 'https://chat.whatsapp.com/Dgy7hr3kGgA12Viar76MNz',
                     'level_id' => $levelUnivId
                 ],
                 [
                     'name' => 'UI/UX Design',
                     'description' => 'yo nda tau',
-                    'registration_fee' => rand(1000000, 10000000),
+                    'registration_fee' => 50000,
                     'whatsapp_group' => 'https://chat.whatsapp.com/Db40YbqbHtI2JXE2yz6lsh',
                     'level_id' => $levelUmumId
                 ],
                 [
                     'name' => 'Web Programming',
                     'description' => 'yo nda tau',
-                    'registration_fee' => rand(1000000, 10000000),
+                    'registration_fee' => 50000,
                     'whatsapp_group' => 'https://chat.whatsapp.com/HGgeI625VED8Xg857KNWGS',
                     'level_id' => $levelUmumId
                 ],
