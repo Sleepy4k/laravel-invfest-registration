@@ -35,7 +35,7 @@ return [
         '*.rar',
         '*.exe',
         '*.wmv',
-        '*.doc',
+        '*.docx',
         '*.avi',
         '*.ppt',
         '*.mpg',
