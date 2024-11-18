@@ -32,12 +32,12 @@
                         @foreach ($mediaPartners as $mediapartner)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $mediapartner->name }}</td>
+                                <td>{{ $mediapartner?->name }}</td>
                                 <td>
-                                    <a href="{{ asset($mediapartner->logo) }}" data-lightbox="mediapartner"
+                                    <a href="{{ isset($mediapartner->logo) ? asset($mediapartner->logo) : '#' }}" data-lightbox="mediapartner"
                                         data-title="{{ $mediapartner->name }}">
-                                        <img src="{{ asset($mediapartner->logo) }}" alt="{{ $mediapartner->name }}"
-                                            class="img-table-lightbox">
+                                        <img src="{{ isset($mediapartner->logo) ? asset($mediapartner->logo) : '#' }}" alt="{{ $mediapartner->name }}"
+                                            class="img-table-lightbox" loading="lazy">
                                     </a>
                                 </td>
                                 <td>{{ $mediapartner->link ?? '-' }}</td>

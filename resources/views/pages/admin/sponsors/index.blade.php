@@ -37,11 +37,11 @@
                                     <a href="{{ isset($sponsorship->logo) ? asset($sponsorship->logo) : '#' }}" data-lightbox="sponsor"
                                         data-title="{{ $sponsorship->name }}">
                                         <img src="{{ isset($sponsorship->logo) ? asset($sponsorship->logo) : '#' }}" alt="{{ $sponsorship->name }}"
-                                            class="img-table-lightbox">
+                                            class="img-table-lightbox" loading="lazy">
                                     </a>
                                 </td>
                                 <td>{{ $sponsorship->link ?? '-' }}</td>
-                                <td>{{ $sponsorship->tier->tier }}</td>
+                                <td>{{ $sponsorship->tier?->tier }}</td>
                                 <td>
                                     <a href="{{ route('admin.sponsor.edit', $sponsorship->id) }}"
                                         class="btn btn-warning btn-sm me-2">Edit</a>

@@ -9,14 +9,14 @@
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="wd-30 ht-30 rounded-circle"
                         src="{{ url('https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp') }}"
-                        alt="profile">
+                        alt="profile" loading="lazy">
                 </a>
                 <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
                     <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
                         <div class="mb-3">
                             <img class="wd-80 ht-80 rounded-circle"
                                 src="{{ url('https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp') }}"
-                                alt="">
+                                alt="" loading="lazy">
                         </div>
                         <div class="text-center">
                             <p class="tx-12 text-muted">

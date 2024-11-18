@@ -29,7 +29,7 @@
                         @foreach ($works as $work)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $work->team->competition->name }}</td>
+                                <td>{{ $work->team?->competition?->name }}</td>
                                 <td>{{ $work->team->name }}</td>
                                 <td>{{ $work->team->institution }}</td>
                                 <td>{{ $work->title }}</td>

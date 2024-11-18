@@ -10,7 +10,7 @@
                     <i class="fas fa-tachometer-alt"></i>
                     Dashboard
                 </a>
-                @if (auth('web')->user()->leader?->first()->team?->first()->payment?->first()->status === 'approve')
+                @if (auth('web')->user()?->leader?->first()?->team?->payment?->status === 'approve')
                     <a class="nav-link mt-2 {{ request()->is('team/karya') ? 'active' : '' }}"
                         href="{{ route('team.work') }}">
                         <i class="fas fa-tasks"></i>

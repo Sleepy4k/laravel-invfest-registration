@@ -18,7 +18,7 @@
                     </a>
                 </div>
             </div>
-            <img src="{{ isset($appSettings['mascot']) ? asset($appSettings['mascot']) : '#' }}" alt="mascot" class="mascot-image">
+            <img src="{{ isset($appSettings['mascot']) ? asset($appSettings['mascot']) : '#' }}" alt="mascot" class="mascot-image" loading="lazy">
         </div>
     </div>
 </div>

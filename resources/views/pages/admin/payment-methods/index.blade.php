@@ -37,7 +37,7 @@
                                     <a href="{{ isset($method->logo) ? asset($method->logo) : '#' }}" data-lightbox="payment-methods"
                                         data-title="{{ $method->name }}">
                                         <img src="{{ isset($method->logo) ? asset($method->logo) : '#' }}" alt="{{ $method->name }}"
-                                            class="img-table-lightbox">
+                                            class="img-table-lightbox" loading="lazy">
                                     </a>
                                 </td>
                                 <td>{{ $method->number }}</td>

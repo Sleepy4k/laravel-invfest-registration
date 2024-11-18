@@ -4,7 +4,7 @@
             <div class="card card-competition">
                 <div class="position-relative">
                     <img src="{{ isset($competition->poster) ? asset($competition->poster) : '#' }}"
-                        class="card-img-top p-3" alt="{{ $competition->name }}">
+                        class="card-img-top p-3" alt="{{ $competition->name }}" loading="lazy">
                     <div class="position-absolute top-0 end-0 p-3">
                         <span class="badge bg-secondary badge-competition">
                             {{ $competition->level->display_as }}

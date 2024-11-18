@@ -1,7 +1,7 @@
 <x-layouts.auth title="Pembayaran">
     @php
-        $team = $user?->leader?->first()?->team?->first();
-        $competition = $team?->competition?->first();
+        $team = $user?->leader?->first()?->team;
+        $competition = $team?->competition;
     @endphp
 
     <div class="page-content d-flex align-items-center justify-content-center">
@@ -12,12 +12,12 @@
                         <div class="col-md-12 ps-md-0">
                             <div class="auth-form-wrapper px-4 py-5">
                                 <a href="{{ url('/') }}" class="noble-ui-logo d-block mb-2">Pembayaran Tim
-                                    {{ $team->name }}
+                                    {{ $team?->name }}
                                 </a>
                                 <h5 class="text-muted fw-normal mb-4">Silahkan lakukan pembayaran untuk melanjutkan
                                     pendaftaran sebesar
                                     <b class="text-primary">
-                                        {{ $competition->registration_fee_rupiah }}
+                                        {{ $competition?->registration_fee_rupiah }}
                                     </b>
                                 </h5>
 
@@ -25,13 +25,13 @@
                                     <div class="card mb-3">
                                         <div class="card-body d-flex gap-3 align-items-center ">
                                             <img src="{{ $paymentMethod->logo }}" alt="{{ $paymentMethod->name }}"
-                                                width="60" height="60" class="rounded-2">
+                                                width="60" height="60" class="rounded-2" loading="lazy">
                                             <div class="information ">
                                                 <h2 class="card-title mb-0">
-                                                    {{ $paymentMethod->name }}
+                                                    {{ $paymentMethod?->name }}
                                                 </h2>
                                                 <p class="card-text">
-                                                    {{ $paymentMethod->number }} an {{ $paymentMethod->owner }}
+                                                    {{ $paymentMethod?->number }} A/N {{ $paymentMethod?->owner }}
                                                 </p>
                                             </div>
                                         </div>
@@ -47,7 +47,7 @@
                                         <option value="">Pilih Metode Pembayaran</option>
                                         @foreach ($paymentMethods as $paymentMethod)
                                             <option value="{{ $paymentMethod->id }}">
-                                                {{ $paymentMethod->name }}
+                                                {{ $paymentMethod?->name }}
                                             </option>
                                         @endforeach
                                     </x-input.select>

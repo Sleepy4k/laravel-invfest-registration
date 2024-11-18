@@ -1,12 +1,23 @@
 <nav class="nav-mobile d-flex d-md-none d-lg-none">
-    <a href="#competition">
-        <i class="fas fa-trophy"></i>
-        Kompetisi
-    </a>
-    <a href="#detail">
-        <i class="fas fa-info-circle"></i>
-        Informasi
-    </a>
+    @if (request()->is('frontend.landing'))
+        <a href="#competition">
+            <i class="fas fa-trophy"></i>
+            Kompetisi
+        </a>
+        <a href="#detail">
+            <i class="fas fa-info-circle"></i>
+            Informasi
+        </a>
+    @else
+        <a href="{{ route('frontend.landing') }}#competition">
+            <i class="fas fa-trophy"></i>
+            Kompetisi
+        </a>
+        <a href="{{ route('frontend.landing') }}#detail">
+            <i class="fas fa-info-circle"></i>
+            Informasi
+        </a>
+    @endif
     @guest
         <a href="{{ route('login') }}">
             <i class="fas fa-sign-in-alt"></i>

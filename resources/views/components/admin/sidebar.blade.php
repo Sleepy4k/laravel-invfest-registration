@@ -1,7 +1,7 @@
 <nav class="sidebar">
     <div class="sidebar-header">
         <a href="{{ url('/') }}">
-            <img src="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" class="sidebar-brand" width="40">
+            <img src="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" class="sidebar-brand" width="40" loading="lazy">
         </a>
         <div class="sidebar-toggler not-active">
             <span></span>
@@ -46,7 +46,7 @@
                 <li class="nav-item {{ request()->is('admin/sponsor*') ? ' active' : '' }}">
                     <a href="{{ route('admin.sponsor.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="dollar-sign"></i>
-                        <span class="link-title">Sponsor</span>
+                        <span class="link-title">Sponsorship</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->is('admin/media-partner*') ? ' active' : '' }}">

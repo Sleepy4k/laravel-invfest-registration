@@ -4,7 +4,7 @@
             d-flex flex-row justify-content-center align-self-center"
             href="{{ route('frontend.landing') }}">
             <img src="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" alt="Logo"
-                width="60px" height="80px" />
+                width="60px" height="80px" loading="lazy" />
             <div class="d-flex flex-column align-self-center justify-self-center mx-3">
                 <span class="text-judul font-weight-bold">
                     {{ $appSettings['title'] }}
@@ -32,7 +32,7 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-users"></i>
                             @role('team')
-                                {{ auth('web')->user()->leader->first()->team->first()->name ?? '#####' }}
+                                {{ auth('web')->user()?->leader?->first()?->team?->name ?? '#####' }}
                             @else
                                 Admin
                             @endrole

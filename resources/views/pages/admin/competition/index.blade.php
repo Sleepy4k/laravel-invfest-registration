@@ -34,13 +34,13 @@
                         @foreach ($competitions as $competition)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $competition->name }}</td>
-                                <td>{{ $competition->level->display_as }}</td>
+                                <td>{{ $competition?->name }}</td>
+                                <td>{{ $competition?->level?->display_as }}</td>
                                 <td>
                                     <a href="{{ isset($competition->poster) ? asset($competition->poster) : '#' }}" class="d-block" data-lightbox="poster"
                                         data-title="{{ $competition->name }}">
-                                        <img src="{{ isset($competition->poster) ? asset($competition->poster) : '#' }}" alt="{{ $competition->name }}"
-                                            class="img-table-lightbox">
+                                        <img src="{{ isset($competition->poster) ? asset($competition->poster) : '#' }}" alt="{{ $competition?->name }}"
+                                            class="img-table-lightbox" loading="lazy">
                                     </a>
                                 </td>
                                 <td>
@@ -48,10 +48,10 @@
                                         target="_blank">Lihat</a>
                                 </td>
                                 <td>
-                                    <a href="{{ $competition->whatsapp_group ?? '#' }}" class="btn btn-primary btn-sm"
+                                    <a href="{{ $competition?->whatsapp_group ?? '#' }}" class="btn btn-primary btn-sm"
                                         target="_blank">Lihat</a>
                                 </td>
-                                <td>{{ $competition->registration_fee_rupiah }}</td>
+                                <td>{{ $competition?->registration_fee_rupiah }}</td>
                                 <td>
                                     <a href="{{ route('admin.competition.edit', $competition->id) }}"
                                         class="btn btn-warning btn-sm me-2">Edit</a>

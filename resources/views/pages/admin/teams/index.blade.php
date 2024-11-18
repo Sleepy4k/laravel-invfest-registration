@@ -30,26 +30,26 @@
                         @foreach ($teams as $team)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $team->competition->name }}</td>
-                                <td>{{ $team->competition->level->display_as }}</td>
-                                <td>{{ $team->name }}</td>
-                                <td>{{ $team->institution }}</td>
-                                <td>{{ $team->leader->name }}</td>
+                                <td>{{ $team?->competition?->name }}</td>
+                                <td>{{ $team?->competition?->level?->display_as }}</td>
+                                <td>{{ $team?->name }}</td>
+                                <td>{{ $team?->institution }}</td>
+                                <td>{{ $team?->leader?->name }}</td>
                                 <td>
-                                    @if ($team->payment != null && $team->payment->proof != null)
+                                    @if ($team?->payment != null && $team?->payment?->proof != null)
                                         <img src="{{ isset($team->payment->proof) ? asset($team->payment->proof) : '#' }}" alt="Bukti Pembayaran"
-                                            class="img-table-lightbox" width="100">
+                                            class="img-table-lightbox" width="100" loading="lazy">
                                     @else
                                         <span>Belum Bayar</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($team->payment != null && $team->payment->status == 'pending')
-                                        <span class="badge bg-warning">Pending</span>
-                                    @elseif($team->payment != null && $team->payment->status == 'approve')
+                                    @if ($team?->payment != null && $team?->payment?->status == 'reject')
+                                        <span class="badge bg-danger">Ditolak</span>
+                                    @elseif($team?->payment != null && $team?->payment?->status == 'approve')
                                         <span class="badge bg-success">Diterima</span>
                                     @else
-                                        <span class="badge bg-danger">Ditolak</span>
+                                        <span class="badge bg-warning">Pending</span>
                                     @endif
                                 </td>
                                 <td>

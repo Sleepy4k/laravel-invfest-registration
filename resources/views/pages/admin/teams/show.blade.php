@@ -31,30 +31,30 @@
                             </tr>
                             <tr>
                                 <th>Nama Ketua</th>
-                                <td>{{ $team->leader->name }}</td>
+                                <td>{{ $team->leader->name ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th> Kartu Pelajar / Mahasiswa Ketua</th>
                                 <td>
                                     <a href="{{ isset($team->leader->card) ? asset($team->leader->card) : '#' }}" data-lightbox="image-1"
-                                        data-title="Kartu Identitas {{ $team->leader->name }}">
+                                        data-title="Kartu Identitas {{ $team->leader->name ?? '-' }}">
                                         Kartu Pelajar / Mahasiswa
                                     </a>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Email Ketua</th>
-                                <td>{{ $team->leader->user->email }}</td>
+                                <td>{{ $team->leader->user->email ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>No. HP Ketua</th>
-                                <td>{{ $team->leader->phone }}</td>
+                                <td>{{ $team->leader->phone ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Anggota</th>
                                 <td>
                                     <ul>
-                                        @foreach ($team->member as $member)
+                                        @foreach ($team?->member as $member)
                                             <li>
                                                 {{ $member->name ?? 'Tidak Ada' }} <a
                                                     href="{{ isset($member->card) ? asset($member->card) : '#' }}" data-lightbox="image-1"
@@ -66,16 +66,16 @@
                                     </ul>
                                 </td>
                             </tr>
-                            @if ($team->level == 'sma/smk')
+                            @if ($team->competition->level->level == 'umum' && $team->companion?->id != null)
                                 <tr>
                                     <th>Nama Pembimbing</th>
-                                    <td>{{ $team->companion_name }}</td>
+                                    <td>{{ $team?->companion?->name }}</td>
                                 </tr>
                                 <tr>
                                     <th>Kartu Identitas Pembmbing</th>
                                     <td>
-                                        <a href="{{ asset($team->companion_card) }}" data-lightbox="image-1"
-                                            data-title="Kartu Identitas {{ $team->companion_name }}">
+                                        <a href="{{ isset($team?->companion?->card) ? asset($team->companion->card) : '#' }}" data-lightbox="image-1"
+                                            data-title="Kartu Identitas {{ $team?->companion?->name }}">
                                             Kartu Identitas Pembimbing
                                         </a>
                                     </td>
@@ -84,31 +84,31 @@
                             <tr>
                                 <th>Metode Pembayaran</th>
                                 <td>
-                                    {{ $team->payment->method->name ?? '' }} -
-                                    {{ $team->payment->method->number ?? '' }}
+                                    {{ $team?->payment?->method?->name ?? '' }} -
+                                    {{ $team?->payment?->method?->number ?? '' }}
                                     <br />
-                                    A/N {{ $team->payment->method->owner ?? '' }}
+                                    A/N {{ $team?->payment?->method?->owner ?? '' }}
                                 </td>
                             </tr>
                             <tr>
                                 <th>Bukti Pembayaran</th>
                                 <td>
-                                    <a href="{{ isset($team->payment->proof) ? asset($team->payment->proof) : '#' }}" data-lightbox="image-1"
+                                    <a href="{{ isset($team?->payment?->proof) ? asset($team?->payment?->proof) : '#' }}" data-lightbox="image-1"
                                         data-title="Bukti Pembayaran {{ $team->name }}">
-                                        <img src="{{ isset($team->payment->proof) ? asset($team->payment->proof) : '#' }}" alt="Bukti Pembayaran"
-                                            class="img-table-lightbox" width="100">
+                                        <img src="{{ isset($team?->payment?->proof) ? asset($team?->payment?->proof) : '#' }}" alt="Bukti Pembayaran"
+                                            class="img-table-lightbox" width="100" loading="lazy">
                                     </a>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Status</th>
                                 <td>
-                                    @if ($team->payment->status == 'pending')
-                                        <span class="badge bg-warning">Pending</span>
-                                    @elseif($team->payment->status == 'approve')
+                                    @if ($team?->payment?->status == 'reject')
+                                        <span class="badge bg-danger">Ditolak</span>
+                                    @elseif($team?->payment?->status == 'approve')
                                         <span class="badge bg-success">Diterima</span>
                                     @else
-                                        <span class="badge bg-danger">Ditolak</span>
+                                        <span class="badge bg-warning">Pending</span>
                                     @endif
                                 </td>
                             </tr>
@@ -116,16 +116,16 @@
                     </div>
                 </div>
                 <x-slot name="footer">
-                    @if ($team->payment->status == 'pending')
+                    @if ($team?->payment !== null && $team?->payment?->status == 'pending')
                         <span style="color: red;">* Pastikan bukti pembayaran sudah tervalidasi sebelum melakukan aksi</span>
                         <div class="d-flex justify-content-between mt-4">
                             <form action="{{ route('admin.team.update', $team->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="status" value="{{ $status::APPROVE }}">
-                                <input type="hidden" name="email" value="{{ $team->leader->user->email }}">
+                                <input type="hidden" name="email" value="{{ $team?->leader?->user?->email }}">
                                 <input type="hidden" name="whatsapp_link"
-                                    value="{{ $team->competition->whatsapp_group }}">
+                                    value="{{ $team?->competition?->whatsapp_group }}">
                                 <button class="btn btn-success btn-sm"
                                     onclick="return confirm('Apakah anda yakin ingin menerima tim ini?')">Terima</button>
                             </form>
@@ -133,7 +133,7 @@
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="status" value="{{ $status::REJECT }}">
-                                <input type="hidden" name="email" value="{{ $team->leader->user->email }}">
+                                <input type="hidden" name="email" value="{{ $team?->leader?->user?->email }}">
                                 <button class="btn btn-danger btn-sm"
                                     onclick="return confirm('Apakah anda yakin ingin menolak tim ini?')">Tolak</button>
                             </form>

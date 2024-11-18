@@ -16,11 +16,11 @@
                     Tutorial Pendaftaran
                 </button>
             </div>
-            <img src="{{ isset($appSettings['mascot']) ? asset($appSettings['mascot']) : '#' }}" alt="mascot" class="mascot-image">
+            <img src="{{ isset($appSettings['mascot']) ? asset($appSettings['mascot']) : '#' }}" alt="mascot" class="mascot-image" loading="lazy">
         </div>
         <div class="d-flex twibbon justify-content-between align-items-center bg-primary text-white p-4 gap-5"
             style="border-radius: 0 0 1rem 1rem;">
-            <img src="{{ isset($appSettings['twibbon']) ? asset($appSettings['twibbon']) : '#' }}" alt="twibbon" class="twibbon-image">
+            <img src="{{ isset($appSettings['twibbon']) ? asset($appSettings['twibbon']) : '#' }}" alt="twibbon" class="twibbon-image" loading="lazy">
             <div class="information p-4">
                 <h3 class="text-uppercase fw-bold">{{ sprintf('Twibbon %s', $appSettings['title']) }}</h3>
                 <p class="info-desc mb-5">Hello Developer Muda, Mari kita berpartisipasi dengan menggunakan Twibon dari
@@ -47,9 +47,10 @@
                 <button type="button" class="btn-close float-end mb-3" data-bs-dismiss="modal"
                     aria-label="Close"></button>
                 <iframe width="100%" height="500px"
-                    src="https://www.youtube.com/embed/o1Va6qr3HHc?si=C2Xqh5U55O_5vTEa" title="YouTube video player"
+                    src="https://www.youtube.com/embed/LDT5cLIaRpw?si=_UKktn-lfWoQYhkF" title="Video tutorial pendaftaran INVFEST X ISF 9.0"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
                     allowfullscreen></iframe>
             </div>
         </div>

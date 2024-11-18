@@ -2,7 +2,9 @@
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Metode Pembayaran</a></li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('admin.payment-method.index') }}">Metode Pembayaran</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>

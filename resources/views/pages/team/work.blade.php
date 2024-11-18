@@ -1,11 +1,11 @@
 @php
     $leader = $user->leader?->first();
-    $team = $leader?->team?->first();
-    $payment = $team->payment?->first();
-    $submission = $team->submission?->first();
+    $team = $leader?->team;
+    $payment = $team?->payment;
+    $submission = $team?->submission;
 @endphp
 
-<x-layouts.dashboard-team title="Dashboard Tim {{ $team->name }}">
+<x-layouts.dashboard-team title="Dashboard Tim {{ $team?->name }}">
     @if ($payment->status == 'pending')
         <div class="alert alert-warning">
             <i class="fas fa-exclamation-triangle"></i>
@@ -33,8 +33,8 @@
                     <i class="fas fa-check-circle"></i>
                     Karya anda telah dikirimkan, semoga sukses!
                 </div>
-                <x-input.text label="Judul Karya" value="{{ $submission->title }}" readonly />
-                <a href="{{ $submission->file }}" target="_blank"
+                <x-input.text label="Judul Karya" value="{{ $submission?->title }}" readonly />
+                <a href="{{ $submission?->file }}" target="_blank"
                     class="btn btn-primary btn-sm">
                     Unduh Karya
                 </a>
@@ -43,8 +43,8 @@
                     id="form-work">
                     @csrf
                     <x-input.text label="Judul Karya" name="title"
-                        value="{{ $submission->title ?? '' }}" />
-                    <x-input.text label="Zip Karya" name="zip_file" type="file" />
+                        value="{{ $submission?->title ?? '' }}" />
+                    <x-input.text label="File Karya" name="zip_file" type="file" />
                     <x-button.primary class="float-end" type="submit">
                         Kirim Karya
                     </x-button.primary>
@@ -60,8 +60,8 @@
                     <i class="fas fa-check-circle"></i>
                     Karya anda telah dikirimkan, semoga sukses!
                 </div>
-                <x-input.text label="Judul Karya" value="{{ $submission->title }}" readonly />
-                <a href="{{ $submission->file }}" target="_blank"
+                <x-input.text label="Judul Karya" value="{{ $submission?->title }}" readonly />
+                <a href="{{ $submission?->file }}" target="_blank"
                     class="btn btn-primary btn-sm">
                     Unduh Karya
                 </a>
