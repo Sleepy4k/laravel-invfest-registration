@@ -78,6 +78,18 @@ composer run dev
 
 ## Notes
 
+- Composer installation Error
+
+If you met installation error with message `need github token` or `permissions are sufficient for this personal access token`,
+then you need to generate your github personal access token on `https://github.com/settings/tokens`, and make sure to checklist
+`read:packages` permission, and generate token, and paste on token input after type your github username, token example
+
+~~~bash
+ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxx
+-------------------------------
+github_pat_xxxxxx_xxxxxxxxxxxxx
+~~~
+
 - Pre Setup Error
 
 To solve this error you need to run pre setup command.
@@ -119,6 +131,57 @@ which mean it use latin1 charset, and max of string only 125 or 191 character, t
 
 ~~~bash
 'engine' => 'InnoDB',
+~~~
+
+- Notification won't sent to user
+
+Keep in mind that default system using queue for jobs, that's mean when user register they need to wait until jobs is clear,
+but if your system don't setup any cron job or using InnoDB (they can't load jobs database), so you need to disable on notification class,
+just remove `implements ShouldQueue` from current class so it will be like this,
+
+~~~bash
+class TeamRejected extends Notification
+~~~
+
+and if you want to activated notification jobs then change again to
+
+~~~bash
+class TeamRejected extends Notification implements ShouldQueue
+~~~
+
+## Security Things
+
+- Content Security Policy (CSP)
+
+For any reasons please don't turn on this feature, because we are implementing danger rendering on blade,
+so for security issue, keep enable this feature, if you met any error such as script blocked or something,
+read article about how to setting up CSP, so you can handle this error
+
+- User Session
+
+When this web deployed, please change session setting on `config/session.php`, keep in mind out main goal
+is to secure user data, so follow this config for better session security,
+
+~~~bash
+'encrypt' => env('SESSION_ENCRYPT', true)
+'secure' => env('SESSION_SECURE_COOKIE', true),
+~~~
+
+- Secure Header
+
+After all feature implemented, you can change secure heade config for better security,
+so set HTTP Strict Transport Security config (force into https protocol), so it will be like this
+
+~~~bash
+'hsts' => [
+    'enable' => true,
+
+    'max-age' => 31536000,
+
+    'include-sub-domains' => false,
+
+    'preload' => true,
+],
 ~~~
 
 ## Environment Variables
