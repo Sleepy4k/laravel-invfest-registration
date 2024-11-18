@@ -47,6 +47,7 @@
                 <button type="button" class="btn-close float-end mb-3" data-bs-dismiss="modal"
                     aria-label="Close"></button>
                 <iframe width="100%" height="500px"
+                    loading="lazy"
                     src="https://www.youtube.com/embed/LDT5cLIaRpw?si=_UKktn-lfWoQYhkF" title="Video tutorial pendaftaran INVFEST X ISF 9.0"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
