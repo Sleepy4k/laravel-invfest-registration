@@ -1,4 +1,4 @@
-<x-layouts.auth title="Pengisian Team">
+<x-layouts.auth title="Pengisian Anggota Team">
     <div class="page-content d-flex align-items-center justify-content-center">
         <div class="row w-100 mx-0 auth-page">
             <div class="col-md-6 col-xl-5 mx-auto">
@@ -12,6 +12,20 @@
                                 <h5 class="text-muted fw-normal mb-4">
                                     Isi data dengan benar, tidak bisa diubah kembali
                                 </h5>
+                                <div class="alert alert-danger" id="alert-team-required">
+                                    <ul class="mb-0">
+                                        <li>Memiliki minimal 1 anggota team</li>
+                                    </ul>
+                                </div>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul class="mb-0">
+                                            @foreach($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <form action="{{ route('team-members.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
@@ -24,7 +38,6 @@
                                     <x-button.primary class="w-100 mb-3" type="submit">
                                         Lanjutkan ke Pembayaran
                                     </x-button.primary>
-                                    <span style="color: red;">* Minimal memiliki 1 anggota team selain ketua team</span>
                                 </form>
                             </div>
                         </div>
@@ -33,4 +46,25 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function checkTeamMembers() {
+            const member1 = $('input[name="data[0][member]"]').val();
+            const member2 = $('input[name="data[1][member]"]').val();
+            const alertTeamRequired = $('#alert-team-required');
+
+            if (member1 || member2) {
+                alertTeamRequired.hide();
+            } else {
+                alertTeamRequired.show();
+            }
+        }
+
+        $(document).ready(function() {
+            checkTeamMembers();
+            $('input[name="data[0][member]"], input[name="data[1][member]"]').on('input', function() {
+                checkTeamMembers();
+            });
+        });
+    </script>
 </x-layouts.auth>

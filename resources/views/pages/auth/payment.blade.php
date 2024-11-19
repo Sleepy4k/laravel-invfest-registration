@@ -1,9 +1,9 @@
-<x-layouts.auth title="Pembayaran">
-    @php
-        $team = $user?->leader?->first()?->team;
-        $competition = $team?->competition;
-    @endphp
+@php
+    $team = $user?->leader?->first()?->team;
+    $competition = $team?->competition;
+@endphp
 
+<x-layouts.auth title="Pembayaran">
     <div class="page-content d-flex align-items-center justify-content-center">
         <div class="row w-100 mx-0 auth-page">
             <div class="col-md-6 col-xl-3 mx-auto">
