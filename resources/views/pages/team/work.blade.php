@@ -1,5 +1,5 @@
 @php
-    $leader = $user->leader?->first();
+    $leader = $user->leader;
     $team = $leader?->team;
     $payment = $team?->payment;
     $submission = $team?->submission;

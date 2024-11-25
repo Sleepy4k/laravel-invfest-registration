@@ -92,6 +92,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function leader()
     {
-        return $this->hasMany(TeamLeader::class, 'user_id', 'id');
+        return $this->hasOne(TeamLeader::class, 'user_id', 'id');
     }
 }

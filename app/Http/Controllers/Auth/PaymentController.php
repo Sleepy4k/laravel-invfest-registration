@@ -21,7 +21,7 @@ class PaymentController extends Controller
     public function index()
     {
         try {
-            if (auth('web')->user()->leader->first()->payment != null) {
+            if (!is_null(auth('web')->user()->leader?->payment)) {
                 toast('Pembayaran sudah dilakukan, silahkan menunggu konfirmasi dari admin', 'success');
 
                 return to_route('team.dashboard');

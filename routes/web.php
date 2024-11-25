@@ -12,12 +12,12 @@ Route::get('/competition/{slug}', [Frontend\CompetitionController::class, 'show'
 
 Route::middleware('guest')->group(function () {
     Route::resource('login', Auth\LoginController::class)
-    ->only(['index', 'store'])
-    ->name('index', 'login');
+        ->only(['index', 'store'])
+        ->name('index', 'login');
 
     Route::resource('register', Auth\RegisterController::class)
-    ->only(['index', 'store'])
-    ->name('index', 'register');
+        ->only(['index', 'store'])
+        ->name('index', 'register');
 
     Route::get('/competition', [Frontend\CompetitionController::class, 'index'])->name('frontend.competition.index');
 });
@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/email/verification-check', [Auth\VerificationController::class, 'store'])->name('verification.send');
         });
 
-        Route::middleware('verified')->group(function () {
+        Route::middleware(['verified', 'ensure_registration_complete'])->group(function () {
             Route::resource('team-members', Auth\TeamController::class)
                 ->only(['index', 'store'])
                 ->name('index', 'team-members');

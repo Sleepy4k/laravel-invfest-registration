@@ -32,7 +32,7 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-users"></i>
                             @role('team')
-                                {{ auth('web')->user()?->leader?->first()?->team?->name ?? '#####' }}
+                                {{ auth('web')->user()?->leader?->team?->name ?? '#####' }}
                             @else
                                 Admin
                             @endrole

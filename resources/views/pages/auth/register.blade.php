@@ -6,14 +6,14 @@
                     <div class="row flex-column-reverse flex-md-row">
                         <div class="col-md-12 ps-md-0">
                             <div class="auth-form-wrapper px-4 py-5">
-                                <a href="{{ url('/') }}"
+                                <a href="{{ route('frontend.landing') }}"
                                     class="noble-ui-logo d-block mb-2">{{ $appSettings['title'] }}</a>
                                 <h5 class="text-muted fw-normal mb-4">Silahkan isi form berikut untuk mendaftar</h5>
                                 <form action="{{ route('register.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <x-input.select name="level" label="Tingkat" id="level">
-                                        <option value="">Pilih Tingkat</option>
+                                    <x-input.select name="level" label="Tingkat Kompetisi" id="level">
+                                        <option value="">Pilih Tingkat Kompetisi</option>
                                         @foreach ($levels as $level)
                                             <option value="{{ $level->id }}" id="{{ $level->level }}">{{ $level->display_as }}</option>
                                         @endforeach

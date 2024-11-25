@@ -1,5 +1,5 @@
 @php
-    $team = $user?->leader?->first()?->team;
+    $team = $user?->leader?->team;
     $competition = $team?->competition;
 @endphp
 
@@ -11,7 +11,7 @@
                     <div class="row flex-column-reverse flex-md-row">
                         <div class="col-md-12 ps-md-0">
                             <div class="auth-form-wrapper px-4 py-5">
-                                <a href="{{ url('/') }}" class="noble-ui-logo d-block mb-2">Pembayaran Tim
+                                <a href="{{ route('frontend.landing') }}" class="noble-ui-logo d-block mb-2">Pembayaran Tim
                                     {{ $team?->name }}
                                 </a>
                                 <h5 class="text-muted fw-normal mb-4">Silahkan lakukan pembayaran untuk melanjutkan

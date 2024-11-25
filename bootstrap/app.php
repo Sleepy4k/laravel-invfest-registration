@@ -29,6 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'verification_email_access' => \App\Http\Middleware\VerificationEmailAccess::class,
+            'ensure_registration_complete' => \App\Http\Middleware\EnsureRegistrationComplete::class,
         ]);
 
         $middleware->redirectGuestsTo('/');

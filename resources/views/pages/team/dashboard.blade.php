@@ -1,5 +1,5 @@
 @php
-    $leader = $user->leader?->first();
+    $leader = $user->leader;
     $team = $leader?->team;
     $payment = $team?->payment;
     $paymentMethod = $payment?->method;
@@ -14,7 +14,15 @@
             href="{{ asset('admin/assets/plugins/lightbox/css/lightbox.css') }}">
     @endpush
 
-    @if (is_null($payment))
+    @if (!isset($team?->member) || count($team?->member) == 0)
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            Anda belum melakukan mendaftarkan anggota team. Silahkan melakukan pendaftaran anggota team terlebih dahulu.
+            <a href="{{ route('team-members') }}" target="_blank" class="alert-link">
+                Daftar Sekarang
+            </a>
+        </div>
+    @elseif (is_null($payment))
         <div class="alert alert-warning">
             <i class="fas fa-exclamation-triangle"></i>
             Anda belum melakukan pembayaran. Silahkan melakukan pembayaran terlebih dahulu.

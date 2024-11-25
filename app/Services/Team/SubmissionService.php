@@ -43,7 +43,7 @@ class SubmissionService extends Service
     public function store(array $request): void
     {
         try {
-            $request['team_id'] = auth('web')->user()->leader?->first()?->team?->id ?? null;
+            $request['team_id'] = auth('web')->user()->leader?->team?->id ?? null;
             if ($request['team_id'] == null) {
                 alert('Gagal', 'Karya gagal ditambahkan, silahkan refresh halaman anda', 'error');
                 return;

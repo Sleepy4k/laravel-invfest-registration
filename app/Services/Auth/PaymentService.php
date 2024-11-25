@@ -44,7 +44,7 @@ class PaymentService extends Service
      */
     public function store(array $request): void
     {
-        $request['team_id'] = auth('web')->user()->leader->first()?->team?->id;
+        $request['team_id'] = auth('web')->user()->leader?->team?->id;
         $request['status'] = PaymentStatus::PENDING;
         $request['method_id'] = $request['payment_method_id'];
 

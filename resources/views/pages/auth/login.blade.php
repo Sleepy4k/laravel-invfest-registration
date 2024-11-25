@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-md-8 ps-md-0">
                             <div class="auth-form-wrapper px-4 py-5">
-                                <a href="{{ url('/') }}"
+                                <a href="{{ route('frontend.landing') }}"
                                     class="noble-ui-logo d-block mb-2">{{ $appSettings['title'] }}</a>
                                 <h5 class="text-muted fw-normal mb-4">Silahkan Login Dengan Akun Anda</h5>
                                 <form action="{{ route('login') }}" method="POST">

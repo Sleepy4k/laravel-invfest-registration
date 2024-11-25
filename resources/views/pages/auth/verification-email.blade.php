@@ -6,7 +6,7 @@
                     <div class="row flex-column-reverse flex-md-row">
                         <div class="col-md-12 ps-md-0">
                             <div class="auth-form-wrapper px-4 py-5">
-                                <a href="{{ url('/') }}" class="noble-ui-logo d-block mb-2">
+                                <a href="{{ route('frontend.landing') }}" class="noble-ui-logo d-block mb-2">
                                     Verifikasi Email
                                 </a>
                                 <h5 class="text-muted fw-normal mb-4">

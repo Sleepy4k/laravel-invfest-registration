@@ -30,7 +30,7 @@ class TeamService extends Service
             'competition:id,name,level_id',
             'competition.level:id,display_as',
             'payment:team_id,proof,status',
-            'leader:team_id,name'
+            'leader:team_id,name,phone'
         ]);
 
         return compact('teams');

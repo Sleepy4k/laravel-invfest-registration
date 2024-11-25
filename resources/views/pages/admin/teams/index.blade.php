@@ -37,8 +37,9 @@
                                 <td>{{ $team?->leader?->name }}</td>
                                 <td>
                                     @if ($team?->payment != null && $team?->payment?->proof != null)
-                                        <img src="{{ isset($team->payment->proof) ? asset($team->payment->proof) : '#' }}" alt="Bukti Pembayaran"
-                                            class="img-table-lightbox" width="100" loading="lazy">
+                                        <img src="{{ isset($team->payment->proof) ? asset($team->payment->proof) : '#' }}"
+                                            alt="Bukti Pembayaran" class="img-table-lightbox" width="100"
+                                            loading="lazy">
                                     @else
                                         <span>Belum Bayar</span>
                                     @endif
@@ -53,6 +54,18 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if ($team?->payment == null || $team?->payment?->status == 'pending')
+                                        @php
+                                            $lnBreak = urlencode("\n");
+                                        @endphp
+
+                                        <span class="btn btn-warning btn-sm me-2">
+                                            <a href="{{ 'https://api.whatsapp.com/send/?phone=' . $appSettings['phone'] . '&text=Halo!' . $lnBreak . 'Sebelumnya saya ' . (auth('web')->user()->roles?->first()->name ?? 'admin') . ' dari Web ' . $appSettings['title'] . ' ' . $lnBreak . 'Apakah boleh meminta tolong untuk follow up team "' . $team?->name . '" pada lomba ' . $team?->competition?->name . ' untuk ' . ($team?->payment == null ? 'melakukan pembayaran' : 'melakukan crosscheck pembayaran') . '?' . $lnBreak . 'Jika boleh, kontak ketua team pada nomor berikut wa.me/' . (isset($team?->leader?->phone) && substr($team?->leader?->phone, 0, 1) === '0' ? '62' . substr($team?->leader?->phone, 1) : 'xxxxxxxx') . '' . $lnBreak . 'Terima kasih!!' }}"
+                                                target="_blank" rel="noopener" class="nav-link">
+                                                Follow Up
+                                            </a>
+                                        </span>
+                                    @endif
                                     <a href="{{ route('admin.team.show', $team->id) }}"
                                         class="btn btn-primary btn-sm me-2">Detail</a>
                                     <form action="{{ route('admin.team.destroy', $team->id) }}" method="POST"
