@@ -16,6 +16,7 @@ class TeamService extends Service
     public function __construct(
         private Models\UserInterface $userInterface,
         private Models\TeamInterface $teamInterface,
+        private Models\TeamLeaderInterface $teamLeaderInterface,
         private Models\PaymentInterface $paymentInterface,
     ) {}
 
@@ -103,7 +104,13 @@ class TeamService extends Service
     public function destroy(string $id): void
     {
         try {
+            $teamLeader = $this->teamLeaderInterface->findByCustomId([['team_id', '=', $id]], ['id', 'team_id', 'user_id']);
+
             $this->teamInterface->deleteById($id);
+
+            if (isset($teamLeader) && !is_null($teamLeader?->user_id ?? null)) {
+                $this->userInterface->deleteById($teamLeader->user_id);
+            }
 
             toast('Tim berhasil dihapus', 'success');
         } catch (\Throwable $th) {

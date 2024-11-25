@@ -27,6 +27,7 @@ class ViewServiceProvider extends ServiceProvider
             'pages.auth.register',
             'pages.team.dashboard',
             'pages.team.work',
+            'pages.admin.teams.index',
 
             'components.layouts.admin',
             'components.layouts.auth',
