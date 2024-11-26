@@ -33,7 +33,7 @@ class SettingSeeder extends Seeder
                 ],
                 [
                     'key' => 'deadline',
-                    'value' => '2024-12-13',
+                    'value' => '2024-11-30T14:47',
                 ],
                 [
                     'key' => 'phone',
@@ -62,7 +62,11 @@ class SettingSeeder extends Seeder
                 [
                     'key' => 'instagram',
                     'value' => 'https://www.instagram.com/official.invfestxisf',
-                ]
+                ],
+                [
+                    'key' => 'video_tutorial',
+                    'value' => 'https://www.youtube.com/embed/LDT5cLIaRpw?si=_UKktn-lfWoQYhkF',
+                ],
             ];
 
             $files = [
