@@ -29,6 +29,7 @@ class SettingRequest extends FormRequest
             'nav_logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
             'phone' => ['required', 'string'],
             'instagram' => ['required', 'string'],
+            'video_tutorial' => ['required', 'url'],
             'deadline' => ['required', 'string'],
             'twibbon' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
             'twibbon_link' => ['required', 'string'],

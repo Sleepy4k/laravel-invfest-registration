@@ -12,6 +12,7 @@ class SubmissionService extends Service
      */
     public function __construct(
         private Models\SubmissionInterface $submissionInterface,
+        private Models\CompetitionInterface $competitionInterface,
     ) {}
 
     /**
@@ -21,9 +22,18 @@ class SubmissionService extends Service
      */
     public function index(): array
     {
-        $works = $this->submissionInterface->all(['id', 'team_id', 'title', 'file', 'is_reviewed'], ['team:id,competition_id,name,institution', 'team.competition:id,name']);
+        $filtered = request()->get('filter') ?? null;
 
-        return compact('works');
+        if (isset($filtered) && !empty($filtered)) {
+            $filtered = [['competition_id', '=', $filtered]];
+        } else {
+            $filtered = [];
+        }
+
+        $competitions = $this->competitionInterface->all(['id', 'name']);
+        $works = $this->submissionInterface->all(['id', 'team_id', 'title', 'file', 'is_reviewed'], ['team:id,competition_id,name,institution', 'team.competition:id,name'], $filtered);
+
+        return compact('works', 'competitions');
     }
 
     /**

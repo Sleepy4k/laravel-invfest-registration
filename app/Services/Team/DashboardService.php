@@ -25,15 +25,13 @@ class DashboardService extends Service
         $user = $this->userInterface->findById($uid, ['id', 'email'], [
             'leader:id,team_id,user_id,name,phone,card',
             'leader.team:id,competition_id,name,institution',
-            'leader.team.member:id,team_id',
+            'leader.team.member:id,team_id,name,card',
             'leader.team.companion:id,team_id,name,card',
             'leader.team.payment:id,team_id,method_id,proof,status',
             'leader.team.payment.method:id,name,number,owner',
             'leader.team.competition:id,name,level_id,whatsapp_group',
             'leader.team.competition.level:id,display_as'
         ]);
-
-        // dd($user);
 
         return compact('user');
     }

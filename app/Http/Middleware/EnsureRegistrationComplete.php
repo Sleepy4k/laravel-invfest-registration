@@ -44,7 +44,7 @@ class EnsureRegistrationComplete
                 return to_route('team-members');
             } elseif (is_null($payment)) {
                 return to_route('payment-team');
-            } elseif (!is_null($payment) && $payment?->status && $request->routeIs('team.work')) {
+            } elseif (!is_null($payment) && $payment?->status == 'pending' && $request->routeIs('team.work*')) {
                 return to_route('team.dashboard');
             }
         }
