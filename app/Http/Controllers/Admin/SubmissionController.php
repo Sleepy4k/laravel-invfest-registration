@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\Admin\SubmissionDataTable;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\SubmissionService;
 use Illuminate\Http\Request;
@@ -18,10 +19,10 @@ class SubmissionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(SubmissionDataTable $dataTable)
     {
         try {
-            return view('pages.admin.works.index', $this->service->index());
+            return $dataTable->render('pages.admin.works.index', $this->service->index());
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

@@ -22,18 +22,9 @@ class SubmissionService extends Service
      */
     public function index(): array
     {
-        $filtered = request()->get('filter') ?? null;
-
-        if (isset($filtered) && !empty($filtered)) {
-            $filtered = [['competition_id', '=', $filtered]];
-        } else {
-            $filtered = [];
-        }
-
         $competitions = $this->competitionInterface->all(['id', 'name']);
-        $works = $this->submissionInterface->all(['id', 'team_id', 'title', 'file', 'is_reviewed'], ['team:id,competition_id,name,institution', 'team.competition:id,name'], $filtered);
 
-        return compact('works', 'competitions');
+        return compact('competitions');
     }
 
     /**

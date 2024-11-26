@@ -28,23 +28,9 @@ class TeamService extends Service
      */
     public function index(): array
     {
-        $filtered = request()->get('filter') ?? null;
-
-        if (isset($filtered) && !empty($filtered)) {
-            $filtered = [['competition_id', '=', $filtered]];
-        } else {
-            $filtered = [];
-        }
-
         $competitions = $this->competitionInterface->all(['id', 'name']);
-        $teams = $this->teamInterface->all(['id', 'name', 'institution', 'competition_id'], [
-            'competition:id,name,level_id',
-            'competition.level:id,display_as',
-            'payment:team_id,proof,status',
-            'leader:team_id,name,phone'
-        ], $filtered);
 
-        return compact('teams', 'competitions');
+        return compact('competitions');
     }
 
     /**

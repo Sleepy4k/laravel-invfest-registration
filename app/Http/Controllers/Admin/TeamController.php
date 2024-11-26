@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\Admin\TeamDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\TeamRequest;
 use App\Services\Admin\TeamService;
@@ -18,10 +19,10 @@ class TeamController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(TeamDataTable $dataTable)
     {
         try {
-            return view('pages.admin.teams.index', $this->service->index());
+            return $dataTable->render('pages.admin.teams.index', $this->service->index());
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

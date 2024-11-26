@@ -43,7 +43,9 @@ class CspPolicy extends BasePolicy
             ->addDirectivesForYouTube()
             ->addDirectivesForJsDelivrCDN()
             ->addDirectivesForCloudflareCDN()
-            ->addDirectivesForTailwindcssCDN();
+            ->addDirectivesForTailwindcssCDN()
+            ->addDirectivesForHighCharts()
+            ->addDirectivesForDataTablesCDN();
     }
 
     protected function addGeneralDirectives(): self
@@ -122,5 +124,21 @@ class CspPolicy extends BasePolicy
             ->addDirective(Directive::FONT, 'cdn.tailwindcss.com')
             ->addDirective(Directive::STYLE, 'cdn.tailwindcss.com')
             ->addDirective(Directive::SCRIPT, 'cdn.tailwindcss.com');
+    }
+
+    protected function addDirectivesForHighCharts(): self
+    {
+        return $this
+            ->addDirective(Directive::FONT, 'code.highcharts.com')
+            ->addDirective(Directive::STYLE, 'code.highcharts.com')
+            ->addDirective(Directive::SCRIPT, 'code.highcharts.com');
+    }
+
+    protected function addDirectivesForDataTablesCDN(): self
+    {
+        return $this
+            ->addDirective(Directive::FONT, 'cdn.datatables.net')
+            ->addDirective(Directive::STYLE, 'cdn.datatables.net')
+            ->addDirective(Directive::SCRIPT, 'cdn.datatables.net');
     }
 }

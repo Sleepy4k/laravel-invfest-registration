@@ -33,6 +33,7 @@ class AppSettingComposer
     protected function defaultSettings(): array
     {
         $logo = asset('images/logo.png');
+
         return [
             'title' => 'INVFEST X IST 9.0',
             'slogan' => 'Spark the Vision, Light the World',
