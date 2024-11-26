@@ -1,4 +1,8 @@
 <x-layouts.admin title="Tim Peserta">
+    @push('plugin-styles')
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/fh-3.2.4/r-2.3.0/sc-2.0.7/sl-1.4.0/datatables.min.css"/>
+    @endpush
+
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
             <ol class="breadcrumb">
@@ -31,75 +35,14 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <x-admin.card title="Tim Peserta">
-                <x-admin.datatable>
-                    <x-slot name="thead">
-                        <tr>
-                            <th>No</th>
-                            <th>Lomba</th>
-                            <th>Tingkat</th>
-                            <th>Nama Tim</th>
-                            <th>Asal Instansi</th>
-                            <th>Nama Ketua</th>
-                            <th>Bukti Pembayaran</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </x-slot>
-                    <x-slot name="tbody">
-                        @foreach ($teams as $team)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $team?->competition?->name }}</td>
-                                <td>{{ $team?->competition?->level?->display_as }}</td>
-                                <td>{{ $team?->name }}</td>
-                                <td>{{ $team?->institution }}</td>
-                                <td>{{ $team?->leader?->name }}</td>
-                                <td>
-                                    @if ($team?->payment != null && $team?->payment?->proof != null)
-                                        <img src="{{ isset($team->payment->proof) ? asset($team->payment->proof) : '#' }}"
-                                            alt="Bukti Pembayaran" class="img-table-lightbox" width="100"
-                                            loading="lazy">
-                                    @else
-                                        <span>Belum Bayar</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($team?->payment != null && $team?->payment?->status == 'reject')
-                                        <span class="badge bg-danger">Ditolak</span>
-                                    @elseif($team?->payment != null && $team?->payment?->status == 'approve')
-                                        <span class="badge bg-success">Diterima</span>
-                                    @else
-                                        <span class="badge bg-warning">Pending</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($team?->payment == null || $team?->payment?->status == 'pending')
-                                        @php
-                                            $lnBreak = urlencode("\n");
-                                        @endphp
-
-                                        <span class="btn btn-warning btn-sm me-2">
-                                            <a href="{{ 'https://api.whatsapp.com/send/?phone=' . $appSettings['phone'] . '&text=Halo!' . $lnBreak . 'Sebelumnya saya ' . (auth('web')->user()->roles?->first()->name ?? 'admin') . ' dari Web ' . $appSettings['title'] . ' ' . $lnBreak . 'Apakah boleh meminta tolong untuk follow up team "' . $team?->name . '" pada lomba ' . $team?->competition?->name . ' untuk ' . ($team?->payment == null ? 'melakukan pembayaran' : 'melakukan crosscheck pembayaran') . '?' . $lnBreak . 'Jika boleh, kontak ketua team pada nomor berikut wa.me/' . (isset($team?->leader?->phone) && substr($team?->leader?->phone, 0, 1) === '0' ? '62' . substr($team?->leader?->phone, 1) : 'xxxxxxxx') . '' . $lnBreak . 'Terima kasih!!' }}"
-                                                target="_blank" rel="noopener" class="nav-link">
-                                                Follow Up
-                                            </a>
-                                        </span>
-                                    @endif
-                                    <a href="{{ route('admin.team.show', $team->id) }}"
-                                        class="btn btn-primary btn-sm me-2">Detail</a>
-                                    <form action="{{ route('admin.team.destroy', $team->id) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </x-slot>
-                </x-admin.datatable>
+                {{ $dataTable->table() }}
             </x-admin.card>
         </div>
     </div>
+
+    @push('plugin-scripts')
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/fh-3.2.4/r-2.3.0/sc-2.0.7/sl-1.4.0/datatables.min.js"></script>
+        <script type="text/javascript" src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+        {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+    @endpush
 </x-layouts.admin>
