@@ -18,6 +18,8 @@
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
+
+            <li class="nav-item nav-category">Participants</li>
             <li class="nav-item {{ request()->is('admin/team*') ? ' active' : '' }}">
                 <a href="{{ route('admin.team.index') }}" class="nav-link">
                     <i class="link-icon" data-feather="users"></i>
@@ -31,6 +33,8 @@
                         <span class="link-title">Karya Peserta</span>
                     </a>
                 </li>
+
+                <li class="nav-item nav-category">Competition Management</li>
                 <li class="nav-item {{ request()->is('admin/competition*') ? ' active' : '' }}">
                     <a href="{{ route('admin.competition.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="award"></i>
@@ -43,6 +47,8 @@
                         <span class="link-title">Timeline</span>
                     </a>
                 </li>
+
+                <li class="nav-item nav-category">Partnerships</li>
                 <li class="nav-item {{ request()->is('admin/sponsor*') ? ' active' : '' }}">
                     <a href="{{ route('admin.sponsor.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="dollar-sign"></i>
@@ -55,6 +61,8 @@
                         <span class="link-title">Media Partner</span>
                     </a>
                 </li>
+
+                <li class="nav-item nav-category">Settings</li>
                 <li class="nav-item {{ request()->is('admin/payment-method*') ? ' active' : '' }}">
                     <a href="{{ route('admin.payment-method.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="credit-card"></i>
@@ -71,6 +79,7 @@
         </ul>
     </div>
 </nav>
+
 <nav class="settings-sidebar">
     <div class="sidebar-body">
         <a href="#" class="settings-sidebar-toggler">

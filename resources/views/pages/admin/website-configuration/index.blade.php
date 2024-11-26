@@ -53,6 +53,8 @@
                                 value="{{ $settings['phone'] }}" />
                             <x-input.text name="instagram" label="Instagram"
                                 value="{{ $settings['instagram'] }}" />
+                            <x-input.text name="video_tutorial" label="Video Tutorial"
+                                value="{{ $settings['video_tutorial'] }}" />
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                             <h5 class="mb-3">Konfigurasi Event</h5>

@@ -18,23 +18,32 @@
             Informasi
         </a>
     @endif
+
     @guest
         <a href="{{ route('login') }}">
             <i class="fas fa-sign-in-alt"></i>
             Masuk
         </a>
     @else
-        @if (request()->is('team/dashboard'))
-            <a href="{{ route('frontend.landing') }}">
-                <i class="fas fa-home"></i>
-                Beranda
-            </a>
-        @else
-            <a href="{{ route('team.dashboard') }}">
+        @role('admin')
+            <a href="{{ route('admin.dashboard') }}">
                 <i class="fas fa-tachometer-alt"></i>
                 Dashboard
             </a>
-        @endif
+        @else
+            @if (request()->is('team/dashboard'))
+                <a href="{{ route('frontend.landing') }}">
+                    <i class="fas fa-home"></i>
+                    Beranda
+                </a>
+            @else
+                <a href="{{ route('team.dashboard') }}">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+            @endif
+        @endrole
+
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="fas fa-sign-out-alt"></i>
             Keluar

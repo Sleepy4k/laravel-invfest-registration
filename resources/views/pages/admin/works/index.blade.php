@@ -7,6 +7,25 @@
                 </li>
             </ol>
         </nav>
+        <div class="dropdown mb-4">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Filter Dari Lomba
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                @foreach ($competitions as $competition)
+                    <li>
+                        <a class="dropdown-item" href="{{ route('admin.work.index') }}?filter={{ $competition->id }}">
+                            {{ $competition->name }}
+                        </a>
+                    </li>
+                @endforeach
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.work.index') }}">
+                        Clear Filter
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="row">

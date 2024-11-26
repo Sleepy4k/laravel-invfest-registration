@@ -37,6 +37,7 @@
                                         id="companion_card" />
                                     <x-input.text name="email" label="Email Ketua" type="email"
                                         value="{{ old('email') }}" />
+                                    <span style="color: red; font-weight: bold; font-style: italic; padding: 0 4px;">* Pastikan menggunakan email pribadi</span>
                                     <x-input.text name="password" label="Password" type="password" />
                                     <x-input.text name="password_confirmation" label="Konfirmasi Password"
                                         type="password" />

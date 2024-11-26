@@ -40,6 +40,7 @@
             }
         </style>
         <link rel="stylesheet" href="{{ asset('frontend/css/app.css') }}" nonce="{{ csp_nonce() }}">
+        <link rel="stylesheet" href="{{ asset('frontend/css/card.css') }}" nonce="{{ csp_nonce() }}">
         <link rel="stylesheet" href="{{ asset('frontend/css/timeline.css') }}" nonce="{{ csp_nonce() }}">
         <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}" nonce="{{ csp_nonce() }}">
 

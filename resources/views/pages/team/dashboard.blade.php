@@ -94,18 +94,22 @@
                         <th>Anggota</th>
                         <td>
                             <ul>
-                                @foreach ($team?->member as $member)
-                                    <li>
-                                        {{ $member->name ?? 'Tidak Ada' }}
-                                        <a href="{{ asset($member->card) }}" data-lightbox="image-1" data-title="Kartu Identitas {{ $member->name ?? 'Tidak Ada' }}">
-                                            Kartu Pelajar / Mahasiswa
-                                        </a>
-                                    </li>
-                                @endforeach
+                                @if (count($team?->member ?? []) > 0)
+                                    @foreach ($team?->member as $member)
+                                        <li>
+                                            {{ $member->name ?? 'Tidak Ada' }}
+                                            <a href="{{ isset($member->card) ? asset($member->card) : '#' }}" data-lightbox="image-1" data-title="Kartu Identitas {{ $member->name ?? 'Tidak Ada' }}">
+                                                Kartu Pelajar / Mahasiswa
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @else
+                                    <li>Belum memiliki anggota</li>
+                                @endif
                             </ul>
                         </td>
                     </tr>
-                    @if ($companion != null)
+                    @if (!is_null($companion))
                         <tr>
                             <th>Nama Pembimbing</th>
                             <td>{{ $companion?->name }}</td>
