@@ -74,4 +74,4 @@ Route::middleware('auth')->group(function () {
 });
 
 // Don't disabled this for checking uptime and overriding default uptime status endpoint
-Route::get('/up', UpStatusController::class);
+Route::get('/uptime', UpStatusController::class);
