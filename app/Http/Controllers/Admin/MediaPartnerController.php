@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\Admin\MediaPartnerDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MediaPartner\StoreRequest;
 use App\Http\Requests\Admin\MediaPartner\UpdateRequest;
@@ -19,10 +20,10 @@ class MediaPartnerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(MediaPartnerDataTable $dataTable)
     {
         try {
-            return view('pages.admin.media-partners.index', $this->service->index());
+            return $dataTable->render('pages.admin.media-partners.index', $this->service->index());
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\Admin\TimelineDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Timeline\StoreRequest;
 use App\Http\Requests\Admin\Timeline\UpdateRequest;
@@ -19,10 +20,10 @@ class TimelineController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(TimelineDataTable $dataTable)
     {
         try {
-            return view('pages.admin.timeline.index', $this->service->index());
+            return $dataTable->render('pages.admin.timeline.index', $this->service->index());
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

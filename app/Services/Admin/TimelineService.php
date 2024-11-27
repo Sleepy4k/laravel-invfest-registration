@@ -21,9 +21,7 @@ class TimelineService extends Service
      */
     public function index(): array
     {
-        $timelines = $this->timelineInterface->all(['id', 'title', 'date', 'description'], [], [], 'date');
-
-        return compact('timelines');
+        return [];
     }
 
     /**

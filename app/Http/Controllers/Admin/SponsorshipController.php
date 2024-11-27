@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\Admin\SponsorshipDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Sponsorship\StoreRequest;
 use App\Http\Requests\Admin\Sponsorship\UpdateRequest;
@@ -19,10 +20,10 @@ class SponsorshipController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(SponsorshipDataTable $dataTable)
     {
         try {
-            return view('pages.admin.sponsors.index', $this->service->index());
+            return $dataTable->render('pages.admin.sponsors.index', $this->service->index());
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

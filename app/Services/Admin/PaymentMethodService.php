@@ -21,9 +21,7 @@ class PaymentMethodService extends Service
      */
     public function index(): array
     {
-        $methods = $this->paymentMethodInterface->all(['id', 'name', 'logo', 'number', 'owner']);
-
-        return compact('methods');
+        return [];
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\Admin\PaymentMethodDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PaymentMethod\StoreRequest;
 use App\Http\Requests\Admin\PaymentMethod\UpdateRequest;
@@ -19,10 +20,10 @@ class PaymentMethodController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PaymentMethodDataTable $dataTable)
     {
         try {
-            return view('pages.admin.payment-methods.index', $this->service->index());
+            return $dataTable->render('pages.admin.payment-methods.index', $this->service->index());
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

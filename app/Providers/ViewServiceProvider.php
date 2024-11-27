@@ -43,7 +43,5 @@ class ViewServiceProvider extends ServiceProvider
 
             'vendor.mail.html.header',
         ], Composers\AppSettingComposer::class);
-
-        view()->composer('components.frontend.footer', Composers\LatestCompetitionComposer::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\Admin\CompetitionDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Competition\StoreRequest;
 use App\Http\Requests\Admin\Competition\UpdateRequest;
@@ -19,10 +20,10 @@ class CompetitionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(CompetitionDataTable $dataTable)
     {
         try {
-            return view('pages.admin.competition.index', $this->service->index());
+            return $dataTable->render('pages.admin.competition.index', $this->service->index());
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

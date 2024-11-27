@@ -21,9 +21,7 @@ class MediaPartnerService extends Service
      */
     public function index(): array
     {
-        $mediaPartners = $this->mediaPartnerInterface->all(['id', 'name', 'logo', 'link']);
-
-        return compact('mediaPartners');
+        return [];
     }
 
     /**

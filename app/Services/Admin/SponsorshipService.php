@@ -22,9 +22,7 @@ class SponsorshipService extends Service
      */
     public function index(): array
     {
-        $sponsorships = $this->sponsorshipInterface->all(['id', 'name', 'link', 'logo', 'tier_id'], ['tier:id,tier']);
-
-        return compact('sponsorships');
+        return [];
     }
 
     /**

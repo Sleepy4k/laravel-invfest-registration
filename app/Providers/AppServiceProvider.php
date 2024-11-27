@@ -17,7 +17,6 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singletonIf(Composers\AppSettingComposer::class);
-        $this->app->singletonIf(Composers\LatestCompetitionComposer::class);
     }
 
     /**
@@ -28,8 +27,8 @@ class AppServiceProvider extends ServiceProvider
         JsonResource::withoutWrapping();
 
         RateLimiter::for('web', function (Request $request) {
-            return Limit::perMinute(30)->by(optional($request->user())->id ?: $request->ip())->response(function () use ($request) {
-                abort(429, 'Too Many Requests');
+            return Limit::perMinute(30)->by($request->ip())->response(function () {
+                abort(429, 'Too Many Requests, Slow Down!');
             });
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\DataTables\Admin;
 
+use App\Models\Setting;
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -12,6 +13,25 @@ use Yajra\DataTables\Services\DataTable;
 
 class TeamDataTable extends DataTable
 {
+    /**
+     * Convert a phone number to ensure it starts with '62'.
+     *
+     * @param string $number The phone number to be converted.
+     *
+     * @return string The converted phone number starting with '62' and whatsapp api format.
+     */
+    private function convertTeamNumber(string $number) {
+        $number = preg_replace('/^\D+/', '', $number);
+
+        if (strpos($number, '0') === 0) {
+            $number = '62' . substr($number, 1);
+        } elseif (strpos($number, '62') !== 0) {
+            $number = '62' . $number;
+        }
+
+        return 'https://wa.me/'.$number;
+    }
+
     /**
      * Build the DataTable class.
      *
@@ -24,6 +44,7 @@ class TeamDataTable extends DataTable
                 $detailUrl = route("admin.team.show", $query->id);
                 $deleteUrl = route('admin.team.destroy', $query->id);
 
+                $followUpButton = '';
                 $detailButton = '<a href="' . $detailUrl . '" class="btn btn-primary btn-sm me-2">Detail</a>';
                 $deleteButton = '<form action="' . $deleteUrl . '" method="POST" class="d-inline">'
                     . csrf_field()
@@ -31,22 +52,46 @@ class TeamDataTable extends DataTable
                     . '<button class="btn btn-danger btn-sm" onclick="return confirm(`Apakah anda yakin ingin menghapus data ini?`)">Hapus</button>'
                     . '</form>';
 
-                return $detailButton . $deleteButton;
+                if (is_null($query?->payment) || $query->payment->status == 'pending') {
+                    $lnBreak = urlencode("\n");
+                    $settings = Setting::whereIn('key', ['phone', 'title'])->pluck('value', 'key');
+                    $phoneNumber = $settings['phone'] ?? 'xxxx';
+                    $appTitle = $settings['title'] ?? config('app.name');
+                    $userName = auth('web')->user()->roles->first()->name ?? 'admin';
+                    $reason = $query->payment ? 'melakukan crosscheck pembayaran' : 'melakukan pembayaran';
+
+                    $followUpButton = '<span class="btn btn-warning btn-sm me-2">'
+                        . '<a href="https://api.whatsapp.com/send?phone='.$phoneNumber
+                        . '&text=Halo!'.$lnBreak.'Sebelumnya saya '.$userName.' dari Web '.$appTitle
+                        . ' '.$lnBreak.'Apakah boleh meminta tolong untuk follow up Team '.$query->name
+                        . ' pada lomba '.$query->competition->name.' untuk '.$reason.'?'.$lnBreak
+                        . 'Jika boleh, kontak ketua team pada nomor berikut '.$this->convertTeamNumber($query->leader->phone ?? 'xxxx')
+                        . $lnBreak.'Terima Kasih Banyak!!!" target="_blank" rel="noopener" class="nav-link">'
+                        . 'Follow Up</a></span>';
+                }
+
+                return $followUpButton . $detailButton . $deleteButton;
             })
             ->addColumn('proof', function ($query) {
-                if ($query?->payment && $query?->payment?->proof) {
-                    $proofUrl = asset($query->payment->proof);
-                    return '<img src="' . $proofUrl . '" alt="Bukti Pembayaran" class="img-table-lightbox" width="100" loading="lazy"></img>';
+                if (is_null($query?->payment) || is_null($query?->payment?->proof)) {
+                    return '<span>Belum Melakukan Pembayaran</span>';
                 }
-                return '<span>Belum Melakukan Pembayaran</span>';
+
+                $proofUrl = asset($query->payment->proof);
+                return '<img src="' . $proofUrl . '" alt="Bukti Pembayaran" class="img-table-lightbox" width="100" loading="lazy"></img>';
             })
             ->addColumn('status', function ($query) {
-                if ($query?->payment) {
-                    $statusClass = $query->payment->status == 'reject' ? 'bg-danger' : ($query->payment->status == 'approve' ? 'bg-success' : 'bg-warning');
-                    $statusText = $query->payment->status == 'reject' ? 'Ditolak' : ($query->payment->status == 'approve' ? 'Diterima' : 'Pending');
-                    return '<span class="badge ' . $statusClass . '">' . $statusText . '</span>';
+                if (is_null($query?->payment)) {
+                    return '<span class="badge bg-warning">Pending</span>';
                 }
-                return '<span class="badge bg-warning">Pending</span>';
+
+                $statusData = match ($query->payment->status) {
+                    'reject' => ['class' => 'bg-danger', 'text' => 'Ditolak'],
+                    'approve' => ['class' => 'bg-success', 'text' => 'Diterima'],
+                    default => ['class' => 'bg-warning', 'text' => 'Pending'],
+                };
+
+                return '<span class="badge ' . $statusData['class'] . '">' . $statusData['text'] . '</span>';
             })
             ->editColumn('payment.proof', function ($query) {
                 return $query?->payment?->proof ?? '-';
@@ -99,7 +144,7 @@ class TeamDataTable extends DataTable
                 'leader.user:id,email',
                 'leader.team:id',
                 'leader.team.member:team_id,name'
-            ])->newQuery();
+            ]);
     }
 
     /**
@@ -188,7 +233,7 @@ class TeamDataTable extends DataTable
                 ->title('Status')
                 ->addClass('text-center'),
             Column::computed('action')
-                ->title('Action')
+                ->title('Aksi')
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center'),

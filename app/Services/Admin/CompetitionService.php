@@ -22,9 +22,7 @@ class CompetitionService extends Service
      */
     public function index(): array
     {
-        $competitions = $this->competitionInterface->all(['id', 'level_id', 'name', 'poster', 'guidebook', 'whatsapp_group', 'registration_fee'], ['level:id,display_as']);
-
-        return compact('competitions');
+        return [];
     }
 
     /**

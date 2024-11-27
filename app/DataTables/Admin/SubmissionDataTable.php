@@ -68,7 +68,7 @@ class SubmissionDataTable extends DataTable
             ->with([
                 'team:id,competition_id,name,institution',
                 'team.competition:id,name'
-            ])->newQuery();
+            ]);
     }
 
     /**
@@ -142,7 +142,7 @@ class SubmissionDataTable extends DataTable
                 ->title('Status')
                 ->addClass('text-center'),
             Column::computed('action')
-                ->title('Action')
+                ->title('Aksi')
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center'),
