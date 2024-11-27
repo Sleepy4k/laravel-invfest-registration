@@ -16,7 +16,7 @@
             <x-admin.card title="{{ $competition->name }}">
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="{{ isset($competition->poster) ? asset($competition->poster) : '#' }}" loading="lazy" alt="image" class="img-fluid">
+                        <img src="{{ asset($competition->poster ?? '#') }}" loading="lazy" alt="image" class="img-fluid">
                     </div>
                     <div class="col-md-8">
                         <table class="table">
@@ -39,7 +39,7 @@
                             <tr>
                                 <th>Guide Book</th>
                                 <td>
-                                    <a href="{{ isset($competition->guidebook) ? asset($competition->guidebook) : '#' }}" class="btn btn-primary btn-sm"
+                                    <a href="{{ asset($competition->guidebook ?? '#') }}" class="btn btn-primary btn-sm"
                                         target="_blank">Lihat</a>
                                 </td>
                             </tr>

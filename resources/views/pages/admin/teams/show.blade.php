@@ -1,7 +1,7 @@
 <x-layouts.admin title="{{ $team->name }}">
-    @push('plugin-styles')
+    @pushOnce('plugin-styles')
         <link rel="stylesheet" href="{{ asset('admin/assets/plugins/lightbox/css/lightbox.css') }}">
-    @endpush
+    @endPushOnce
 
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
@@ -36,7 +36,7 @@
                             <tr>
                                 <th> Kartu Pelajar / Mahasiswa Ketua</th>
                                 <td>
-                                    <a href="{{ isset($team->leader->card) ? asset($team->leader->card) : '#' }}" data-lightbox="image-1"
+                                    <a href="{{ asset($team->leader->card ?? '#') }}" data-lightbox="image-1"
                                         data-title="Kartu Identitas {{ $team->leader->name ?? '-' }}">
                                         Kartu Pelajar / Mahasiswa
                                     </a>
@@ -56,9 +56,12 @@
                                     <ul>
                                         @foreach ($team?->member as $member)
                                             <li>
-                                                {{ $member->name ?? 'Tidak Ada' }} <a
-                                                    href="{{ isset($member->card) ? asset($member->card) : '#' }}" data-lightbox="image-1"
-                                                    data-title="Kartu Identitas {{ $member->name }}">
+                                                {{ $member->name ?? 'Tidak Ada' }}
+                                                <a
+                                                    href="{{ asset($member->card ?? '#') }}"
+                                                    data-lightbox="image-1"
+                                                    data-title="Kartu Identitas {{ $member->name }}"
+                                                >
                                                     Kartu Pelajar / Mahasiswa
                                                 </a>
                                             </li>
@@ -74,8 +77,11 @@
                                 <tr>
                                     <th>Kartu Identitas Pembmbing</th>
                                     <td>
-                                        <a href="{{ isset($team?->companion?->card) ? asset($team->companion->card) : '#' }}" data-lightbox="image-1"
-                                            data-title="Kartu Identitas {{ $team?->companion?->name }}">
+                                        <a
+                                            href="{{ asset($team->companion->card ?? '#') }}"
+                                            data-lightbox="image-1"
+                                            data-title="Kartu Identitas {{ $team?->companion?->name }}"
+                                        >
                                             Kartu Identitas Pembimbing
                                         </a>
                                     </td>
@@ -93,10 +99,18 @@
                             <tr>
                                 <th>Bukti Pembayaran</th>
                                 <td>
-                                    <a href="{{ isset($team?->payment?->proof) ? asset($team?->payment?->proof) : '#' }}" data-lightbox="image-1"
-                                        data-title="Bukti Pembayaran {{ $team->name }}">
-                                        <img src="{{ isset($team?->payment?->proof) ? asset($team?->payment?->proof) : '#' }}" alt="Bukti Pembayaran"
-                                            class="img-table-lightbox" width="100" loading="lazy">
+                                    <a
+                                        href="{{ asset($team?->payment?->proof ?? '#') }}"
+                                        data-lightbox="image-1"
+                                        data-title="Bukti Pembayaran {{ $team->name }}"
+                                    >
+                                        <img
+                                            src="{{ asset($team?->payment?->proof ?? '#') }}"
+                                            alt="Bukti Pembayaran"
+                                            class="img-table-lightbox"
+                                            width="100"
+                                            loading="lazy"
+                                        />
                                     </a>
                                 </td>
                             </tr>
@@ -146,7 +160,7 @@
         </div>
     </div>
 
-    @push('plugin-scripts')
+    @pushOnce('plugin-scripts')
         <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox.js') }}"></script>
 
         <script>
@@ -155,5 +169,5 @@
                 'wrapAround': true
             })
         </script>
-    @endpush
+    @endPushOnce
 </x-layouts.admin>

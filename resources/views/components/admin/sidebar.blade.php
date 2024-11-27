@@ -1,7 +1,7 @@
 <nav class="sidebar">
     <div class="sidebar-header">
         <a href="{{ route('frontend.landing') }}">
-            <img src="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" class="sidebar-brand" width="40" loading="lazy">
+            <img src="{{ asset($appSettings['nav_logo'] ?? '#') }}" class="sidebar-brand" width="40" loading="lazy">
         </a>
         <div class="sidebar-toggler not-active">
             <span></span>
@@ -9,6 +9,7 @@
             <span></span>
         </div>
     </div>
+
     <div class="sidebar-body">
         <ul class="nav">
             <li class="nav-item nav-category">Main</li>
@@ -26,6 +27,7 @@
                     <span class="link-title">Tim Peserta</span>
                 </a>
             </li>
+
             @hasrole('admin')
                 <li class="nav-item {{ request()->is('admin/work*') ? ' active' : '' }}">
                     <a href="{{ route('admin.work.index') }}" class="nav-link">
@@ -77,30 +79,5 @@
                 </li>
             @endhasrole
         </ul>
-    </div>
-</nav>
-
-<nav class="settings-sidebar">
-    <div class="sidebar-body">
-        <a href="#" class="settings-sidebar-toggler">
-            <i data-feather="settings"></i>
-        </a>
-        <h6 class="text-muted mb-2">Sidebar:</h6>
-        <div class="mb-3 pb-3 border-bottom">
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="sidebarThemeSettings" id="sidebarLight"
-                        value="sidebar-light" checked>
-                    Light
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="sidebarThemeSettings" id="sidebarDark"
-                        value="sidebar-dark">
-                    Dark
-                </label>
-            </div>
-        </div>
     </div>
 </nav>

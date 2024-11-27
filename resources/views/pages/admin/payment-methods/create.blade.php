@@ -17,7 +17,7 @@
                 <form action="{{ route('admin.payment-method.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <x-input.text label="Nama" name="name" />
-                    <x-input.file label="Logo" name="logo" />
+                    <x-input.file label="Logo" name="logo" accept="image/*" />
                     <x-input.text label="No Rekening/No Hp" name="number" />
                     <x-input.text label="Atas Nama" name="owner" />
                     <x-button.primary class="float-end" type="submit">
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    @push('custom-scripts')
+    @pushOnce('custom-scripts')
         <script>
             $(document).ready(function() {
                 $('#logo').change(function() {
@@ -57,5 +57,5 @@
                 });
             });
         </script>
-    @endpush
+    @endPushOnce
 </x-layouts.admin>

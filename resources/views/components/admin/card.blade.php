@@ -6,6 +6,7 @@
 
         {{ $slot }}
     </div>
+
     @isset($footer)
         <div class="card-footer">
             {{ $footer }}

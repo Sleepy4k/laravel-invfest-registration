@@ -69,8 +69,9 @@
         @endif
     @endif
 
-    @push('custom-scripts')
+    @pushOnce('custom-scripts')
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <script>
             $(document).ready(function() {
                 $('#form-work').submit(function(e) {
@@ -92,5 +93,5 @@
                 });
             });
         </script>
-    @endpush
+    @endPushOnce
 </x-layouts.dashboard-team>

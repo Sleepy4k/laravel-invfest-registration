@@ -1,7 +1,8 @@
 <x-layouts.admin title="Metode Pembayaran">
-    @push('plugin-styles')
+    @pushOnce('plugin-styles')
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/fh-3.2.4/r-2.3.0/sc-2.0.7/sl-1.4.0/datatables.min.css"/>
         <link rel="stylesheet" href="{{ asset('admin/assets/plugins/lightbox/css/lightbox.css') }}">
-    @endpush
+    @endPushOnce
 
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
@@ -17,51 +18,16 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <x-admin.card title="Data Metode Pembayaran">
-                <x-admin.datatable>
-                    <x-slot name="thead">
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Logo</th>
-                            <th>No Rekening/No Hp</th>
-                            <th>Atas Nama</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </x-slot>
-                    <x-slot name="tbody">
-                        @foreach ($methods as $method)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $method->name }}</td>
-                                <td>
-                                    <a href="{{ isset($method->logo) ? asset($method->logo) : '#' }}" data-lightbox="payment-methods"
-                                        data-title="{{ $method->name }}">
-                                        <img src="{{ isset($method->logo) ? asset($method->logo) : '#' }}" alt="{{ $method->name }}"
-                                            class="img-table-lightbox" loading="lazy">
-                                    </a>
-                                </td>
-                                <td>{{ $method->number }}</td>
-                                <td>{{ $method->owner }}</td>
-                                <td>
-                                    <a href="{{ route('admin.payment-method.edit', $method->id) }}"
-                                        class="btn btn-warning btn-sm me-2">Edit</a>
-                                    <form action="{{ route('admin.payment-method.destroy', $method->id) }}"
-                                        method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </x-slot>
-                </x-admin.datatable>
+                {{ $dataTable->table() }}
             </x-admin.card>
         </div>
     </div>
 
-    @push('plugin-scripts')
+    @pushOnce('plugin-scripts')
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/fh-3.2.4/r-2.3.0/sc-2.0.7/sl-1.4.0/datatables.min.js"></script>
+        <script type="text/javascript" src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+        {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+
         <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox.js') }}"></script>
 
         <script>
@@ -70,5 +36,5 @@
                 'wrapAround': true
             })
         </script>
-    @endpush
+    @endPushOnce
 </x-layouts.admin>

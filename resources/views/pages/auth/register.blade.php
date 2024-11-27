@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    @push('custom-scripts')
+    @pushOnce('custom-scripts')
         <script>
             $('#companion_name').parent().hide();
             $('#companion_card').parent().hide();
@@ -104,5 +104,5 @@
                 }
             });
         </script>
-    @endpush
+    @endPushOnce
 </x-layouts.auth>

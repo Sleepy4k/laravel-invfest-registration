@@ -2,7 +2,12 @@
     <div class="d-flex flex-center">
         @foreach ($sponsors as $sponsor)
             <div class="card card-custom">
-                <img src="{{ isset($sponsor->logo) ? asset($sponsor->logo) : '#' }}" class="card-img card-img-custom" alt="{{ $sponsor->name }}" loading="lazy">
+                <img
+                    src="{{ asset($sponsor->logo ?? '#') }}"
+                    class="card-img card-img-custom"
+                    alt="{{ $sponsor->name }}"
+                    loading="lazy"
+                />
             </div>
         @endforeach
     </div>

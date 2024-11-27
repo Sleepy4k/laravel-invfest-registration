@@ -9,10 +9,9 @@
 @endphp
 
 <x-layouts.dashboard-team title="Dashboard Tim {{ $team?->name }}">
-    @push('plugin-styles')
-        <link rel="stylesheet"
-            href="{{ asset('admin/assets/plugins/lightbox/css/lightbox.css') }}">
-    @endpush
+    @pushOnce('plugin-styles')
+        <link rel="stylesheet" href="{{ asset('admin/assets/plugins/lightbox/css/lightbox.css') }}" />
+    @endPushOnce
 
     @if (!isset($team?->member) || count($team?->member) == 0)
         <div class="alert alert-warning">
@@ -77,7 +76,7 @@
                     </tr>
                     <tr>
                         <th>Kartu Pelajar / Mahasiswa Ketua</th>
-                        <td> <a href="{{ isset($leader->card) ? asset($leader->card) : '#' }}" data-lightbox="image-1" data-title="Kartu Identitas {{ $leader->name }}">
+                        <td> <a href="{{ asset($leader->card ?? '#') }}" data-lightbox="image-1" data-title="Kartu Identitas {{ $leader->name }}">
                                 Kartu Pelajar / Mahasiswa
                             </a>
                         </td>
@@ -98,7 +97,7 @@
                                     @foreach ($team?->member as $member)
                                         <li>
                                             {{ $member->name ?? 'Tidak Ada' }}
-                                            <a href="{{ isset($member->card) ? asset($member->card) : '#' }}" data-lightbox="image-1" data-title="Kartu Identitas {{ $member->name ?? 'Tidak Ada' }}">
+                                            <a href="{{ asset($member->card ?? '#') }}" data-lightbox="image-1" data-title="Kartu Identitas {{ $member->name ?? 'Tidak Ada' }}">
                                                 Kartu Pelajar / Mahasiswa
                                             </a>
                                         </li>
@@ -117,7 +116,7 @@
                         <tr>
                             <th>Kartu Identitas Pembmbing</th>
                             <td>
-                                <a href="{{ isset($companion->card) ? asset($companion->card) : '#' }}"
+                                <a href="{{ asset($companion->card ?? '#') }}"
                                     data-title="Kartu Identitas {{ $companion->name }}">
                                     Kartu Identitas Pembimbing </a>
                             </td>
@@ -133,10 +132,16 @@
                     <tr>
                         <th>Bukti Pembayaran</th>
                         <td>
-                            <a href="{{ isset($payment->proof) ? asset($payment->proof) : '#' }}" data-lightbox="image-1" data-title="Bukti Pembayaran {{ $team->name }}">
+                            <a
+                                href="{{ asset($payment->proof ?? '#') }}"
+                                data-lightbox="image-1"
+                                data-title="Bukti Pembayaran {{ $team->name }}"
+                            >
                                 <img
-                                    src="{{ isset($payment->proof) ? asset($payment->proof) : '#' }}"
-                                    class="img-table-lightbox" width="100" loading="lazy"
+                                    src="{{ asset($payment->proof ?? '#') }}"
+                                    class="img-table-lightbox"
+                                    width="100"
+                                    loading="lazy"
                                 />
                             </a>
                         </td>
@@ -144,9 +149,16 @@
                     <tr>
                         <th>Status</th>
                         <td>
-                            @if($payment?->status == 'reject') <span class="badge bg-danger">Ditolak</span>
-                            @elseif($payment?->status == 'approve') <span class="badge bg-success">Diterima</span>
-                            @else <span class="badge bg-warning">Pending</span> @endif
+                            @switch($payment?->status)
+                                @case('reject')
+                                    <span class="badge bg-danger">Ditolak</span>
+                                    @break
+                                @case('approve')
+                                    <span class="badge bg-success">Diterima</span>
+                                    @break
+                                @default
+                                    <span class="badge bg-warning">Pending</span>
+                            @endswitch
                         </td>
                     </tr>
                 </table>
@@ -154,13 +166,14 @@
         </div>
     @endif
 
-    @push('plugin-scripts')
+    @pushOnce('plugin-scripts')
         <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox.js') }}"></script>
+
         <script>
             lightbox.option({
                 'resizeDuration': 200,
                 'wrapAround': true
             })
         </script>
-    @endpush
+    @endPushOnce
 </x-layouts.dashboard-team>

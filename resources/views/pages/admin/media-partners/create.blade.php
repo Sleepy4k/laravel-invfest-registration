@@ -18,7 +18,7 @@
                 <form action="{{ route('admin.media-partner.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <x-input.text label="Nama Media Partner" name="name" value="{{ old('name') }}" />
-                    <x-input.file label="Logo Media Partner" name="logo" />
+                    <x-input.file label="Logo Media Partner" name="logo" accept="image/*" />
                     <x-input.text label="Link Media Partner" name="link" value="{{ old('link') }}" />
                     <x-button.primary class="float-end" type="submit">
                         Simpan
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    @push('custom-scripts')
+    @pushOnce('custom-scripts')
         <script>
             $(document).ready(function() {
                 $('#logo').change(function() {
@@ -57,5 +57,5 @@
                 });
             });
         </script>
-    @endpush
+    @endPushOnce
 </x-layouts.admin>

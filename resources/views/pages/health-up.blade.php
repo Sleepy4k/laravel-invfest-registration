@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ isset($appSettings['title']) ? $appSettings['title'] : config('app.name', 'Laravel') }}</title>
+        <title>{{ $appSettings['title'] ?? config('app.name', 'Laravel') }}</title>
 
         <meta property="csp-nonce" content="{{ csp_nonce() }}">
 
@@ -23,7 +23,7 @@
         <meta name="twitter:description" content="Check current uptime status">
         <meta name="twitter:image" content="{{ asset('images/banner.png') }}">
 
-        <link rel="shortcut icon" href="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset($appSettings['nav_logo'] ?? '#') }}" type="image/x-icon">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />

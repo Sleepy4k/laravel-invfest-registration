@@ -2,25 +2,38 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="title" content="{{ $title }}">
         <meta name="description" content="{{ $description ?? '' }}">
-        <meta name="keywords" content="lomba, lomba ui/ux, lomba ngoding">
+        <meta name="author" content="Benjamin4k">
+        <meta name="coverage" content="Worldwide">
+        <meta name="distribution" content="Global">
         <meta name="robots" content="index, follow">
+        <meta name="keywords" content="lomba, lomba ui/ux, lomba web, lomba ngoding, invfest, 9.0, invfest 9.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name="language" content="English">
+
+        <link rel="canonical" href="{{ config('app.url') }}">
+        <link rel="apple-touch-icon" href="{{ asset($appSettings['nav_logo'] ?? '#') }}" />
+        <link rel="icon" type="image/png" href="{{ asset($appSettings['nav_logo'] ?? '#') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset($appSettings['nav_logo'] ?? '#') }}">
+        <link rel="shortcut icon" type="image/png" href="{{ asset($appSettings['nav_logo'] ?? '#') }}" />
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset($appSettings['nav_logo'] ?? '#') }}">
 
         <title>{{ $title }}</title>
 
-        <meta property="csp-nonce" content="{{ csp_nonce() }}">
-
         @cspMetaTag(App\Support\CspPolicy::class)
 
+        <meta property="csp-nonce" content="{{ csp_nonce() }}">
+
+        <meta property="og:locale" content="{{ str_replace('_', '-', app()->getLocale()) }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:type" content="website">
+        <meta property="og:site_name" content="{{ $appSettings['title'] ?? '#' }}">
         <meta property="og:title" content="{{ $title }}">
         <meta property="og:description" content="{{ $description ?? '' }}">
         <meta property="og:image" content="{{ asset('images/banner.png') }}">
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
 
         <meta name="twitter:card" content="summary_large_image">
         <meta property="twitter:domain" content="{{ url()->current() }}">
@@ -28,8 +41,6 @@
         <meta name="twitter:title" content="{{ $title }}">
         <meta name="twitter:description" content="{{ $description ?? '' }}">
         <meta name="twitter:image" content="{{ asset('images/banner.png') }}">
-
-        <link rel="shortcut icon" href="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" type="image/x-icon">
 
         <style nonce="{{ csp_nonce() }}">
             :root {

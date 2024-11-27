@@ -1,10 +1,16 @@
 <nav class="navbar  navbar-expand-lg navbar-light shadow-sm " id="topNav">
     <div class="container">
-        <a class="navbar-brand mx-auto mx-lg-0
-            d-flex flex-row justify-content-center align-self-center"
-            href="{{ route('frontend.landing') }}">
-            <img src="{{ isset($appSettings['nav_logo']) ? asset($appSettings['nav_logo']) : '#' }}" alt="Logo"
-                width="60px" height="80px" loading="lazy" />
+        <a
+            class="navbar-brand mx-auto mx-lg-0 d-flex flex-row justify-content-center align-self-center"
+            href="{{ route('frontend.landing') }}"
+        >
+            <img
+                src="{{ asset($appSettings['nav_logo'] ?? '#') }}"
+                alt="Logo"
+                width="60px"
+                height="80px"
+                loading="lazy"
+            />
             <div class="d-flex flex-column align-self-center justify-self-center mx-3">
                 <span class="text-judul font-weight-bold">
                     {{ $appSettings['title'] }}
@@ -71,6 +77,7 @@
         </div>
     </div>
 </nav>
+
 <nav class="navbar navbar-light navbar-expand p-0 d-lg-none d-xl-none fixed-bottom top-shadow bg-white" id="bottomNav">
     <ul class="navbar-nav nav-justified w-100"></ul>
 </nav>

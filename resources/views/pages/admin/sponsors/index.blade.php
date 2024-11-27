@@ -1,7 +1,8 @@
 <x-layouts.admin title="Sponsor Event">
-    @push('plugin-styles')
+    @pushOnce('plugin-styles')
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/fh-3.2.4/r-2.3.0/sc-2.0.7/sl-1.4.0/datatables.min.css"/>
         <link rel="stylesheet" href="{{ asset('admin/assets/plugins/lightbox/css/lightbox.css') }}">
-    @endpush
+    @endPushOnce
 
     <div class="d-flex align-items-center justify-content-between">
         <nav class="page-breadcrumb mb-0">
@@ -17,51 +18,16 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <x-admin.card title="Data Sponsor">
-                <x-admin.datatable>
-                    <x-slot name="thead">
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Logo</th>
-                            <th>Link Sponsor</th>
-                            <th>Level Sponsor</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </x-slot>
-                    <x-slot name="tbody">
-                        @foreach ($sponsorships as $sponsorship)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $sponsorship->name }}</td>
-                                <td>
-                                    <a href="{{ isset($sponsorship->logo) ? asset($sponsorship->logo) : '#' }}" data-lightbox="sponsor"
-                                        data-title="{{ $sponsorship->name }}">
-                                        <img src="{{ isset($sponsorship->logo) ? asset($sponsorship->logo) : '#' }}" alt="{{ $sponsorship->name }}"
-                                            class="img-table-lightbox" loading="lazy">
-                                    </a>
-                                </td>
-                                <td>{{ $sponsorship->link ?? '-' }}</td>
-                                <td>{{ $sponsorship->tier?->tier }}</td>
-                                <td>
-                                    <a href="{{ route('admin.sponsor.edit', $sponsorship->id) }}"
-                                        class="btn btn-warning btn-sm me-2">Edit</a>
-                                    <form action="{{ route('admin.sponsor.destroy', $sponsorship->id) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </x-slot>
-                </x-admin.datatable>
+                {{ $dataTable->table() }}
             </x-admin.card>
         </div>
     </div>
 
-    @push('plugin-scripts')
+    @pushOnce('plugin-scripts')
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/fh-3.2.4/r-2.3.0/sc-2.0.7/sl-1.4.0/datatables.min.js"></script>
+        <script type="text/javascript" src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+        {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+
         <script src="{{ asset('admin/assets/plugins/lightbox/js/lightbox.js') }}"></script>
 
         <script>
@@ -70,5 +36,5 @@
                 'wrapAround': true
             })
         </script>
-    @endpush
+    @endPushOnce
 </x-layouts.admin>

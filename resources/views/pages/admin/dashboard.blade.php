@@ -173,7 +173,7 @@
         </div>
     </div>
 
-    @push('plugin-scripts')
+    @pushOnce('plugin-scripts')
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script>
             var pieData = {!! $competitionChart !!};
@@ -282,5 +282,5 @@
                 }
             });
         </script>
-    @endpush
+    @endPushOnce
 </x-layouts.admin>

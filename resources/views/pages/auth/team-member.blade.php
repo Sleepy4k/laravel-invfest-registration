@@ -47,24 +47,26 @@
         </div>
     </div>
 
-    <script>
-        function checkTeamMembers() {
-            const member1 = $('input[name="data[0][member]"]').val();
-            const member2 = $('input[name="data[1][member]"]').val();
-            const alertTeamRequired = $('#alert-team-required');
+    @pushOnce('custom-scripts')
+        <script>
+            function checkTeamMembers() {
+                const member1 = $('input[name="data[0][member]"]').val();
+                const member2 = $('input[name="data[1][member]"]').val();
+                const alertTeamRequired = $('#alert-team-required');
 
-            if (member1 || member2) {
-                alertTeamRequired.hide();
-            } else {
-                alertTeamRequired.show();
+                if (member1 || member2) {
+                    alertTeamRequired.hide();
+                } else {
+                    alertTeamRequired.show();
+                }
             }
-        }
 
-        $(document).ready(function() {
-            checkTeamMembers();
-            $('input[name="data[0][member]"], input[name="data[1][member]"]').on('input', function() {
+            $(document).ready(function() {
                 checkTeamMembers();
+                $('input[name="data[0][member]"], input[name="data[1][member]"]').on('input', function() {
+                    checkTeamMembers();
+                });
             });
-        });
-    </script>
+        </script>
+    @endPushOnce
 </x-layouts.auth>

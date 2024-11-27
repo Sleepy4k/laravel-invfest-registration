@@ -19,11 +19,11 @@
                     @csrf
                     @method('PUT')
                     <x-input.text name="name" label="Nama Sponsor" :value="$sponsorship->name" />
-                    <x-input.file name="logo" label="Logo Sponsor" />
+                    <x-input.file name="logo" label="Logo Sponsor" accept="image/*" />
                     <x-input.text name="link" label="Link Sponsor" :value="$sponsorship->link" />
                     <x-input.select name="tier_id" label="Level Sponsor">
                         @foreach ($tiers as $tier)
-                            <option value="{{ $tier->id }}" {{ $sponsorship->tier->id == $tier->id ? 'selected' : '' }}>{{ $tier->tier }}</option>
+                            <option value="{{ $tier->id }}" @selected($sponsorship->tier->id == $tier->id)>{{ $tier->tier }}</option>
                         @endforeach
                     </x-input.select>
                     <x-button.primary class="float-end" type="submit">
@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    @push('custom-scripts')
+    @pushOnce('custom-scripts')
         <script>
             $(document).ready(function() {
                 $('#logo').change(function() {
@@ -63,5 +63,5 @@
                 });
             });
         </script>
-    @endpush
+    @endPushOnce
 </x-layouts.admin>

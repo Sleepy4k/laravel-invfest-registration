@@ -7,20 +7,26 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="wd-30 ht-30 rounded-circle"
-                        src="{{ url('https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp') }}"
-                        alt="profile" loading="lazy">
+                    <img
+                        class="wd-30 ht-30 rounded-circle"
+                        src="{{ $profilePicture }}"
+                        alt="Profile Picture"
+                        loading="lazy"
+                    />
                 </a>
                 <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
                     <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
                         <div class="mb-3">
-                            <img class="wd-80 ht-80 rounded-circle"
-                                src="{{ url('https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp') }}"
-                                alt="" loading="lazy">
+                            <img
+                                class="wd-80 ht-80 rounded-circle"
+                                src="{{ $profilePicture }}"
+                                alt="Profile Picture"
+                                loading="lazy"
+                            />
                         </div>
                         <div class="text-center">
                             <p class="tx-12 text-muted">
-                                {{ auth()->user()->email }}
+                                {{ auth('web')->user()->email }}
                             </p>
                         </div>
                     </div>

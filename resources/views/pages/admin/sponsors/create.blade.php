@@ -6,7 +6,6 @@
                     <a href="{{ route('admin.sponsor.index') }}">Sponsor</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Create</li>
-
             </ol>
         </nav>
         <a href="{{ route('admin.sponsor.index') }}" class="btn btn-danger btn-sm ml-auto mb-3">Kembali</a>
@@ -18,7 +17,7 @@
                 <form action="{{ route('admin.sponsor.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <x-input.text label="Nama Sponsor" name="name" />
-                    <x-input.file label="Logo Sponsor" name="logo" />
+                    <x-input.file label="Logo Sponsor" name="logo" accept="image/*" />
                     <x-input.text label="Link Sponsor" name="link" />
                     <x-input.select name="tier_id" label="Level Sponsor">
                         @foreach ($tiers as $tier)
@@ -33,7 +32,7 @@
         </div>
     </div>
 
-    @push('custom-scripts')
+    @pushOnce('custom-scripts')
         <script>
             $(document).ready(function() {
                 $('#logo').change(function() {
@@ -62,5 +61,5 @@
                 });
             });
         </script>
-    @endpush
+    @endPushOnce
 </x-layouts.admin>

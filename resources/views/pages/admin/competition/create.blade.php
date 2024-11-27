@@ -19,7 +19,7 @@
                     <x-input.text label="Nama Kompetisi" name="name" value="{{ old('name') }}"/>
                     <x-input.select label="Tingkat" name="level_id">
                         @foreach ($levels as $level)
-                            <option value="{{ $level->id }}" {{ old('level_id') == $level->id ? 'selected' : '' }}>{{ $level->display_as }}</option>
+                            <option value="{{ $level->id }}" @selected(old('level_id') == $level->id)>{{ $level->display_as }}</option>
                         @endforeach
                     </x-input.select>
                     <x-input.textarea label="Deskripsi" name="description"  value="{{ old('description') }}" />
