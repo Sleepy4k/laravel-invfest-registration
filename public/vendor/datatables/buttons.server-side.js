@@ -11,10 +11,10 @@
         } else {
             params.visible_columns = null;
         }
-        
+
         return params;
     };
-    
+
     var _getVisibleColumns = function () {
 
         var visible_columns = [];
@@ -85,12 +85,12 @@
         if (url.indexOf('?') > -1) {
             return url + '&' + $.param(params);
         }
-        
+
         return url + '?' + $.param(params);
     };
 
     DataTable.ext.buttons.excel = {
-        className: 'buttons-excel',
+        className: 'buttons-excel me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.excel', 'Excel');
@@ -103,7 +103,7 @@
     };
 
     DataTable.ext.buttons.postExcel = {
-        className: 'buttons-excel',
+        className: 'buttons-excel me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.excel', 'Excel');
@@ -116,9 +116,9 @@
             _downloadFromUrl(url, params);
         }
     };
-    
+
     DataTable.ext.buttons.postExcelVisibleColumns = {
-        className: 'buttons-excel',
+        className: 'buttons-excel me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.excel', 'Excel (only visible columns)');
@@ -135,7 +135,7 @@
     DataTable.ext.buttons.export = {
         extend: 'collection',
 
-        className: 'buttons-export',
+        className: 'buttons-export me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-download"></i> ' + dt.i18n('buttons.export', 'Export') + '&nbsp;<span class="caret"/>';
@@ -145,7 +145,7 @@
     };
 
     DataTable.ext.buttons.csv = {
-        className: 'buttons-csv',
+        className: 'buttons-csv me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.csv', 'CSV');
@@ -158,7 +158,7 @@
     };
 
     DataTable.ext.buttons.postCsvVisibleColumns = {
-        className: 'buttons-csv',
+        className: 'buttons-csv me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.csv', 'CSV (only visible columns)');
@@ -171,9 +171,9 @@
             _downloadFromUrl(url, params);
         }
     };
-    
+
     DataTable.ext.buttons.postCsv = {
-        className: 'buttons-csv',
+        className: 'buttons-csv me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.csv', 'CSV');
@@ -188,7 +188,7 @@
     };
 
     DataTable.ext.buttons.pdf = {
-        className: 'buttons-pdf',
+        className: 'buttons-pdf me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-file-pdf-o"></i> ' + dt.i18n('buttons.pdf', 'PDF');
@@ -201,7 +201,7 @@
     };
 
     DataTable.ext.buttons.postPdf = {
-        className: 'buttons-pdf',
+        className: 'buttons-pdf me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-file-pdf-o"></i> ' + dt.i18n('buttons.pdf', 'PDF');
@@ -216,7 +216,7 @@
     };
 
     DataTable.ext.buttons.print = {
-        className: 'buttons-print',
+        className: 'buttons-print me-2 mb-2',
 
         text: function (dt) {
             return  '<i class="fa fa-print"></i> ' + dt.i18n('buttons.print', 'Print');
@@ -229,7 +229,7 @@
     };
 
     DataTable.ext.buttons.reset = {
-        className: 'buttons-reset',
+        className: 'buttons-reset me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-undo"></i> ' + dt.i18n('buttons.reset', 'Reset');
@@ -243,7 +243,7 @@
     };
 
     DataTable.ext.buttons.reload = {
-        className: 'buttons-reload',
+        className: 'buttons-reload me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-refresh"></i> ' + dt.i18n('buttons.reload', 'Reload');
@@ -255,7 +255,7 @@
     };
 
     DataTable.ext.buttons.create = {
-        className: 'buttons-create',
+        className: 'buttons-create me-2 mb-2',
 
         text: function (dt) {
             return '<i class="fa fa-plus"></i> ' + dt.i18n('buttons.create', 'Create');
