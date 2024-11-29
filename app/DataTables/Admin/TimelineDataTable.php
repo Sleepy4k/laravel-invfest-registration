@@ -23,9 +23,10 @@ class TimelineDataTable extends DataTable
             ->addColumn('action', function ($query) {
                 return '<a href="'.route('admin.timeline.edit', $query->id).'" class="btn btn-warning btn-sm me-2">Edit</a>'
                     . '<a href="'.route('admin.timeline.show', $query->id).'" class="btn btn-info btn-sm me-2">Detail</a>'
-                    . '<form action="'.route('admin.timeline.destroy', $query->id).'" method="POST" class="d-inline"'
+                    . '<form action="'.route('admin.timeline.destroy', $query->id).'" method="POST" class="d-inline">'
                     . csrf_field() . method_field('DELETE')
-                    . '<button class="btn btn-danger btn-sm" onclick="return confirm(`Apakah anda yakin ingin menghapus data ini?`)">Hapus</button>';
+                    . '<button class="btn btn-danger btn-sm" onclick="return confirm(`Apakah anda yakin ingin menghapus data ini?`)">Hapus</button>'
+                    . '</form>';
             })
             ->editColumn('description', function ($query) {
                 $text = $query->description;

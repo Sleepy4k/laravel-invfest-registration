@@ -45,7 +45,8 @@ class CspPolicy extends BasePolicy
             ->addDirectivesForCloudflareCDN()
             ->addDirectivesForTailwindcssCDN()
             ->addDirectivesForHighCharts()
-            ->addDirectivesForDataTablesCDN();
+            ->addDirectivesForDataTablesCDN()
+            ->addDirectivesForUNPKGCDN();
     }
 
     protected function addGeneralDirectives(): self
@@ -140,5 +141,12 @@ class CspPolicy extends BasePolicy
             ->addDirective(Directive::FONT, 'cdn.datatables.net')
             ->addDirective(Directive::STYLE, 'cdn.datatables.net')
             ->addDirective(Directive::SCRIPT, 'cdn.datatables.net');
+    }
+
+    protected function addDirectivesForUNPKGCDN(): self
+    {
+        return $this
+            ->addDirective(Directive::STYLE, 'unpkg.com')
+            ->addDirective(Directive::SCRIPT, 'unpkg.com');
     }
 }

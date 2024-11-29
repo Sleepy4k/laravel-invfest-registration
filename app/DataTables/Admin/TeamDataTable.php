@@ -128,12 +128,22 @@ class TeamDataTable extends DataTable
     public function query(Team $model): QueryBuilder
     {
         $filtered = request()->get('filter') ?? null;
+        $paymentStatus = request()->get('status') ?? null;
 
         return $model
             ->select('id', 'name', 'institution', 'competition_id', 'created_at')
             ->when($filtered, function ($query) use ($filtered) {
                 if (!empty($filtered)) {
                     $query->where('competition_id', $filtered);
+                }
+            })
+            ->when($paymentStatus, function ($query) use ($paymentStatus) {
+                if (!empty($paymentStatus)) {
+                    $query->where(function ($model) use ($paymentStatus) {
+                        $model->whereHas('payment', function($q) use ($paymentStatus) {
+                            $q->where('status', $paymentStatus == 'paid' ? 'approve' : 'pending');
+                        });
+                    });
                 }
             })
             ->with([

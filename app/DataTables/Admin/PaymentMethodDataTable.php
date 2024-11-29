@@ -22,9 +22,10 @@ class PaymentMethodDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
                 return '<a href="'.route('admin.payment-method.edit', $query->id).'" class="btn btn-warning btn-sm me-2">Edit</a>'
-                    . '<form action="'.route('admin.payment-method.destroy', $query->id).'" method="POST" class="d-inline"'
+                    . '<form action="'.route('admin.payment-method.destroy', $query->id).'" method="POST" class="d-inline">'
                     . csrf_field() . method_field('DELETE')
-                    . '<button class="btn btn-danger btn-sm" onclick="return confirm(`Apakah anda yakin ingin menghapus data ini?`)">Hapus</button>';
+                    . '<button class="btn btn-danger btn-sm" onclick="return confirm(`Apakah anda yakin ingin menghapus data ini?`)">Hapus</button>'
+                    . '</form>';
             })
             ->editColumn('logo', function ($query) {
                 return '<a href="'.asset($query->logo ?? '#').'" data-lightbox="sponsor" data-title="'.$query->name.'">'

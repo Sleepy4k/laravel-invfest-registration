@@ -62,19 +62,21 @@ class RegisterService extends Service
         $team = $this->teamInterface->create($teamPayload);
 
         if (!$team) {
+            $this->userInterface->deleteById($user->id);
             alert('Pendaftaran Gagal', 'system gagal memproses data team', 'error');
             return false;
         }
 
-        if ($request['companion_name'] != null) {
+        if (!is_null($request['companion_name'] ?? null) && !is_null($request['companion_card'] ?? null)) {
             $companionPayload = [
                 'team_id' => $team->id,
-                'name' => $request['companion_name'],
-                'card' => $request['companion_card'],
+                'name' => $request['companion_name'] ?? '-',
+                'card' => $request['companion_card'] ?? '-',
             ];
             $companion = $this->teamCompanionInterface->create($companionPayload);
 
             if (!$companion) {
+                $this->teamInterface->deleteById($team->id);
                 alert('Pendaftaran Gagal', 'system gagal memproses data pembimbing', 'error');
                 return false;
             }
@@ -90,6 +92,12 @@ class RegisterService extends Service
         $leader = $this->teamLeaderInterface->create($leaderPayload);
 
         if (!$leader) {
+            $this->teamInterface->deleteById($team->id);
+
+            if (!is_null($request['companion_name'])) {
+                $this->teamCompanionInterface->deleteById($companion->id);
+            }
+
             alert('Pendaftaran Gagal', 'system gagal memproses data ketua team', 'error');
             return false;
         }
@@ -103,7 +111,11 @@ class RegisterService extends Service
         ];
         $otp = $this->otpInterface->create($otpPayload);
 
-        if (!$otp) $otpPayload['otp'] = '91b4ax';
+        if (!$otp) {
+            $this->teamLeaderInterface->deleteById($leader->id);
+            alert('Pendaftaran Gagal', 'system gagal membuat kode otp', 'error');
+            return false;
+        }
 
         $user->notify(new TeamOTPVerification($otpPayload['otp']));
 

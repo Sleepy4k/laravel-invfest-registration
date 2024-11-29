@@ -23,9 +23,10 @@ class CompetitionDataTable extends DataTable
             ->editColumn('action', function ($query) {
                 return '<a href="'.route('admin.competition.edit', $query->id).'" class="btn btn-warning btn-sm me-2">Edit</a>'
                     . '<a href="'.route('admin.competition.show', $query->id).'" class="btn btn-info btn-sm me-2">Detail</a>'
-                    . '<form action="'.route('admin.competition.destroy', $query->id).'" method="POST" class="d-inline"'
+                    . '<form action="'.route('admin.competition.destroy', $query->id).'" method="POST" class="d-inline">'
                     . csrf_field() . method_field('DELETE')
-                    . '<button class="btn btn-danger btn-sm" onclick="return confirm(`Apakah anda yakin ingin menghapus data ini?`)">Hapus</button>';
+                    . '<button class="btn btn-danger btn-sm" onclick="return confirm(`Apakah anda yakin ingin menghapus data ini?`)">Hapus</button>'
+                    . '</form>';
             })
             ->editColumn('poster', function ($query) {
                 if (is_null($query->poster)) {

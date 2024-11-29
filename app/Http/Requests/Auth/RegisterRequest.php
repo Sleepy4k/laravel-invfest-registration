@@ -22,16 +22,16 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'competition_id' => ['required', 'string', 'exists:competitions,id'],
             'team_name' => ['required', 'string', 'max:100'],
             'institution' => ['required', 'string', 'max:150'],
             'leader_name' => ['required', 'string', 'max:150'],
             'leader_phone' => ['required', 'string', 'max:50'],
             'leader_card' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
             'companion_name' => ['nullable', 'string', 'max:150'],
-            'companion_card' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
-            'competition_id' => ['required', 'string', 'exists:competitions,id'],
+            'companion_card' => ['required_unless:companion_name,null', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
 
@@ -43,13 +43,9 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'Email harus diisi.',
-            'email.email' => 'Email tidak valid.',
-            'email.unique' => 'Email sudah terdaftar.',
-            'password.required' => 'Password harus diisi.',
-            'password.string' => 'Password harus berupa string.',
-            'password.min' => 'Password minimal 8 karakter.',
-            'password.confirmed' => 'Password tidak cocok.',
+            'competition_id.required' => 'Lomba harus dipilih.',
+            'competition_id.string' => 'Lomba harus berupa string.',
+            'competition_id.exists' => 'Lomba tidak ditemukan.',
             'team_name.required' => 'Nama tim harus diisi.',
             'team_name.string' => 'Nama tim harus berupa string.',
             'team_name.max' => 'Nama tim tidak boleh lebih dari 100 karakter.',
@@ -67,14 +63,19 @@ class RegisterRequest extends FormRequest
             'leader_card.mimes' => 'Kartu pelajar/kartu mahasiswa ketua tim harus berupa gambar dengan format jpg, jpeg, atau png.',
             'leader_card.extensions' => 'Kartu pelajar/kartu mahasiswa ketua tim harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
             'leader_card.max' => 'Kartu pelajar/kartu mahasiswa ketua tim tidak boleh lebih dari 8 MB.',
-            'companion_name.string' => 'Nama anggota tim harus berupa string.',
-            'companion_card.image' => 'Kartu pelajar/kartu mahasiswa anggota tim harus berupa gambar.',
-            'companion_card.mimes' => 'Kartu pelajar/kartu mahasiswa anggota tim harus berupa gambar dengan format jpg, jpeg, atau png.',
-            'companion_card.extensions' => 'Kartu pelajar/kartu mahasiswa anggota tim harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
-            'companion_card.max' => 'Kartu pelajar/kartu mahasiswa anggota tim tidak boleh lebih dari 8 MB.',
-            'competition_id.required' => 'Lomba harus dipilih.',
-            'competition_id.string' => 'Lomba harus berupa string.',
-            'competition_id.exists' => 'Lomba tidak ditemukan.',
+            'companion_name.string' => 'Nama pendamping tim harus berupa string.',
+            'companion_card.required_unless' => 'Kartu pendamping tim harus berupa di diunggah jika melampirkan pendamping tim.',
+            'companion_card.image' => 'Kartu pendamping tim harus berupa gambar.',
+            'companion_card.mimes' => 'Kartu pendamping tim harus berupa gambar dengan format jpg, jpeg, atau png.',
+            'companion_card.extensions' => 'Kartu pendamping tim harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
+            'companion_card.max' => 'Kartu pendamping tim tidak boleh lebih dari 8 MB.',
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'password.required' => 'Password harus diisi.',
+            'password.string' => 'Password harus berupa string.',
+            'password.min' => 'Password minimal 8 karakter.',
+            'password.confirmed' => 'Password tidak cocok.',
         ];
     }
 }
