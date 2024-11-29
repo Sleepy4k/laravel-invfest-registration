@@ -54,9 +54,12 @@
         <link rel="stylesheet" href="{{ asset('frontend/css/card.css') }}" nonce="{{ csp_nonce() }}">
         <link rel="stylesheet" href="{{ asset('frontend/css/timeline.css') }}" nonce="{{ csp_nonce() }}">
         <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}" nonce="{{ csp_nonce() }}">
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
         @stack('plugin-styles')
 
@@ -75,6 +78,12 @@
         <script src="{{ asset('frontend/js/app.js') }}" nonce="{{ csp_nonce() }}"></script>
         <script src="{{ asset('js/warning.js') }}" nonce="{{ csp_nonce() }}"></script>
         <script nonce="{{ csp_nonce() }}">
+            AOS.init({
+                once: true,
+                duration: 1000,
+                easing: 'ease-in-out',
+            });
+
             $(document).ready(function() {
                 $('.back-to-top').click(function() {
                     $('html, body').animate({

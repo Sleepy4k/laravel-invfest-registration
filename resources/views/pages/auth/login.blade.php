@@ -1,23 +1,24 @@
 <x-layouts.auth title="Masuk">
     <div class="page-content d-flex align-items-center justify-content-center">
         <div class="row w-100 mx-0 auth-page">
-            <div class="col-md-8 col-xl-6 mx-auto">
+            <div class="col-md-8 col-xl-4 mx-auto">
                 <div class="card">
                     <div class="row flex-column-reverse flex-md-row">
-                        <div class="col-md-4 pe-md-0">
-                            <div class="auth-side-wrapper"
-                                style="background-image: url({{ asset('admin/assets/images/internship-rendi-photo-backend.png') }})">
-                            </div>
-                        </div>
-                        <div class="col-md-8 ps-md-0">
-                            <div class="auth-form-wrapper px-4 py-5">
-                                <a href="{{ route('frontend.landing') }}"
-                                    class="noble-ui-logo d-block mb-2">{{ $appSettings['title'] }}</a>
-                                <h5 class="text-muted fw-normal mb-4">Silahkan Login Dengan Akun Anda</h5>
+                        <div class="col-md-8 col-xl-12 ps-md-0">
+                            <div class="auth-form-wrapper px-4 ps-5 py-5 pe-5">
+                                <a
+                                    href="{{ route('frontend.landing') }}"
+                                    class="noble-ui-logo d-block mb-2"
+                                >
+                                    {{ $appSettings['title'] }}
+                                </a>
+                                <h5 class="text-muted fw-normal mb-4">
+                                    Silahkan Login Dengan Akun Anda
+                                </h5>
                                 <form action="{{ route('login') }}" method="POST">
                                     @csrf
-                                    <x-input.email name="email" value="" />
-                                    <x-input.password name="password" value="" label="Password" />
+                                    <x-input.email name="email" value="{{ old('email') }}" />
+                                    <x-input.password name="password" label="Password" />
 
                                     <x-button.primary class="w-100 mb-3" type="submit">
                                         Masuk

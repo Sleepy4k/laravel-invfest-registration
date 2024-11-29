@@ -4,18 +4,26 @@
 @endphp
 
 <x-layouts.auth title="Pembayaran">
+    @pushOnce('style')
+        <link rel="stylesheet" href="{{ asset('frontend/css/auth.css') }}">
+    @endPushOnce
+
     <div class="page-content d-flex align-items-center justify-content-center">
         <div class="row w-100 mx-0 auth-page">
-            <div class="col-md-6 col-xl-3 mx-auto">
-                <div class="card">
+            <div class="col-md-8 col-xl-6 mx-auto">
+                <div class="mt-6">
+                    <x-auth.progress-bar />
+                </div>
+
+                <div class="card mt-4">
                     <div class="row flex-column-reverse flex-md-row">
                         <div class="col-md-12 ps-md-0">
-                            <div class="auth-form-wrapper px-4 py-5">
-                                <a href="{{ route('frontend.landing') }}" class="noble-ui-logo d-block mb-2">Pembayaran Tim
-                                    {{ $team?->name }}
+                            <div class="auth-form-wrapper px-4 ps-5 py-5 pe-5">
+                                <a href="{{ route('frontend.landing') }}" class="noble-ui-logo d-block mb-2">
+                                    Pembayaran Tim {{ $team?->name }}
                                 </a>
-                                <h5 class="text-muted fw-normal mb-4">Silahkan lakukan pembayaran untuk melanjutkan
-                                    pendaftaran sebesar
+                                <h5 class="text-muted fw-normal mb-4">
+                                    Silahkan lakukan pembayaran untuk melanjutkan pendaftaran sebesar
                                     <b class="text-primary">
                                         {{ $competition?->registration_fee_rupiah }}
                                     </b>
@@ -38,8 +46,7 @@
                                     </div>
                                 @endforeach
 
-                                <form action="{{ route('payment-team.store') }}" method="POST"
-                                    enctype="multipart/form-data">
+                                <form action="{{ route('payment-team.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="team_id" value="{{ $team->id }}">
                                     <x-input.select name="payment_method_id" value=""

@@ -3,7 +3,13 @@
         <x-frontend.card.hero />
     </div>
     <div class="container py-5" id="competition">
-        <h2 class="text-center mb-5" style="color: var(--secondary)">kompetisi</h2>
+        <h2
+            class="text-center mb-5"
+            style="color: var(--secondary)"
+            data-aos="fade-up"
+        >
+            kompetisi
+        </h2>
         <x-frontend.card.competition />
     </div>
     <div class="container py-5">

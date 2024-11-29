@@ -1,5 +1,5 @@
-<div class="card card-hero">
-    <div class="card-body p-4 text-white">
+<div class="card card-hero" data-aos="fade-down">
+    <div class="card-body text-white">
         <h2 class="text-center">
             {{ $appSettings['title'] }}
         </h2>
@@ -18,7 +18,12 @@
                     </a>
                 </div>
             </div>
-            <img src="{{ isset($appSettings['mascot']) ? asset($appSettings['mascot']) : '#' }}" alt="mascot" class="mascot-image" loading="lazy">
+            <img
+                src="{{ asset($appSettings['mascot'] ?? '#') }}"
+                alt="mascot"
+                class="mascot-image"
+                loading="lazy"
+            />
         </div>
     </div>
 </div>

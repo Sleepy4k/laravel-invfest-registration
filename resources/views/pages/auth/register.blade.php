@@ -1,11 +1,19 @@
 <x-layouts.auth title="Daftar">
+    @pushOnce('style')
+        <link rel="stylesheet" href="{{ asset('frontend/css/auth.css') }}">
+    @endPushOnce
+
     <div class="page-content d-flex align-items-center justify-content-center">
         <div class="row w-100 mx-0 auth-page">
             <div class="col-md-8 col-xl-6 mx-auto">
-                <div class="card">
+                <div class="mt-6">
+                    <x-auth.progress-bar />
+                </div>
+
+                <div class="card mt-4">
                     <div class="row flex-column-reverse flex-md-row">
                         <div class="col-md-12 ps-md-0">
-                            <div class="auth-form-wrapper px-4 py-5">
+                            <div class="auth-form-wrapper px-4 ps-5 py-5 pe-5">
                                 <a href="{{ route('frontend.landing') }}"
                                     class="noble-ui-logo d-block mb-2">{{ $appSettings['title'] }}</a>
                                 <h5 class="text-muted fw-normal mb-4">Silahkan isi form berikut untuk mendaftar</h5>
@@ -22,6 +30,7 @@
                                     <x-input.select name="competition_id" label="Kompetisi" id="competition_id">
                                         <option value="">Pilih Kompetisi</option>
                                     </x-input.select>
+                                    <span style="color: red; font-weight: bold; font-style: italic; padding: 0 4px;">* Jika kompetisi kosong, pastikan sudah memilih tingkat kompetisi</span>
                                     <x-input.text name="team_name" label="Nama Tim" value="{{ old('team_name') }}" />
                                     <x-input.text name="institution" label="Asal Institusi"
                                         value="{{ old('institution') }}" />

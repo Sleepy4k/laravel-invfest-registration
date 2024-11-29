@@ -1,4 +1,4 @@
-<nav class="navbar  navbar-expand-lg navbar-light shadow-sm " id="topNav">
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm sticky-top" id="topNav">
     <div class="container">
         <a
             class="navbar-brand mx-auto mx-lg-0 d-flex flex-row justify-content-center align-self-center"
@@ -44,20 +44,29 @@
                             @endrole
                         </a>
                         <ul class="dropdown-menu border-0 shadow-sm p-2" aria-labelledby="navbarDropdownMenuLink">
-                            @role('team')
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('team.dashboard') }}">
-                                        <i class="fas fa-tachometer-alt"></i>
-                                        Dashboard
-                                    </a>
-                                </li>
-                            @else
+                            @role('admin')
                                 <li>
                                     <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                                         <i class="fas fa-tachometer-alt"></i>
                                         Dashboard
                                     </a>
                                 </li>
+                            @else
+                                @if (request()->is('team/dashboard'))
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('frontend.landing') }}">
+                                            <i class="fas fa-home"></i>
+                                            Beranda
+                                        </a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('team.dashboard') }}">
+                                            <i class="fas fa-tachometer-alt"></i>
+                                            Dashboard
+                                        </a>
+                                    </li>
+                                @endif
                             @endrole
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
@@ -76,8 +85,4 @@
             </ul>
         </div>
     </div>
-</nav>
-
-<nav class="navbar navbar-light navbar-expand p-0 d-lg-none d-xl-none fixed-bottom top-shadow bg-white" id="bottomNav">
-    <ul class="navbar-nav nav-justified w-100"></ul>
 </nav>

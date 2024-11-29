@@ -12,19 +12,40 @@
             </ol>
         </nav>
         <div class="dropdown mb-4">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                Filter Dari Lomba
+            <button class="btn btn-secondary dropdown-toggle me-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Filter Dari Status
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.team.index', array_merge(request()->query(), ['status' => 'paid'])) }}">
+                        Sudah Bayar
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.team.index', array_merge(request()->query(), ['status' => 'unpaid'])) }}">
+                        Belum Bayar
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.team.index', request()->except('status')) }}">
+                        Clear Filter
+                    </a>
+                </li>
+            </ul>
+
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                Filter Dari Lomba
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                 @foreach ($competitions as $competition)
                     <li>
-                        <a class="dropdown-item" href="{{ route('admin.team.index') }}?filter={{ $competition->id }}">
+                        <a class="dropdown-item" href="{{ route('admin.team.index', array_merge(request()->query(), ['filter' => $competition->id])) }}">
                             {{ $competition->name }}
                         </a>
                     </li>
                 @endforeach
                 <li>
-                    <a class="dropdown-item" href="{{ route('admin.team.index') }}">
+                    <a class="dropdown-item" href="{{ route('admin.team.index', request()->except('filter')) }}">
                         Clear Filter
                     </a>
                 </li>

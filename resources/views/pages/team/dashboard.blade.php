@@ -48,7 +48,6 @@
             <a href="{{ $competition?->whatsapp_group }}" target="_blank" class="alert-link">
                 Link Grup Whatsapp
             </a>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" />
         </div>
         <div class="row">
             <div class="col-md-12">
