@@ -12,8 +12,8 @@
 }
 
 .card-custom {
-    width: 200px;
-    height: 200px;
+    width: 15vw;
+    height: 15vh;
     overflow: hidden;
     border-radius: 15px;
     transition: transform 0.2s;
@@ -34,7 +34,7 @@
     }
 
     .card-custom {
-        width: 150px;
-        height: 150px;
+        width: 25vw;
+        height: 25vh;
     }
 }

@@ -10,15 +10,15 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background-color: #EDFBFB;
+    background-color: #F3F3F3;
 }
 
 .navbar.sticky-top {
-    background-color: #ffffffb7 !important;
+    background-color: #fff !important;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1) !important;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    animation: fadeInDown 0.5s;
+    animation: fadeInDown 1.25s;
 }
 
 .navbar.navbar.sticky-top .nav-item a {
@@ -55,6 +55,7 @@ nav .list_menu_link .nav-link.active {
 
 /* hero */
 #hero-heading {
+    font-size: 20px;
     font-weight: 600;
     letter-spacing: .1rem;
     margin-bottom: 3rem;
@@ -227,6 +228,10 @@ header h4 {
     border-left: 3px solid var(--primary);
 }
 
+#content_timeline {
+    margin-top: 8vh;
+}
+
 .timeline h1 {
     font-weight: 300;
     font-size: 1.4em;
@@ -244,7 +249,7 @@ header h4 {
     position: relative;
     padding: 1rem;
     border: none;
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.035);
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.085);
     min-width: 300px
 }
 
@@ -446,6 +451,10 @@ header h4 {
     letter-spacing: .1rem;
 }
 
+.card-information {
+    margin-top: 5vh;
+}
+
 .card-information .information .info-desc {
     line-height: 1.75rem;
     letter-spacing: .025rem;
@@ -463,7 +472,28 @@ header h4 {
 .card-competition .card-img-top {
     height: 250px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 26px;
+}
+
+.card-title {
+    font-weight: 700;
+}
+
+.card-text {
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+    font-weight: 400;
+}
+
+.card-button {
+    border: 0;
+    border-radius: 8px;
+    background-color: var(--secondary);
+}
+
+.card-button:hover {
+    color: var(--secondary);
+    background-color: var(--primary);
 }
 
 .bg-secondary {
