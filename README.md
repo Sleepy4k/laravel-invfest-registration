@@ -12,7 +12,7 @@ This project is a registration portal that allows user to register and submit th
 
 ### Security and Permissions
 
-- Role-based access control (RBAC): Different admin roles (admin, petugas, user, etc.) with varying permissions.
+- Role-based access control (RBAC): Different admin roles (admin, petugas, team, etc.) with varying permissions.
 - Authentication and authorization: Ensuring only authorized users can access the dashboard.
 - Content Security Policy (CSP): Checking all content is safe to go, and prevent any xss injection for better security.
 
@@ -78,7 +78,7 @@ composer run dev
 
 ## Notes
 
-- Composer installation Error
+### Composer installation Error
 
 If you met installation error with message `need github token` or `permissions are sufficient for this personal access token`,
 then you need to generate your github personal access token on `https://github.com/settings/tokens`, and make sure to checklist
@@ -90,7 +90,7 @@ ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxx
 github_pat_xxxxxx_xxxxxxxxxxxxx
 ~~~
 
-- Pre Setup Error
+### Pre Setup Error
 
 To solve this error you need to run pre setup command.
 copy command below and paste it on your terminal.
@@ -99,7 +99,7 @@ copy command below and paste it on your terminal.
 php artisan naka:pre-setup
 ~~~
 
-- Lack of Performance
+### Lack of Performance
 
 If your website seems laggy, or time to load content is slow as hell.
 run this command and dont forget to clear all cache before.
@@ -112,7 +112,13 @@ php artisan view:cache
 php artisan event:cache
 ~~~
 
-- Storage symlink failed
+or you could do simply with this command
+
+~~~bash
+php artisan naka:re-cache
+~~~
+
+### Storage symlink failed
 
 When you deploy this on cpanel or similar, you need to change index.php base path,
 after that, you can change storage link path on `config/filesystems.php`, scroll to bottom of config,
@@ -124,7 +130,7 @@ and change path, for example
 ],
 ~~~
 
-- Migration Error (SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 1000 bytes)
+### Migration Error (SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 1000 bytes)
 
 This happen when laravel default charset is different from database charset, i met this error before because of database server using `InnoDB`,
 which mean it use latin1 charset, and max of string only 125 or 191 character, to fix this change your migration engine on `config/database.php`, scroll into connections list, and change your drive engine and set into `InnoDB`, for example
@@ -133,7 +139,7 @@ which mean it use latin1 charset, and max of string only 125 or 191 character, t
 'engine' => 'InnoDB',
 ~~~
 
-- Notification won't sent to user
+### Notification won't sent to user
 
 Keep in mind that default system using queue for jobs, that's mean when user register they need to wait until jobs is clear,
 but if your system don't setup any cron job or using InnoDB (they can't load jobs database), so you need to disable on notification class,
@@ -151,13 +157,13 @@ class TeamRejected extends Notification implements ShouldQueue
 
 ## Security Things
 
-- Content Security Policy (CSP)
+### Content Security Policy (CSP)
 
 For any reasons please don't turn on this feature, because we are implementing danger rendering on blade,
 so for security issue, keep enable this feature, if you met any error such as script blocked or something,
 read article about how to setting up CSP, so you can handle this error
 
-- User Session
+### User Session
 
 When this web deployed, please change session setting on `config/session.php`, keep in mind out main goal
 is to secure user data, so follow this config for better session security,
@@ -167,7 +173,7 @@ is to secure user data, so follow this config for better session security,
 'secure' => env('SESSION_SECURE_COOKIE', true),
 ~~~
 
-- Secure Header
+### Secure Header
 
 After all feature implemented, you can change secure heade config for better security,
 so set HTTP Strict Transport Security config (force into https protocol), so it will be like this
@@ -183,6 +189,19 @@ so set HTTP Strict Transport Security config (force into https protocol), so it 
     'preload' => true,
 ],
 ~~~
+
+## ToDo For Next Year
+
+### Improvised some UI/UX
+
+I think it's better change for landing page and other design, instead changing backend structure.
+Otherwise you may change the 'backend' structure to following your current 'rule' of competition.
+
+### Upgrade dashboard admin feature
+
+May this helping you out when checking user data and other else, for more spesific data. for example,
+you had to search data for user that don't had any member(s), for current feature thats filter doesn't
+exists, so you may create it one. good luck
 
 ## Environment Variables
 
@@ -213,6 +232,14 @@ To run this project, you will need to add the following environment variables to
 - [Laravel](https://laravel.com/docs/11.x)
 - [MySQL](https://dev.mysql.com/doc)
 - [Content Security Policy](https://github.com/spatie/laravel-csp)
+- [Secure Headers](https://github.com/bepsvpt/secure-headers)
+- [Cacheable Model](https://github.com/elipZis/laravel-cacheable-model)
+- [File Export/Import (excel, pdf, other)](https://docs.laravel-excel.com/3.1/getting-started/)
+- [Sweet Alert](https://realrashid.github.io/sweet-alert)
+- [Page Speed](https://github.com/renatomarinho/laravel-page-speed)
+- [Role and Permissions](https://spatie.be/docs/laravel-permission/v6/introduction)
+- [Sitemap Generator](https://github.com/spatie/laravel-sitemap)
+- [Data Tables](https://yajrabox.com/docs/laravel-datatables/11.0)
 
 ## Feedback
 
