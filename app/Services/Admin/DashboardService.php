@@ -51,20 +51,27 @@ class DashboardService extends Service
         $daysInMonth = Carbon::now()->daysInMonth;
         $initialData = array_fill(1, $daysInMonth, 0);
 
-        foreach ($rawData->groupBy('competition_id') as $competition_id => $items) {
-            $dailyCounts = $items->groupBy(function ($item) {
-                return (int) $item->created_at->format('d');
-            })->map(function ($dayItems) {
-                return count($dayItems);
-            })->toArray();
-
-            $mergedData = array_replace($initialData, $dailyCounts);
-
-            $series = [
-                'name' => $items?->first()?->competition?->name,
-                'data' => array_values($mergedData)
+        if ($rawData->isEmpty()) {
+            $teamCharts[] = [
+                'name' => 'No Data',
+                'data' => array_values($initialData)
             ];
-            $teamCharts[] = $series;
+        } else {
+            foreach ($rawData->groupBy('competition_id') as $competition_id => $items) {
+                $dailyCounts = $items->groupBy(function ($item) {
+                    return (int) $item->created_at->format('d');
+                })->map(function ($dayItems) {
+                    return count($dayItems);
+                })->toArray();
+
+                $mergedData = array_replace($initialData, $dailyCounts);
+
+                $series = [
+                    'name' => $items?->first()?->competition?->name,
+                    'data' => array_values($mergedData)
+                ];
+                $teamCharts[] = $series;
+            }
         }
 
         $teamCharts = json_encode($teamCharts);
