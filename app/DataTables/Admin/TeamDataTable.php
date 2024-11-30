@@ -57,14 +57,14 @@ class TeamDataTable extends DataTable
                     $settings = Setting::whereIn('key', ['phone', 'title'])->pluck('value', 'key');
                     $phoneNumber = $settings['phone'] ?? 'xxxx';
                     $appTitle = $settings['title'] ?? config('app.name');
-                    $userName = auth('web')->user()->roles->first()->name ?? 'admin';
+                    $userName = auth('web')->user()?->roles?->first()?->name ?? 'admin';
                     $reason = $query->payment ? 'melakukan crosscheck pembayaran' : 'melakukan pembayaran';
 
                     $followUpButton = '<span class="btn btn-warning btn-sm me-2">'
                         . '<a href="https://api.whatsapp.com/send?phone='.$phoneNumber
                         . '&text=Halo!'.$lnBreak.'Sebelumnya saya '.$userName.' dari Web '.$appTitle
-                        . ' '.$lnBreak.'Apakah boleh meminta tolong untuk follow up Team '.$query->name
-                        . ' pada lomba '.$query->competition->name.' untuk '.$reason.'?'.$lnBreak
+                        . ' '.$lnBreak.'Apakah boleh meminta tolong untuk follow up Team '.($query?->name ?? '####')
+                        . ' pada lomba '.$query?->competition?->name.' untuk '.$reason.'?'.$lnBreak
                         . 'Jika boleh, kontak ketua team pada nomor berikut '.$this->convertTeamNumber($query->leader->phone ?? 'xxxx')
                         . $lnBreak.'Terima Kasih Banyak!!!" target="_blank" rel="noopener" class="nav-link">'
                         . 'Follow Up</a></span>';
@@ -175,9 +175,7 @@ class TeamDataTable extends DataTable
                     ->responsive(true)
                     ->selectStyleSingle()
                     ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
+                        Button::make('export'),
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')

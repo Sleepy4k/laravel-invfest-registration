@@ -31,6 +31,15 @@ class LoginController extends Controller
             $user = auth('web')->user();
             $isUserAdmin = $user->hasRole('admin') || $user->hasRole('petugas');
 
+            activity('auth')
+                ->event('login')
+                ->causedBy($user)
+                ->withProperties([
+                    'email' => $user?->email,
+                    'logged_in_at' => now()->toDateTimeString(),
+                ])
+                ->log('User ' . $user?->email . ' successfully logged in');
+
             return redirect()->route($isUserAdmin ? 'admin.dashboard' : 'team.dashboard');
         } catch (\Throwable $th) {
             return $this->redirectError($th);

@@ -9,13 +9,15 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
 #[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, Cacheable;
+    use HasFactory, Notifiable, HasRoles, LogsActivity, Cacheable;
 
     /**
      * Indicates if the model's ID is auto-incrementing.
@@ -77,6 +79,20 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
 
         return array_merge(config('cacheable'), $overrided);
+    }
+
+    /**
+     * The spatie log that setting log option.
+     *
+     * @var bool
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly($this->fillable)
+            ->useLogName('model')
+            ->setDescriptionForEvent(fn (string $eventName) => sprintf('Model %s berhasil %s', $this->table, $eventName))
+            ->dontSubmitEmptyLogs();
     }
 
     /**

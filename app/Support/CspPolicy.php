@@ -38,15 +38,10 @@ class CspPolicy extends BasePolicy
     {
         $this
             ->addGeneralDirectives()
-            ->addDirectivesForBunnyFonts()
             ->addDirectivesForGoogleFonts()
             ->addDirectivesForYouTube()
-            ->addDirectivesForJsDelivrCDN()
-            ->addDirectivesForCloudflareCDN()
             ->addDirectivesForTailwindcssCDN()
-            ->addDirectivesForHighCharts()
-            ->addDirectivesForDataTablesCDN()
-            ->addDirectivesForUNPKGCDN();
+            ->addDirectivesForDataTablesCDN();
     }
 
     protected function addGeneralDirectives(): self
@@ -76,14 +71,6 @@ class CspPolicy extends BasePolicy
             ->addDirective(Directive::BLOCK_ALL_MIXED_CONTENT, Value::NO_VALUE);
     }
 
-    protected function addDirectivesForBunnyFonts(): self
-    {
-        return $this
-            ->addDirective(Directive::FONT, 'fonts.bunny.net')
-            ->addDirective(Directive::SCRIPT, 'fonts.bunny.net')
-            ->addDirective(Directive::STYLE, 'fonts.bunny.net');
-    }
-
     protected function addDirectivesForGoogleFonts(): self
     {
         return $this
@@ -103,50 +90,16 @@ class CspPolicy extends BasePolicy
         return $this->addDirective(Directive::FRAME, '*.youtube.com');
     }
 
-    protected function addDirectivesForJsDelivrCDN(): self
-    {
-        return $this
-            ->addDirective(Directive::FONT, 'cdn.jsdelivr.net')
-            ->addDirective(Directive::STYLE, 'cdn.jsdelivr.net')
-            ->addDirective(Directive::SCRIPT, 'cdn.jsdelivr.net');
-    }
-
-    protected function addDirectivesForCloudflareCDN(): self
-    {
-        return $this
-            ->addDirective(Directive::FONT, 'cdnjs.cloudflare.com')
-            ->addDirective(Directive::STYLE, 'cdnjs.cloudflare.com')
-            ->addDirective(Directive::SCRIPT, 'cdnjs.cloudflare.com');
-    }
-
     protected function addDirectivesForTailwindcssCDN(): self
     {
         return $this
-            ->addDirective(Directive::FONT, 'cdn.tailwindcss.com')
-            ->addDirective(Directive::STYLE, 'cdn.tailwindcss.com')
             ->addDirective(Directive::SCRIPT, 'cdn.tailwindcss.com');
-    }
-
-    protected function addDirectivesForHighCharts(): self
-    {
-        return $this
-            ->addDirective(Directive::FONT, 'code.highcharts.com')
-            ->addDirective(Directive::STYLE, 'code.highcharts.com')
-            ->addDirective(Directive::SCRIPT, 'code.highcharts.com');
     }
 
     protected function addDirectivesForDataTablesCDN(): self
     {
         return $this
-            ->addDirective(Directive::FONT, 'cdn.datatables.net')
             ->addDirective(Directive::STYLE, 'cdn.datatables.net')
             ->addDirective(Directive::SCRIPT, 'cdn.datatables.net');
-    }
-
-    protected function addDirectivesForUNPKGCDN(): self
-    {
-        return $this
-            ->addDirective(Directive::STYLE, 'unpkg.com')
-            ->addDirective(Directive::SCRIPT, 'unpkg.com');
     }
 }

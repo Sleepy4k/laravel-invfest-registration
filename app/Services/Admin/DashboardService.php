@@ -28,7 +28,7 @@ class DashboardService extends Service
      */
     public function invoke(): array
     {
-        $name = Str::ucfirst(auth('web')->user()->roles?->first()->name ?? 'Admin');
+        $name = Str::ucfirst(auth('web')->user()->roles?->first()?->name ?? 'Admin');
         $totalTeam = $this->teamInterface->count();
         $totalTeamPending = count($this->paymentInterface->all(['id'], [], [['status', '=', 'pending']]) ?? []);
         $totalTeamReject = count($this->paymentInterface->all(['id'], [], [['status', '=', 'reject']]) ?? []);
@@ -38,7 +38,7 @@ class DashboardService extends Service
         $totalMediaPartner = $this->mediaPartnerInterface->count();
         $competitions = Competition::select(['id', 'name'])->withCount('team')->get();
         $competitionChart = json_encode($competitions->map(function ($competition) {
-            return [$competition->name, $competition->team_count];
+            return [$competition?->name, $competition->team_count];
         })->toArray());
 
         $rawData = Team::select('id', 'competition_id', 'created_at')
@@ -61,7 +61,7 @@ class DashboardService extends Service
             $mergedData = array_replace($initialData, $dailyCounts);
 
             $series = [
-                'name' => $items->first()->competition->name,
+                'name' => $items?->first()?->competition?->name,
                 'data' => array_values($mergedData)
             ];
             $teamCharts[] = $series;

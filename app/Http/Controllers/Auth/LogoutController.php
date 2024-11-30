@@ -13,6 +13,19 @@ class LogoutController extends Controller
     public function __invoke(Request $request)
     {
         try {
+            $user = auth('web')->user() ?? null;
+
+            if (is_null($user)) return;
+
+            activity('auth')
+                ->event('logout')
+                ->causedBy($user ?? null)
+                ->withProperties([
+                    'email' => $user->email,
+                    'logged_out_at' => now()->toDateTimeString(),
+                ])
+                ->log('User ' . $user->email . ' successfully logged out');
+
             auth('web')->logout();
 
             $session = $request->session();

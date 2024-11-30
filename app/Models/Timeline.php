@@ -7,11 +7,13 @@ use ElipZis\Cacheable\Models\Traits\Cacheable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 #[ObservedBy(TimelineObserver::class)]
 class Timeline extends Model
 {
-    use HasFactory, Cacheable;
+    use HasFactory, LogsActivity, Cacheable;
 
     /**
      * Indicates if the model's ID is auto-incrementing.
@@ -64,6 +66,20 @@ class Timeline extends Model
         ];
 
         return array_merge(config('cacheable'), $overrided);
+    }
+
+    /**
+     * The spatie log that setting log option.
+     *
+     * @var bool
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly($this->fillable)
+            ->useLogName('model')
+            ->setDescriptionForEvent(fn (string $eventName) => sprintf('Model %s berhasil %s', $this->table, $eventName))
+            ->dontSubmitEmptyLogs();
     }
 
     /**

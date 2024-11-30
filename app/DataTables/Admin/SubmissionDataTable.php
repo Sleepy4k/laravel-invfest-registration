@@ -89,9 +89,7 @@ class SubmissionDataTable extends DataTable
                     ->responsive(true)
                     ->selectStyleSingle()
                     ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
+                        Button::make('export'),
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
