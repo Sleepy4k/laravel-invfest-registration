@@ -155,6 +155,35 @@ and if you want to activated notification jobs then change again to
 class TeamRejected extends Notification implements ShouldQueue
 ~~~
 
+- Sitemap Endpoint
+
+On production maybe you need to generate sitemap again due different domain,
+but don't worry about this, just run command below it will generate sitemap
+automatic using current endpoint (as long as you set APP_URL on .env)
+
+~~~bash
+php artisan make:sitemap
+~~~
+
+- Public Assets
+
+If you adding some assets from external for example adding icons from iconscout,
+or something, make sure you add it on local public assets, it will boost your
+load time on production and development, as long as you used the optimized one.
+
+And if you considering server bandwitdh or had to change system structure,
+change it using CDN system or using external hosting provider. I don't recommend
+this way, because security things. just keep it local as long as you can.
+
+- Database Query
+
+When you updating this backend or reworking this project, i personal highly
+recommend you to do not query all fields, just select field(s) that only
+you need, you must considering this as important thing, first of all it
+will takes server resources, second when you using inertia or api based,
+you will exposed all fields on public, even for the unused fields.
+just select for the fields that you needed.
+
 ## Security Things
 
 - Content Security Policy (CSP)
