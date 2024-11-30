@@ -1,4 +1,6 @@
 User-agent: *
 Disallow: /storage
 Disallow: /storage/*
+Disallow: /vendor
+Disallow: /vendor/*
 Disallow: /pre-setup.html
