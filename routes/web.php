@@ -69,6 +69,12 @@ Route::middleware('auth')->group(function () {
             Route::resource('website-configuration', Admin\SettingController::class)
                 ->only(['index', 'store'])
                 ->parameter('website-configuration', 'id');
+
+            Route::prefix('log')->group(function () {
+                Route::get('auth', Admin\AuthLogController::class)->name('auth.index');
+                Route::get('model', Admin\ModelLogController::class)->name('model.index');
+                Route::resource('system', Admin\SystemLogController::class)->only(['index', 'show']);
+            });
         });
     });
 });
