@@ -20,6 +20,7 @@
         "maatwebsite/excel": "3.1.61",
         "realrashid/sweet-alert": "^7.2",
         "renatomarinho/laravel-page-speed": "dev-l11-compatibility",
+        "spatie/laravel-activitylog": "^4.9",
         "spatie/laravel-csp": "^2.10",
         "spatie/laravel-image-optimizer": "^1.8",
         "spatie/laravel-permission": "^6.10",
@@ -44,7 +45,11 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/DateFormatter.php",
+            "app/Helpers/FileSizeFormatter.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
