@@ -125,6 +125,7 @@ return [
     | Custom animation with [Animate.css](https://daneden.github.io/animate.css/)
     | If set to false, modal CSS animation will be use default ones.
     | For specific modal just use the animation() helper method.
+    | default cdn is https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css
     |
     */
 

@@ -10,7 +10,7 @@ return [
      * Note: When server is empty string, it will not be added to the response header.
      */
 
-    'server' => '',
+    'server' => env('APP_NAME', 'Laravel'),
 
     /**
      * X-Content-Type-Options
@@ -30,7 +30,7 @@ return [
      * Available Value: 'on', 'off'
      */
 
-    'x-dns-prefetch-control' => '',
+    'x-dns-prefetch-control' => 'on',
 
     /**
      * X-Download-Options
