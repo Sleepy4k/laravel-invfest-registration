@@ -44,10 +44,10 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
 
-        <link href="{{ asset('admin/assets/fonts/feather-font/css/iconfont.css') }}" rel="stylesheet" nonce="{{ csp_nonce() }}" />
-        <link href="{{ asset('admin/assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" nonce="{{ csp_nonce() }}" />
+        <link rel="stylesheet" href="{{ asset('admin/assets/fonts/feather-font/css/iconfont.css') }}" nonce="{{ csp_nonce() }}" />
+        <link rel="stylesheet" href="{{ asset('admin/assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" nonce="{{ csp_nonce() }}" />
 
         @stack('plugin-styles')
 
@@ -60,7 +60,7 @@
             }
         </style>
 
-        <link href="{{ asset('admin/css/app.css') }}" rel="stylesheet" nonce="{{ csp_nonce() }}" />
+        <link rel="stylesheet" href="{{ asset('admin/css/app.css') }}" nonce="{{ csp_nonce() }}" />
         <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}" nonce="{{ csp_nonce() }}">
 
         @stack('style')

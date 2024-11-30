@@ -77,6 +77,26 @@
                         <span class="link-title">Konfigurasi Web</span>
                     </a>
                 </li>
+
+                <li class="nav-item nav-category">Logs</li>
+                <li class="nav-item {{ request()->is('admin/log/auth*') ? ' active' : '' }}">
+                    <a href="{{ route('admin.auth.index') }}" class="nav-link">
+                        <i class="link-icon" data-feather="key"></i>
+                        <span class="link-title">Auth</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->is('admin/log/model*') ? ' active' : '' }}">
+                    <a href="{{ route('admin.model.index') }}" class="nav-link">
+                        <i class="link-icon" data-feather="database"></i>
+                        <span class="link-title">Model</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->is('admin/log/system*') ? ' active' : '' }}">
+                    <a href="{{ route('admin.system.index') }}" class="nav-link">
+                        <i class="link-icon" data-feather="cpu"></i>
+                        <span class="link-title">System</span>
+                    </a>
+                </li>
             @endhasrole
         </ul>
     </div>

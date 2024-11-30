@@ -3,7 +3,7 @@
         <nav class="page-breadcrumb mb-0">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.timeline.index') }}">Timelien</a>
+                    <a href="{{ route('admin.timeline.index') }}">Timeline</a>
                 </li>
                 <li class="breadcrumb-item active">Detail</li>
             </ol>

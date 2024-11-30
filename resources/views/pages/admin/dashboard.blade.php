@@ -1,7 +1,7 @@
 <x-layouts.admin title="Dashboard">
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
-            <h4 class="mb-3 mb-md-0">Selamat Datang, {{ $name }}</h4>
+            <h4 class="mb-3 mb-md-0">Selamat Datang, {{ $name ?? '-' }}</h4>
         </div>
     </div>
 
@@ -146,7 +146,7 @@
                         <div class="card {{ $loop->iteration > 1 ? 'mt-4' : 'mt-2' }}">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-baseline mb-2">
-                                    <h6 class="card-title mb-0">Total Team Pada Kategori {{ $competition->name }}</h6>
+                                    <h6 class="card-title mb-0">Total Team Pada Kategori {{ $competition->name ?? '-' }}</h6>
                                 </div>
                                 <div class="row">
                                     <div class="col-6 col-md-12 col-xl-5">
@@ -174,7 +174,11 @@
     </div>
 
     @pushOnce('plugin-scripts')
-        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="{{ asset('admin/assets/plugins/highcharts/highcharts.js') }}" nonce="{{ csp_nonce() }}"></script>
+        <script src="{{ asset('admin/assets/plugins/highcharts/modules/exporting.js') }}" nonce="{{ csp_nonce() }}"></script>
+        <script src="{{ asset('admin/assets/plugins/highcharts/modules/export-data.js') }}" nonce="{{ csp_nonce() }}"></script>
+        <script src="{{ asset('admin/assets/plugins/highcharts/modules/accessibility.js') }}" nonce="{{ csp_nonce() }}"></script>
+
         <script>
             var pieData = {!! $competitionChart !!};
             var seriesData = {!! $teamCharts !!};

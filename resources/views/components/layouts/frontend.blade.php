@@ -50,16 +50,16 @@
                 --secondaryHover: {{ $appSettings['secondary_color_hover'] }};
             }
         </style>
-        <link rel="stylesheet" href="{{ asset('frontend/css/app.css') }}" nonce="{{ csp_nonce() }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/card.css') }}" nonce="{{ csp_nonce() }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/timeline.css') }}" nonce="{{ csp_nonce() }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}" nonce="{{ csp_nonce() }}">
-        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+        <link rel="stylesheet" href="{{ asset('frontend/css/app.css') }}" nonce="{{ csp_nonce() }}" />
+        <link rel="stylesheet" href="{{ asset('frontend/css/card.css') }}" nonce="{{ csp_nonce() }}" />
+        <link rel="stylesheet" href="{{ asset('frontend/css/timeline.css') }}" nonce="{{ csp_nonce() }}" />
+        <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}" nonce="{{ csp_nonce() }}" />
+        <link rel="stylesheet" href="{{ asset('frontend/plugins/aos/css/aos.css') }}" nonce="{{ csp_nonce() }}" />
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('frontend/plugins/bootstrap-icons/font/bootstrap-icons.min.css') }}" nonce="{{ csp_nonce() }}" />
+        <link rel="stylesheet" href="{{ asset('frontend/plugins/fontawesome/css/all.min.css') }}" nonce="{{ csp_nonce() }}" />
 
-        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script src="{{ asset('frontend/plugins/aos/js/aos.js') }}" nonce="{{ csp_nonce() }}"></script>
 
         @stack('plugin-styles')
 

@@ -96,7 +96,11 @@
                                     @foreach ($team?->member as $member)
                                         <li>
                                             {{ $member->name ?? 'Tidak Ada' }}
-                                            <a href="{{ asset($member->card ?? '#') }}" data-lightbox="image-1" data-title="Kartu Identitas {{ $member->name ?? 'Tidak Ada' }}">
+                                            <a
+                                                href="{{ asset($member->card ?? '#') }}"
+                                                data-lightbox="image-1"
+                                                data-title="Kartu Identitas {{ $member->name ?? 'Tidak Ada' }}"
+                                            >
                                                 Kartu Pelajar / Mahasiswa
                                             </a>
                                         </li>
