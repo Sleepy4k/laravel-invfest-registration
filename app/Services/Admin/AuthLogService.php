@@ -3,16 +3,31 @@
 namespace App\Services\Admin;
 
 use App\Services\Service;
+use Spatie\Activitylog\Models\Activity;
 
 class AuthLogService extends Service
 {
     /**
-     * Handle the incoming request.
+     * Display a listing of the resource.
      *
      * @return array
      */
-    public function invoke(): array
+    public function index(): array
     {
         return [];
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param string $id
+     *
+     * @return array
+     */
+    public function show(string $id): array
+    {
+        $activity = Activity::findOrfail($id);
+
+        return compact('activity');
     }
 }

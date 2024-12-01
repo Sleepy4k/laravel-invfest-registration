@@ -16,12 +16,24 @@ class ModelLogController extends Controller
     ) {}
 
     /**
-     * Handle the incoming request.
+     * Display a listing of the resource.
      */
-    public function __invoke(ModelLogDataTable $dataTable)
+    public function index(ModelLogDataTable $dataTable)
     {
         try {
-            return $dataTable->render('pages.admin.model.index', $this->service->invoke());
+            return $dataTable->render('pages.admin.model.index', $this->service->index());
+        } catch (\Throwable $th) {
+            return $this->redirectError($th);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        try {
+            return view('pages.admin.model.show', $this->service->show($id));
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

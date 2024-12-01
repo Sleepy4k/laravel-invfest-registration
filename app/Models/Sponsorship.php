@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ActivityEventType;
 use App\Observers\SponsorshipObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -77,7 +78,7 @@ class Sponsorship extends Model
     {
         return LogOptions::defaults()
             ->logOnly($this->fillable)
-            ->useLogName('model')
+            ->useLogName(ActivityEventType::MODEL->value)
             ->setDescriptionForEvent(fn (string $eventName) => sprintf('Model %s berhasil %s', $this->table, $eventName))
             ->dontSubmitEmptyLogs();
     }

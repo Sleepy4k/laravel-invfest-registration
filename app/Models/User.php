@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ActivityEventType;
 use App\Observers\UserObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -90,7 +91,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return LogOptions::defaults()
             ->logOnly($this->fillable)
-            ->useLogName('model')
+            ->useLogName(ActivityEventType::MODEL->value)
             ->setDescriptionForEvent(fn (string $eventName) => sprintf('Model %s berhasil %s', $this->table, $eventName))
             ->dontSubmitEmptyLogs();
     }

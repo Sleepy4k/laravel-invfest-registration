@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ActivityEventType;
 use App\Observers\OtpObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -84,7 +85,7 @@ class Otp extends Model
     {
         return LogOptions::defaults()
             ->logOnly($this->fillable)
-            ->useLogName('model')
+            ->useLogName(ActivityEventType::MODEL->value)
             ->setDescriptionForEvent(fn (string $eventName) => sprintf('Model %s berhasil %s', $this->table, $eventName))
             ->dontSubmitEmptyLogs();
     }

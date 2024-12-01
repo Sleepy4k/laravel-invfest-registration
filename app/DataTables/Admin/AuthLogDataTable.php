@@ -2,8 +2,8 @@
 
 namespace App\DataTables\Admin;
 
-use App\Models\Activity;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -20,34 +20,31 @@ class AuthLogDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->editColumn('action', function ($query) {
+                return '<a href="'.route('admin.auth.show', $query->id).'" class="btn btn-info btn-sm me-2">Detail</a>';
+            })
             ->editColumn('event', function ($query) {
-                if (empty($query->event)) {
-                    return '-';
-                } else {
-                    return $query->event;
-                }
+                return empty($query->event) ? '-' : $query->event;
             })
             ->editColumn('causer', function ($query) {
-                $data = null;
-                if (empty($query->causer_id)) {
-                    $data = '-';
-                } else {
-                    $data = $query->causer_id;
-                }
-                if (empty($query->causer_type)) {
-                    $data .= ' | -';
-                } else {
-                    $data .= ' | ' . $query->causer_type;
-                }
+                $causerId = $query->causer_id ?? '-';
+                $causerType = $query->causer_type ?? '-';
 
-                return $data;
+                return $causerId." | ".$causerType;
             })
             ->editColumn('properties', function ($query) {
-                return json_encode($query->properties);
+                $json = $query->properties->toJson();
+                $trimmedJson = substr($json, 0, 37) . '...';
+
+                return $trimmedJson;
+            })
+            ->editColumn('print_properties', function ($query) {
+                return $query->properties->toJson();
             })
             ->editColumn('created_at', function ($query) {
-                return date('d F Y H:m:s', strtotime($query->created_at));
+                return date('d M Y H:m:s', strtotime($query->created_at));
             })
+            ->rawColumns(['action'])
             ->setRowId('id');
     }
 
@@ -100,19 +97,30 @@ class AuthLogDataTable extends DataTable
                 ->searchable(false)
                 ->addClass('text-center'),
             Column::make('description')
-                ->title('Description')
+                ->title('Pesan')
                 ->addClass('text-center'),
             Column::computed('causer')
-                ->title('Causer')
+                ->title('Pelaku')
                 ->searchable(false)
                 ->addClass('text-center'),
             Column::make('properties')
-                ->title('Properties')
+                ->title('Properti')
+                ->printable(false)
+                ->exportable(false)
                 ->searchable(false)
                 ->addClass('text-center'),
-            Column::computed('created_at')
-                ->title('Created At')
+            Column::computed('print_properties')
+                ->title('Properti')
                 ->addClass('text-center')
+                ->hidden(),
+            Column::make('created_at')
+                ->title('Dibuat Pada')
+                ->addClass('text-center'),
+            Column::computed('action')
+                ->title('Aksi')
+                ->exportable(false)
+                ->printable(false)
+                ->addClass('text-center'),
         ];
     }
 
@@ -121,6 +129,6 @@ class AuthLogDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'AuthLog_' . date('YmdHis');
+        return 'Log_Autentikasi_' . date('YmdHis');
     }
 }

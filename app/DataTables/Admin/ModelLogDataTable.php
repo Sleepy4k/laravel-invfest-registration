@@ -2,8 +2,8 @@
 
 namespace App\DataTables\Admin;
 
-use App\Models\Activity;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -20,49 +20,39 @@ class ModelLogDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('subject', function ($query) {
-                $data = null;
-                if (empty($query->subject_id)) {
-                    $data = '-';
-                } else {
-                    $data = $query->subject_id;
-                }
-                if (empty($query->subject_type)) {
-                    $data .= ' | -';
-                } else {
-                    $data .= ' | ' . $query->subject_type;
-                }
-
-                return $data;
-            })
-            ->editColumn('causer', function ($query) {
-                $data = null;
-                if (empty($query->causer_id)) {
-                    $data = '-';
-                } else {
-                    $data = $query->causer_id;
-                }
-                if (empty($query->causer_type)) {
-                    $data .= ' | -';
-                } else {
-                    $data .= ' | ' . $query->causer_type;
-                }
-
-                return $data;
-            })
-            ->editColumn('properties', function ($query) {
-                return json_encode($query->properties);
+            ->editColumn('action', function ($query) {
+                return '<a href="'.route('admin.model.show', $query->id).'" class="btn btn-info btn-sm me-2">Detail</a>';
             })
             ->editColumn('event', function ($query) {
-                if (empty($query->event)) {
-                    return '-';
-                } else {
-                    return $query->event;
-                }
+                return empty($query->event) ? '-' : $query->event;
+            })
+            ->editColumn('subject', function ($query) {
+                $subjectId = $query->subject_id ?? '-';
+                $subjectType = $query->subject_type ?? '-';
+
+                return $subjectId." | ".$subjectType;
+
+            })
+            ->editColumn('causer', function ($query) {
+                $causerId = $query->causer_id ?? '-';
+                $causerType = $query->causer_type ?? '-';
+
+                return $causerId." | ".$causerType;
+
+            })
+            ->editColumn('properties', function ($query) {
+                $json = $query->properties->toJson();
+                $trimmedJson = substr($json, 0, 37) . '...';
+
+                return $trimmedJson;
+            })
+            ->editColumn('print_properties', function ($query) {
+                return $query->properties->toJson();
             })
             ->editColumn('created_at', function ($query) {
                 return date('d F Y H:m:s', strtotime($query->created_at));
             })
+            ->rawColumns(['action'])
             ->setRowId('id');
     }
 
@@ -127,11 +117,22 @@ class ModelLogDataTable extends DataTable
                 ->addClass('text-center'),
             Column::make('properties')
                 ->title('Properties')
+                ->printable(false)
+                ->exportable(false)
                 ->searchable(false)
                 ->addClass('text-center'),
+            Column::computed('print_properties')
+                ->title('Properti')
+                ->addClass('text-center')
+                ->hidden(),
             Column::computed('created_at')
                 ->title('Created At')
-                ->addClass('text-center')
+                ->addClass('text-center'),
+            Column::computed('action')
+                ->title('Aksi')
+                ->exportable(false)
+                ->printable(false)
+                ->addClass('text-center'),
         ];
     }
 
@@ -140,6 +141,6 @@ class ModelLogDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'ModelLog_' . date('YmdHis');
+        return 'Log_Model_' . date('YmdHis');
     }
 }
