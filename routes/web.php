@@ -71,8 +71,8 @@ Route::middleware('auth')->group(function () {
                 ->parameter('website-configuration', 'id');
 
             Route::prefix('log')->group(function () {
-                Route::get('auth', Admin\AuthLogController::class)->name('auth.index');
-                Route::get('model', Admin\ModelLogController::class)->name('model.index');
+                Route::resource('auth', Admin\AuthLogController::class)->only(['index', 'show']);
+                Route::resource('model', Admin\ModelLogController::class)->only(['index', 'show']);
                 Route::resource('system', Admin\SystemLogController::class)->only(['index', 'show']);
             });
         });
