@@ -44,7 +44,7 @@ class LogLoginUser
         $message = 'User '.($user?->email ?? 'unknown').' successfully logged in';
         $properties = [
             'email' => $user?->email,
-            'email_verified_at' => date('d F Y', strtotime($user?->email_verified_at)),
+            'email_verified_at' => $user?->email_verified_at ? date('d F Y', strtotime($user->email_verified_at)) : null,
             'ip_address' => $ip,
             'user_agent' => $userAgent,
             'login_at' => now()->toDateTimeString()

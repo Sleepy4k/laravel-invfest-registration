@@ -5,7 +5,6 @@ namespace App\Traits;
 use App\Enums\ReportLogType;
 use App\Enums\UploadFileType;
 use Illuminate\Support\Facades\Storage;
-use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 trait UploadFile
 {
@@ -50,25 +49,6 @@ trait UploadFile
     }
 
     /**
-     * Optimize image
-     *
-     * @param string $file
-     *
-     * @return bool
-     */
-    protected function optimizeImage($file)
-    {
-        try {
-            ImageOptimizer::optimize($file);
-
-            return true;
-        } catch (\Throwable $th) {
-            $this->sendReportLog(ReportLogType::ERROR, $th->getMessage());
-            throw $th;
-        }
-    }
-
-    /**
      * Transform name file
      *
      * @param string $type
@@ -79,16 +59,13 @@ trait UploadFile
     protected function transformName($type, $file)
     {
         try {
-            $name = request()->getSchemeAndHttpHost() . '/storage';
-
-            $name .= match ($type) {
-                UploadFileType::IMAGE => '/' . UploadFileType::IMAGE->value . '/' . $file,
-                UploadFileType::FILE => '/' . UploadFileType::FILE->value . '/' . $file,
-                UploadFileType::SETTING => '/' . UploadFileType::SETTING->value . '/' . $file,
-                default => '/' . $this->unkownPath . '/' . $file,
+            $baseUrl = request()->getSchemeAndHttpHost() . '/storage';
+            return match ($type) {
+                UploadFileType::IMAGE => $baseUrl . '/' . UploadFileType::IMAGE->value . '/' . $file,
+                UploadFileType::FILE => $baseUrl . '/' . UploadFileType::FILE->value . '/' . $file,
+                UploadFileType::SETTING => $baseUrl . '/' . UploadFileType::SETTING->value . '/' . $file,
+                default => $baseUrl . '/' . $this->unkownPath . '/' . $file,
             };
-
-            return $name;
         } catch (\Throwable $th) {
             $this->sendReportLog(ReportLogType::ERROR, $th->getMessage());
             throw $th;
@@ -105,16 +82,8 @@ trait UploadFile
     protected function parseImage($file)
     {
         try {
-            $parse = parse_url($file);
-            $pathSegments = explode('/', $parse['path'] ?? '');
-            $name = null;
-
-            $total = count($pathSegments);
-            if ($total > 0 && isset($pathSegments[$total - 1])) {
-                $name = $pathSegments[$total - 1];
-            }
-
-            return $name;
+            $parsedUrl = parse_url($file);
+            return basename($parsedUrl['path'] ?? '');
         } catch (\Throwable $th) {
             $this->sendReportLog(ReportLogType::ERROR, $th->getMessage());
             throw $th;
@@ -132,13 +101,8 @@ trait UploadFile
     protected function putFile(UploadFileType $type, $file)
     {
         try {
-            if (auth('web')->check()) {
-                $user = auth('web')->user();
-                $clientCode = $user->id . '_' . $user->created_at->format('dmY');
-            } else {
-                $clientCode = rand(1, 999) . '_' . date('His');
-            }
-
+            $user = auth('web')->user();
+            $clientCode = $user ? $user->id . '_' . $user->created_at->format('dmY') : rand(1, 999) . '_' . date('His');
             $fileName = preg_replace('/\s+/', '_', uniqid() . '_' . date('dmY') . '_' . $clientCode . '.' . $file->getClientOriginalExtension());
 
             if ($this->checkFile($type, $fileName, true)) {
@@ -147,13 +111,7 @@ trait UploadFile
 
             $file->storeAs($this->storageDisk($type), $fileName);
 
-            if ($type !== UploadFileType::FILE->value) {
-                $this->optimizeImage(storage_path('app\\public\\' . $this->storageDisk($type) . $fileName));
-            }
-
-            $fileName = $this->transformName($type, $fileName);
-
-            return $fileName;
+            return $this->transformName($type, $fileName);
         } catch (\Throwable $th) {
             $this->sendReportLog(ReportLogType::ERROR, $th->getMessage());
             throw $th;
@@ -171,15 +129,14 @@ trait UploadFile
     protected function deleteFile(UploadFileType $type, $file)
     {
         try {
-            if ($this->checkFile($type, $file)) {
-                $parsedFile = $this->parseImage($file);
-
-                Storage::delete($this->storageDisk($type) . $parsedFile);
-
-                return true;
+            if (!$this->checkFile($type, $file)) {
+                return false;
             }
 
-            return false;
+            $parsedFile = $this->parseImage($file);
+            Storage::delete($this->storageDisk($type) . $parsedFile);
+
+            return true;
         } catch (\Throwable $th) {
             $this->sendReportLog(ReportLogType::ERROR, $th->getMessage());
             throw $th;
@@ -198,17 +155,8 @@ trait UploadFile
     protected function checkFile(UploadFileType $type, $file, $save = false)
     {
         try {
-            if ($save) {
-                $parsedFile = $file;
-            } else {
-                $parsedFile = $this->parseImage($file);
-            }
-
-            if (Storage::exists($this->storageDisk($type) . $parsedFile)) {
-                return true;
-            }
-
-            return false;
+            $parsedFile = $save ? $file : $this->parseImage($file);
+            return Storage::exists($this->storageDisk($type) . $parsedFile);
         } catch (\Throwable $th) {
             $this->sendReportLog(ReportLogType::ERROR, $th->getMessage());
             throw $th;
