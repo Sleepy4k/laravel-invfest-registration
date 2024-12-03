@@ -34,7 +34,7 @@
             <i class="fas fa-exclamation-triangle"></i>
             Tim anda sedang dalam proses verifikasi oleh admin. Silahkan menunggu.
             <a
-                href="{{ 'https://api.whatsapp.com/send/?phone=' . $appSettings['phone'] . '&text=ingin%20menanyakan%20status%20verifikasi%20tim%20saya.' }}"
+                href="{{ 'https://api.whatsapp.com/send/?phone='.$appSettings['phone'].'&text=Perkenalkan saya '.($leader?->name ?? 'Pendaftar').' dari team '.($team?->name ?? '-').' ingin menanyakan status verifikasi tim saya.' }}"
                 target="_blank"
                 class="alert-link"
             >

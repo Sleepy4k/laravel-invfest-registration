@@ -17,8 +17,18 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li>
-                    <a class="dropdown-item" href="{{ route('admin.team.index', array_merge(request()->query(), ['status' => 'paid'])) }}">
-                        Sudah Bayar
+                    <a class="dropdown-item" href="{{ route('admin.team.index', array_merge(request()->query(), ['status' => 'approve'])) }}">
+                        Aproved
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.team.index', array_merge(request()->query(), ['status' => 'pending'])) }}">
+                        Pending
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.team.index', array_merge(request()->query(), ['status' => 'reject'])) }}">
+                        Reject
                     </a>
                 </li>
                 <li>
@@ -39,13 +49,13 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                 @foreach ($competitions as $competition)
                     <li>
-                        <a class="dropdown-item" href="{{ route('admin.team.index', array_merge(request()->query(), ['filter' => $competition->id])) }}">
+                        <a class="dropdown-item" href="{{ route('admin.team.index', array_merge(request()->query(), ['competition' => $competition->id])) }}">
                             {{ $competition->name }}
                         </a>
                     </li>
                 @endforeach
                 <li>
-                    <a class="dropdown-item" href="{{ route('admin.team.index', request()->except('filter')) }}">
+                    <a class="dropdown-item" href="{{ route('admin.team.index', request()->except('competition')) }}">
                         Clear Filter
                     </a>
                 </li>
