@@ -7,7 +7,7 @@
                 class="card card-custom"
             >
                 <img
-                    src="{{ asset($partner->logo ?? '#') }}"
+                    src="{{ $partner->logo ?? '#' }}"
                     class="card-img card-img-custom"
                     alt="{{ $partner->name }}"
                     loading="lazy"

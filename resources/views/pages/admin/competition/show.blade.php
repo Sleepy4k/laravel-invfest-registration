@@ -16,7 +16,7 @@
             <x-admin.card title="{{ $competition->name }}">
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="{{ asset($competition->poster ?? '#') }}" loading="lazy" alt="image" class="img-fluid">
+                        <img src="{{ $competition->poster ?? '#' }}" loading="lazy" alt="image" class="img-fluid">
                     </div>
                     <div class="col-md-8">
                         <table class="table">
@@ -39,15 +39,25 @@
                             <tr>
                                 <th>Guide Book</th>
                                 <td>
-                                    <a href="{{ asset($competition->guidebook ?? '#') }}" class="btn btn-primary btn-sm"
-                                        target="_blank">Lihat</a>
+                                    <a
+                                        href="{{ $competition->guidebook ?? '#' }}"
+                                        class="btn btn-primary btn-sm"
+                                        target="_blank"
+                                    >
+                                        Lihat
+                                    </a>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Link Grup Whatsapp</th>
                                 <td>
-                                    <a href="{{ $competition?->whatsapp_group }}" class="btn btn-primary btn-sm"
-                                        target="_blank">Lihat</a>
+                                    <a
+                                        href="{{ $competition?->whatsapp_group }}"
+                                        class="btn btn-primary btn-sm"
+                                        target="_blank"
+                                    >
+                                        Lihat
+                                    </a>
                                 </td>
                             </tr>
 

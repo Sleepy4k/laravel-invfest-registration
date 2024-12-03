@@ -8,7 +8,7 @@
             <div class="card card-competition">
                 <div class="position-relative">
                     <img
-                        src="{{ asset($competition->poster ?? '#') }}"
+                        src="{{ $competition->poster ?? '#' }}"
                         class="card-img-top p-3"
                         alt="{{ $competition->name }}"
                         loading="lazy"

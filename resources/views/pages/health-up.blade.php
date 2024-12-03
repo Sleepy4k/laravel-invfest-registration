@@ -23,7 +23,7 @@
         <meta name="twitter:description" content="Check current uptime status">
         <meta name="twitter:image" content="{{ asset('images/banner.png') }}">
 
-        <link rel="shortcut icon" href="{{ asset($appSettings['nav_logo'] ?? '#') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ $appSettings['nav_logo'] ?? '#' }}" type="image/x-icon">
 
         <script src="https://cdn.tailwindcss.com"></script>
 

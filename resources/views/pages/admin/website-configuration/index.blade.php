@@ -112,7 +112,7 @@
                                 <img
                                     alt="{{ $settings['title'] }}"
                                     class="img-fluid mb-3"
-                                    src="{{ asset($settings['nav_logo'] ?? '#') }}"
+                                    src="{{ $settings['nav_logo'] ?? '#' }}"
                                     id="nav_logo_image" width="100"
                                 />
                                 <x-input.file
@@ -135,7 +135,7 @@
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <img
-                                    src="{{ asset($settings['twibbon'] ?? '#') }}"
+                                    src="{{ $settings['twibbon'] ?? '#' }}"
                                     alt="{{ $settings['title'] }}"
                                     class="img-fluid mb-3"
                                     width="200"
@@ -155,7 +155,7 @@
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <img
-                                    src="{{ asset($settings['mascot'] ?? '#') }}"
+                                    src="{{ $settings['mascot'] ?? '#' }}"
                                     alt="{{ $settings['title'] }}"
                                     class="img-fluid mb-3"
                                     width="200"

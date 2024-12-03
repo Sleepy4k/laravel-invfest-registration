@@ -5,7 +5,7 @@
             href="{{ route('frontend.landing') }}"
         >
             <img
-                src="{{ asset($appSettings['nav_logo'] ?? '#') }}"
+                src="{{ $appSettings['nav_logo'] ?? '#' }}"
                 alt="Logo"
                 width="60px"
                 height="80px"

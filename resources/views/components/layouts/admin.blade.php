@@ -13,11 +13,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
         <link rel="canonical" href="{{ config('app.url') }}">
-        <link rel="apple-touch-icon" href="{{ asset($appSettings['nav_logo'] ?? '#') }}" />
-        <link rel="icon" type="image/png" href="{{ asset($appSettings['nav_logo'] ?? '#') }}" />
-        <link rel="icon" type="image/x-icon" href="{{ asset($appSettings['nav_logo'] ?? '#') }}">
-        <link rel="shortcut icon" type="image/png" href="{{ asset($appSettings['nav_logo'] ?? '#') }}" />
-        <link rel="shortcut icon" type="image/x-icon" href="{{ asset($appSettings['nav_logo'] ?? '#') }}">
+        <link rel="apple-touch-icon" href="{{ $appSettings['nav_logo'] ?? '#' }}" />
+        <link rel="icon" type="image/png" href="{{ $appSettings['nav_logo'] ?? '#' }}" />
+        <link rel="icon" type="image/x-icon" href="{{ $appSettings['nav_logo'] ?? '#' }}">
+        <link rel="shortcut icon" type="image/png" href="{{ $appSettings['nav_logo'] ?? '#' }}" />
+        <link rel="shortcut icon" type="image/x-icon" href="{{ $appSettings['nav_logo'] ?? '#' }}">
 
         <title>Admin - {{ $title ?? '' }}</title>
 

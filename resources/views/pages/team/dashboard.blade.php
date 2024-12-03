@@ -75,7 +75,7 @@
                     </tr>
                     <tr>
                         <th>Kartu Pelajar / Mahasiswa Ketua</th>
-                        <td> <a href="{{ asset($leader->card ?? '#') }}" data-lightbox="image-1" data-title="Kartu Identitas {{ $leader->name }}">
+                        <td> <a href="{{ $leader->card ?? '#' }}" data-lightbox="image-1" data-title="Kartu Identitas {{ $leader->name }}">
                                 Kartu Pelajar / Mahasiswa
                             </a>
                         </td>
@@ -97,7 +97,7 @@
                                         <li>
                                             {{ $member->name ?? 'Tidak Ada' }}
                                             <a
-                                                href="{{ asset($member->card ?? '#') }}"
+                                                href="{{ $member->card ?? '#' }}"
                                                 data-lightbox="image-1"
                                                 data-title="Kartu Identitas {{ $member->name ?? 'Tidak Ada' }}"
                                             >
@@ -119,7 +119,7 @@
                         <tr>
                             <th>Kartu Identitas Pembmbing</th>
                             <td>
-                                <a href="{{ asset($companion->card ?? '#') }}"
+                                <a href="{{ $companion->card ?? '#' }}"
                                     data-title="Kartu Identitas {{ $companion->name }}">
                                     Kartu Identitas Pembimbing </a>
                             </td>
@@ -136,12 +136,12 @@
                         <th>Bukti Pembayaran</th>
                         <td>
                             <a
-                                href="{{ asset($payment->proof ?? '#') }}"
+                                href="{{ $payment->proof ?? '#' }}"
                                 data-lightbox="image-1"
                                 data-title="Bukti Pembayaran {{ $team->name }}"
                             >
                                 <img
-                                    src="{{ asset($payment->proof ?? '#') }}"
+                                    src="{{ $payment->proof ?? '#' }}"
                                     class="img-table-lightbox"
                                     width="100"
                                     loading="lazy"

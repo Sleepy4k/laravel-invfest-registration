@@ -19,7 +19,7 @@
                 </div>
             </div>
             <img
-                src="{{ asset($appSettings['mascot'] ?? '#') }}"
+                src="{{ $appSettings['mascot'] ?? '#' }}"
                 alt="mascot"
                 class="mascot-image"
                 loading="lazy"

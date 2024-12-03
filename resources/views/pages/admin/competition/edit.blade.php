@@ -26,7 +26,7 @@
                     </x-input.select>
                     <x-input.textarea label="Deskripsi" name="description" :value="$competition->description" />
                     <x-input.file label="Poster" name="poster" id="poster" accept="image/*" />
-                    <a href="{{ asset($competition->guidebook ?? '#') }}" class="btn btn-primary btn-sm mb-3"
+                    <a href="{{ $competition->guidebook ?? '#' }}" class="btn btn-primary btn-sm mb-3"
                         target="_blank">Lihat Guide Book</a>
                     <x-input.file label="Guide Book" name="guidebook" id="guidebook" />
                     <x-input.text label="Harga Pendaftaran" name="registration_fee" type="number"

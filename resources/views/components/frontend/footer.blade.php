@@ -2,7 +2,7 @@
     <div class="container">
         <div class="footer_menu row gap-5">
             <div class="footer_menu_list col-12 col-md-12 col-lg-4">
-                <img src="{{ asset($appSettings['nav_logo'] ?? '#') }}" loading="lazy" alt="Logo" width="75" height="75" />
+                <img src="{{ $appSettings['nav_logo'] ?? '#' }}" loading="lazy" alt="Logo" width="75" height="75" />
                 <p class="mt-3">{{ date('Y') }} @ IT TEAM {{ $appSettings['title'] ?? '#' }}</p>
                 <b>Ikuti Kami</b>
                 <ul class="fot_social">

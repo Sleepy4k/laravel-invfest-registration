@@ -22,6 +22,8 @@
                                 </h5>
                                 <form action="{{ route('verification.send') }}" method="POST">
                                     @csrf
+                                    @honeypot
+
                                     <x-input.text name="otp" label="Kode Verifikasi" />
                                     <x-button.primary class="w-100 mb-3" type="submit">
                                         Verifikasi

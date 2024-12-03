@@ -40,7 +40,7 @@
                 </button>
             </div>
             <img
-                src="{{ asset($appSettings['mascot'] ?? '#') }}"
+                src="{{ $appSettings['mascot'] ?? '#' }}"
                 alt="mascot"
                 class="mascot-image aos-init aos-animate"
                 loading="lazy"
@@ -51,7 +51,7 @@
             class="d-flex twibbon justify-content-between align-items-center bg-primary text-white p-4 gap-5"
         >
             <img
-                src="{{ asset($appSettings['twibbon'] ?? '#') }}"
+                src="{{ $appSettings['twibbon'] ?? '#' }}"
                 alt="twibbon"
                 class="twibbon-image"
                 loading="lazy"
@@ -76,7 +76,7 @@
                 <div
                     class="d-flex gap-4 aos-init aos-animate"
                 >
-                    <a href="{{ asset($appSettings['twibbon_link'] ?? '#') }}"
+                    <a href="{{ $appSettings['twibbon_link'] ?? '#' }}"
                         class="btn btn-sm btn-rounded border border-1 border-white text-white">
                         Unduh Twibbon
                     </a>
@@ -100,7 +100,7 @@
                     width="100%"
                     height="500px"
                     loading="lazy"
-                    src={{ asset($appSettings['video_tutorial'] ?? '#') }}
+                    src={{ $appSettings['video_tutorial'] ?? '#' }}
                     title="Video tutorial pendaftaran {{ $appSettings['title'] ?? '#' }}"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

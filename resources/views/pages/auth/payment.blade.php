@@ -32,8 +32,14 @@
                                 @foreach ($paymentMethods as $paymentMethod)
                                     <div class="card mb-3">
                                         <div class="card-body d-flex gap-3 align-items-center ">
-                                            <img src="{{ $paymentMethod->logo }}" alt="{{ $paymentMethod->name }}"
-                                                width="60" height="60" class="rounded-2" loading="lazy">
+                                            <img
+                                                src="{{ $paymentMethod->logo ?? '#' }}"
+                                                alt="{{ $paymentMethod->name ?? '-' }}"
+                                                width="60"
+                                                height="60"
+                                                class="rounded-2"
+                                                loading="lazy"
+                                            />
                                             <div class="information ">
                                                 <h2 class="card-title mb-0">
                                                     {{ $paymentMethod?->name }}
@@ -46,11 +52,19 @@
                                     </div>
                                 @endforeach
 
-                                <form action="{{ route('payment-team.store') }}" method="POST" enctype="multipart/form-data">
+                                <form
+                                    method="POST"
+                                    action="{{ route('payment-team.store') }}"
+                                    enctype="multipart/form-data"
+                                >
                                     @csrf
+                                    @honeypot
+
                                     <input type="hidden" name="team_id" value="{{ $team->id }}">
-                                    <x-input.select name="payment_method_id" value=""
-                                        label="Pilih Metode Pembayaran">
+                                    <x-input.select
+                                        name="payment_method_id"
+                                        label="Pilih Metode Pembayaran"
+                                    >
                                         <option value="">Pilih Metode Pembayaran</option>
                                         @foreach ($paymentMethods as $paymentMethod)
                                             <option value="{{ $paymentMethod->id }}">

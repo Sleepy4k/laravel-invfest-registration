@@ -1,7 +1,7 @@
 <nav class="sidebar">
     <div class="sidebar-header">
         <a href="{{ route('frontend.landing') }}">
-            <img src="{{ asset($appSettings['nav_logo'] ?? '#') }}" class="sidebar-brand" width="40" loading="lazy">
+            <img src="{{ $appSettings['nav_logo'] ?? '#' }}" class="sidebar-brand" width="40" loading="lazy">
         </a>
         <div class="sidebar-toggler not-active">
             <span></span>

@@ -15,7 +15,7 @@
                         <div class="col-md-12 ps-md-0">
                             <div class="auth-form-wrapper px-4 ps-5 py-5 pe-5">
                                 <a href="{{ route('frontend.landing') }}" class="noble-ui-logo d-block mb-2">Daftar Member Tim
-                                    {{ auth('web')->user()->leader?->team?->name }}
+                                    {{ $teamName }}
                                 </a>
                                 <h5 class="text-muted fw-normal mb-4">
                                     Isi data dengan benar, tidak bisa diubah kembali
@@ -28,21 +28,42 @@
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <ul class="mb-0">
-                                            @foreach($errors->all() as $error)
+                                            @foreach ($errors->all() as $error)
                                                 <li>{{ $error }}</li>
                                             @endforeach
                                         </ul>
                                     </div>
                                 @endif
-                                <form action="{{ route('team-members.store') }}" method="POST"
-                                    enctype="multipart/form-data">
+                                <form
+                                    method="POST"
+                                    action="{{ route('team-members.store') }}"
+                                    enctype="multipart/form-data"
+                                >
                                     @csrf
-                                    <x-input.text label="Anggota 1" name="data[0][member]" placeholder="Nama Lengkap"
-                                        value="{{ old('member_1') }}" />
-                                    <x-input.file label="Kartu Pelajar/KTM Anggota 1" name="data[0][card]" />
-                                    <x-input.text label="Anggota 2" name="data[1][member]" placeholder="Nama Lengkap"
-                                        value="{{ old('member_2') }}" />
-                                    <x-input.file label="Kartu Pelajar/KTM Anggota 2" name="data[1][card]" />
+                                    @honeypot
+
+                                    <x-input.text
+                                        label="Anggota 1"
+                                        name="data[0][member]"
+                                        class="team-member"
+                                        placeholder="Nama Lengkap"
+                                        value="{{ old('data[0][member]') }}"
+                                    />
+                                    <x-input.file
+                                        name="data[0][card]"
+                                        label="Kartu Pelajar/KTM Anggota 1"
+                                    />
+                                    <x-input.text
+                                        label="Anggota 2"
+                                        name="data[1][member]"
+                                        class="team-member"
+                                        placeholder="Nama Lengkap"
+                                        value="{{ old('data[1][member]') }}"
+                                    />
+                                    <x-input.file
+                                        label="Kartu Pelajar/KTM Anggota 2"
+                                        name="data[1][card]"
+                                    />
                                     <x-button.primary class="w-100 mb-3" type="submit">
                                         Lanjutkan ke Pembayaran
                                     </x-button.primary>
@@ -58,20 +79,23 @@
     @pushOnce('custom-scripts')
         <script>
             function checkTeamMembers() {
-                const member1 = $('input[name="data[0][member]"]').val();
-                const member2 = $('input[name="data[1][member]"]').val();
-                const alertTeamRequired = $('#alert-team-required');
+                const member1Input = document.querySelector('input[name="data[0][member]"]');
+                const member2Input = document.querySelector('input[name="data[1][member]"]');
+                const alertTeamRequired = document.getElementById('alert-team-required');
+
+                const member1 = member1Input ? member1Input.value : '';
+                const member2 = member2Input ? member2Input.value : '';
 
                 if (member1 || member2) {
-                    alertTeamRequired.hide();
+                    alertTeamRequired.style.display = 'none';
                 } else {
-                    alertTeamRequired.show();
+                    alertTeamRequired.style.display = 'block';
                 }
             }
 
-            $(document).ready(function() {
+            document.addEventListener('DOMContentLoaded', function() {
                 checkTeamMembers();
-                $('input[name="data[0][member]"], input[name="data[1][member]"]').on('input', function() {
+                $('.team-member').on('input', function() {
                     checkTeamMembers();
                 });
             });

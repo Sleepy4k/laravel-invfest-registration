@@ -17,6 +17,8 @@
                                 </h5>
                                 <form action="{{ route('login') }}" method="POST">
                                     @csrf
+                                    @honeypot
+
                                     <x-input.email name="email" value="{{ old('email') }}" />
                                     <x-input.password name="password" label="Password" />
 
