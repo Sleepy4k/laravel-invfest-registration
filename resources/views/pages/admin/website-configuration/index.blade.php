@@ -43,83 +43,210 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-            <x-admin.card title="Data Konfigurasi">
-                <form action="{{ route('admin.website-configuration.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <h5 class="mb-3">Konfigurasi Umum</h5>
-                            <x-input.text name="title" label="Title Website" value="{{ $settings['title'] }}" />
-                            <x-input.text name="slogan" label="Slogan Website"
-                                value="{{ $settings['slogan'] }}" />
-                            <x-input.text name="heading" label="Heading Website"
-                                value="{{ $settings['heading'] }}" />
-                            <x-input.textarea name="description" label="Deskripsi Website"
-                                value="{{ $settings['description'] }}" />
-                            <img src="{{ asset($settings['nav_logo']) }}" alt="{{ $settings['title'] }}"
-                                class="img-fluid mb-3" id="nav_logo_image" width="100">
-                            <x-input.file name="nav_logo" label="Logo Navigasi"
-                                value="{{ $settings['nav_logo'] }}" id="nav_logo" />
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <h5 class="mb-3">Konfigurasi Event</h5>
-                            <x-input.datetime name="deadline" label="Deadline Event"
-                                value="{{ $settings['deadline'] }}" />
-                            <img src="{{ asset($settings['twibbon']) }}" alt="{{ $settings['title'] }}"
-                                class="img-fluid mb-3" width="200" id="twibbon_image">
-                            <x-input.file name="twibbon" label="Twibbon Event" value="{{ $settings['twibbon'] }}"
-                                id="twibbon" />
-                            <x-input.text name="twibbon_link" label="Link Twibbon"
-                                value="{{ $settings['twibbon_link'] }}" />
-                            <img src="{{ asset($settings['mascot']) }}" alt="{{ $settings['title'] }}"
-                                class="img-fluid mb-3" width="200" id="mascot_image">
-                            <x-input.file name="mascot" label="Mascot Event" value="{{ $settings['mascot'] }}"
-                                id="mascot" />
-                        </div>
-                    </div>
-                    <hr class="hr" />
-                    <div class="row mt-3">
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <h5 class="mb-3">Konfigurasi Kontak</h5>
-                            <x-input.text name="phone" label="Nomor Telepon"
-                                value="{{ $settings['phone'] }}" />
-                            <x-input.text name="instagram" label="Instagram"
-                                value="{{ $settings['instagram'] }}" />
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <h5 class="mb-3">Konfigurasi Bantuan</h5>
-                            <x-input.text name="video_tutorial" label="Video Tutorial"
-                                value="{{ $settings['video_tutorial'] }}" />
-                        </div>
-                    </div>
-                    <hr class="hr" />
-                    <div class="row mt-3">
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <h5 class="mb-3">Konfigurasi Tema Primary</h5>
-                            <div id="color-picker-primary" class="mb-3"></div>
-                            <x-input.text name="primary_color" label="Warna Utama"
-                                value="{{ $settings['primary_color'] }}" id="primary_color" />
-                            <div id="color-picker-primary-hover" class="mb-3"></div>
-                            <x-input.text name="primary_color_hover" label="Warna Utama Hover"
-                                value="{{ $settings['primary_color_hover'] }}" id="primary_color_hover" />
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <h5 class="mb-3">Konfigurasi Tema Secondary</h5>
-                            <div id="color-picker-secondary" class="mb-3"></div>
-                            <x-input.text name="secondary_color" label="Warna Sekunder"
-                                value="{{ $settings['secondary_color'] }}" id="secondary_color" />
-                            <div id="color-picker-secondary-hover" class="mb-3"></div>
-                            <x-input.text name="secondary_color_hover" label="Warna Sekunder Hover"
-                                value="{{ $settings['secondary_color_hover'] }}" id="secondary_color_hover" />
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </div>
-                </form>
-            </x-admin.card>
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="nav-item me-1">
+                    <a
+                        href="#konfigurasi-umum"
+                        class="nav-link active"
+                        data-bs-toggle="tab"
+                    >
+                        Konfigurasi Umum
+                    </a>
+                </li>
+                <li class="nav-item me-1">
+                    <a
+                        href="#konfigurasi-event"
+                        class="nav-link"
+                        data-bs-toggle="tab"
+                    >
+                        Konfigurasi Event
+                    </a>
+                </li>
+                <li class="nav-item me-1">
+                    <a
+                        href="#konfigurasi-lainnya"
+                        class="nav-link"
+                        data-bs-toggle="tab"
+                    >
+                        Konfigurasi Lainnya
+                    </a>
+                </li>
+                <li class="nav-item me-1">
+                    <a
+                        href="#konfigurasi-tema"
+                        class="nav-link"
+                        data-bs-toggle="tab"
+                    >
+                        Konfigurasi Tema
+                    </a>
+                </li>
+            </ul>
         </div>
+
+        <form action="{{ route('admin.website-configuration.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="konfigurasi-umum">
+                    <x-admin.card title="Konfigurasi Umum">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <x-input.text
+                                    name="title"
+                                    label="Title Website"
+                                    value="{{ $settings['title'] }}"
+                                />
+                                <x-input.text
+                                    name="slogan"
+                                    label="Slogan Website"
+                                    value="{{ $settings['slogan'] }}"
+                                />
+                                <x-input.textarea
+                                    name="heading"
+                                    label="Heading Website"
+                                    value="{{ $settings['heading'] }}"
+                                />
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <img
+                                    alt="{{ $settings['title'] }}"
+                                    class="img-fluid mb-3"
+                                    src="{{ asset($settings['nav_logo'] ?? '#') }}"
+                                    id="nav_logo_image" width="100"
+                                />
+                                <x-input.file
+                                    name="nav_logo"
+                                    label="Logo Navigasi"
+                                    value="{{ $settings['nav_logo'] }}"
+                                    id="nav_logo"
+                                />
+                                <x-input.textarea
+                                    name="description"
+                                    label="Deskripsi Website"
+                                    value="{{ $settings['description'] }}"
+                                />
+                            </div>
+                        </div>
+                    </x-admin.card>
+                </div>
+                <div class="tab-pane fade" id="konfigurasi-event">
+                    <x-admin.card title="Konfigurasi Event">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <img
+                                    src="{{ asset($settings['twibbon'] ?? '#') }}"
+                                    alt="{{ $settings['title'] }}"
+                                    class="img-fluid mb-3"
+                                    width="200"
+                                    id="twibbon_image"
+                                />
+                                <x-input.file
+                                    name="twibbon"
+                                    label="Twibbon Event"
+                                    value="{{ $settings['twibbon'] }}"
+                                    id="twibbon"
+                                />
+                                <x-input.datetime
+                                    name="deadline"
+                                    label="Deadline Event"
+                                    value="{{ $settings['deadline'] }}"
+                                />
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <img
+                                    src="{{ asset($settings['mascot'] ?? '#') }}"
+                                    alt="{{ $settings['title'] }}"
+                                    class="img-fluid mb-3"
+                                    width="200"
+                                    id="mascot_image"
+                                />
+                                <x-input.file
+                                    name="mascot"
+                                    label="Mascot Event"
+                                    value="{{ $settings['mascot'] }}"
+                                    id="mascot"
+                                />
+                                <x-input.text
+                                    name="twibbon_link"
+                                    label="Link Twibbon"
+                                    value="{{ $settings['twibbon_link'] }}"
+                                />
+                            </div>
+                        </div>
+                    </x-admin.card>
+                </div>
+                <div class="tab-pane fade" id="konfigurasi-lainnya">
+                    <x-admin.card title="Konfigurasi Lainnya">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <x-input.text
+                                    name="phone"
+                                    label="Nomor Telepon"
+                                    value="{{ $settings['phone'] }}"
+                                />
+                                <x-input.text
+                                    name="instagram"
+                                    label="Instagram"
+                                    value="{{ $settings['instagram'] }}"
+                                />
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <x-input.text
+                                    name="video_tutorial"
+                                    label="Video Tutorial"
+                                    value="{{ $settings['video_tutorial'] }}"
+                                />
+                            </div>
+                        </div>
+                    </x-admin.card>
+                </div>
+                <div class="tab-pane fade" id="konfigurasi-tema">
+                    <x-admin.card title="Konfigurasi Tema">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div id="color-picker-primary" class="mb-3"></div>
+                                <x-input.text
+                                    name="primary_color"
+                                    label="Warna Utama"
+                                    value="{{ $settings['primary_color'] }}"
+                                    id="primary_color"
+                                />
+                                <div id="color-picker-primary-hover" class="mb-3"></div>
+                                <x-input.text
+                                    name="primary_color_hover"
+                                    label="Warna Utama Hover"
+                                    value="{{ $settings['primary_color_hover'] }}"
+                                    id="primary_color_hover"
+                                />
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div id="color-picker-secondary" class="mb-3"></div>
+                                <x-input.text
+                                    name="secondary_color"
+                                    label="Warna Sekunder"
+                                    value="{{ $settings['secondary_color'] }}"
+                                    id="secondary_color"
+                                />
+                                <div id="color-picker-secondary-hover" class="mb-3"></div>
+                                <x-input.text
+                                    name="secondary_color_hover"
+                                    label="Warna Sekunder Hover"
+                                    value="{{ $settings['secondary_color_hover'] }}"
+                                    id="secondary_color_hover"
+                                />
+                            </div>
+                        </div>
+                    </x-admin.card>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+                <button type="submit" class="btn btn-primary">
+                    Update Konfigurasi
+                </button>
+            </div>
+        </form>
     </div>
 
     @pushOnce('custom-scripts')
