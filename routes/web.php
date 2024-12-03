@@ -7,38 +7,47 @@ use App\Http\Controllers\Team;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Frontend\LandingController::class, 'index'])->name('frontend.landing');
-Route::get('/competition/{slug}', [Frontend\CompetitionController::class, 'show'])->name('frontend.competition.show');
+Route::get('/competition/{slug}', [Frontend\CompetitionController::class, 'show'])
+    ->name('frontend.competition.show');
 
 Route::middleware('guest')->group(function () {
-    Route::resource('login', Auth\LoginController::class)
-        ->only(['index', 'store'])
-        ->name('index', 'login');
+    Route::get('/competition', [Frontend\CompetitionController::class, 'index'])
+        ->name('frontend.competition.index');
 
-    Route::resource('register', Auth\RegisterController::class)
-        ->only(['index', 'store'])
-        ->name('index', 'register');
+    Route::middleware('honeypot')->group(function () {
+        Route::resource('login', Auth\LoginController::class)
+            ->only(['index', 'store'])
+            ->name('index', 'login');
 
-    Route::get('/competition', [Frontend\CompetitionController::class, 'index'])->name('frontend.competition.index');
+        Route::resource('register', Auth\RegisterController::class)
+            ->only(['index', 'store'])
+            ->name('index', 'register');
+    });
 });
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', Auth\LogoutController::class)->name('logout');
 
     Route::middleware('role:team')->group(function () {
-        Route::middleware('verification_email_access')->group(function () {
-            Route::get('/email/verify', [Auth\VerificationController::class, 'index'])->name('verification.notice');
-            Route::get('/email/verify/{id}/{hash}', [Auth\VerificationController::class, 'show'])->name('verification.verify');
-            Route::post('/email/verification-check', [Auth\VerificationController::class, 'store'])->name('verification.send');
+        Route::middleware(['verification_email_access', 'honeypot'])->group(function () {
+            Route::get('/email/verify', [Auth\VerificationController::class, 'index'])
+                ->name('verification.notice');
+            Route::get('/email/verify/{id}/{hash}', [Auth\VerificationController::class, 'show'])
+                ->name('verification.verify');
+            Route::post('/email/verification-check', [Auth\VerificationController::class, 'store'])
+                ->name('verification.send');
         });
 
         Route::middleware(['verified', 'ensure_registration_complete'])->group(function () {
-            Route::resource('team-members', Auth\TeamController::class)
-                ->only(['index', 'store'])
-                ->name('index', 'team-members');
+            Route::middleware('honeypot')->group(function () {
+                Route::resource('team-members', Auth\TeamController::class)
+                    ->only(['index', 'store'])
+                    ->name('index', 'team-members');
 
-            Route::resource('payment-team', Auth\PaymentController::class)
-                ->only(['index', 'store'])
-                ->name('index', 'payment-team');
+                Route::resource('payment-team', Auth\PaymentController::class)
+                    ->only(['index', 'store'])
+                    ->name('index', 'payment-team');
+            });
 
             Route::prefix('team')->name('team.')->group(function () {
                 Route::get('/dashboard', Team\DashboardController::class)->name('dashboard');
