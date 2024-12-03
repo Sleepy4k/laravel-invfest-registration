@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\Frontend;
 use App\Http\Controllers\Team;
-use App\Http\Controllers\UpStatusController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Frontend\LandingController::class, 'index'])->name('frontend.landing');
@@ -80,4 +79,4 @@ Route::middleware('auth')->group(function () {
 });
 
 // Don't disabled this for checking uptime and overriding default uptime status endpoint
-Route::get('/uptime', UpStatusController::class);
+Route::view('uptime', 'pages.health-up')->name('uptime');
