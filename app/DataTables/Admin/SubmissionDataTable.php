@@ -34,7 +34,7 @@ class SubmissionDataTable extends DataTable
                     . '<i data-feather="check"></i>Tandai Sudah Direview</button></form>';
             })
             ->addColumn('file_karya', function ($query) {
-                $url = isset($query->file) ? asset($query->file) : "#";
+                $url = $query->file ?? "#";
                 return '<a href="'.$url.'" target="_blank" class="btn btn-sm btn-primary">'
                     . '<i data-feather="download"></i>Download Karya</a>';
             })

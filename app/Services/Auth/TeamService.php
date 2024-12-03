@@ -15,6 +15,18 @@ class TeamService extends Service
     ) {}
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return array
+     */
+    public function index(): array
+    {
+        $teamName = optional(auth('web')->user()->leader->team)->name ?? null;
+
+        return compact('teamName');
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param array $request

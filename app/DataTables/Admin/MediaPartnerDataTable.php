@@ -28,8 +28,8 @@ class MediaPartnerDataTable extends DataTable
                     . '</form>';
             })
             ->editColumn('logo', function ($query) {
-                return '<a href="'.asset($query->logo ?? '#').'" data-lightbox="sponsor" data-title="'.$query->name.'">'
-                    . '<img src="'.asset($query->logo ?? '#').'" alt="'.$query->name.'" class="img-table-lightbox" loading="lazy" height="150" />'
+                return '<a href="'.($query->logo ?? '#').'" data-lightbox="sponsor" data-title="'.$query->name.'">'
+                    . '<img src="'.($query->logo ?? '#').'" alt="'.$query->name.'" class="img-table-lightbox" loading="lazy" height="150" />'
                     . '</a>';
             })
             ->addColumn('link_logo', function ($query) {

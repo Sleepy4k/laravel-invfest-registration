@@ -20,7 +20,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return view('pages.auth.team-member');
+        return view('pages.auth.team-member', $this->service->index());
     }
 
     /**

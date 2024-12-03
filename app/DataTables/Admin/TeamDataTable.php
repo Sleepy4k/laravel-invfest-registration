@@ -77,7 +77,7 @@ class TeamDataTable extends DataTable
                     return '<span>Belum Melakukan Pembayaran</span>';
                 }
 
-                $proofUrl = asset($query->payment->proof);
+                $proofUrl = $query->payment->proof ?? '#';
                 return '<a href="'.$proofUrl.'" data-lightbox="image-1" data-title="Bukti Pembayaran '.$query->name.'">'
                     . '<img src="' . $proofUrl . '" alt="Bukti Pembayaran" class="img-table-lightbox" width="100" loading="lazy"></img>'
                     . '</a>';
