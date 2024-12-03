@@ -78,7 +78,9 @@ class TeamDataTable extends DataTable
                 }
 
                 $proofUrl = asset($query->payment->proof);
-                return '<img src="' . $proofUrl . '" alt="Bukti Pembayaran" class="img-table-lightbox" width="100" loading="lazy"></img>';
+                return '<a href="'.$proofUrl.'" data-lightbox="image-1" data-title="Bukti Pembayaran '.$query->name.'">'
+                    . '<img src="' . $proofUrl . '" alt="Bukti Pembayaran" class="img-table-lightbox" width="100" loading="lazy"></img>'
+                    . '</a>';
             })
             ->addColumn('status', function ($query) {
                 if (is_null($query?->payment)) {

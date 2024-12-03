@@ -14,6 +14,11 @@ class MinimumTeamMember implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        if (count($value) > 2) {
+            $fail('Tidak boleh ada lebih dari dua anggota team.');
+            return;
+        }
+
         $validMembers = array_filter($value, function ($member) {
             return !empty($member['member']) && !empty($member['card']);
         });
