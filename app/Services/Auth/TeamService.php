@@ -30,12 +30,14 @@ class TeamService extends Service
 
         $total = count($request['data']) > 2 ? 2 : count($request['data']);
 
-        for ($i=0; $i < $total; $i++) {
+        for ($i = 0; $i < $total; $i++) {
             $name = htmlspecialchars($request['data'][$i]['member'] ?? '', ENT_QUOTES, 'UTF-8');
-            if (!isset($name)) continue;
+            $card = $request['data'][$i]['card'] ?? null;
+
+            if (empty($name) || empty($card)) continue;
 
             $data['name'] = $name;
-            $data['card'] = $request['data'][$i]['card'] ?? null;
+            $data['card'] = $card;
 
             $this->teamMemberInterface->create($data);
         }

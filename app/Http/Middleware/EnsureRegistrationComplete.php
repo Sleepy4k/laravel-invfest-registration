@@ -16,35 +16,53 @@ class EnsureRegistrationComplete
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth('web')->check()) {
-            return abort(403, 'You dont have access for this request');
+            return abort(403, 'You dont have access to this request');
         }
 
         $user = auth('web')->user();
-        $leader = $user?->leader;
-        $team = $leader?->team;
-        $payment = $team?->payment;
-        $memberCount = $team?->member?->count() ?? 0;
+        $leader = $user ? $user->leader : null;
+        $team = $leader ? $leader->team : null;
+        $payment = $team ? $team->payment : null;
+        $memberCount = 0;
+
+        if ($team && $team->member) {
+            $memberCount = $team->member->count();
+        }
 
         if ($request->routeIs('team-members*')) {
             if (is_null($leader)) {
                 return to_route('frontend.landing');
-            } elseif ($memberCount > 0) {
+            }
+
+            if ($memberCount > 0) {
                 return to_route('payment-team');
             }
-        } elseif ($request->routeIs('payment-team*')) {
+        }
+
+        if ($request->routeIs('payment-team*')) {
             if ($memberCount === 0) {
                 return to_route('team-members');
-            } elseif (!is_null($payment)) {
+            }
+
+            if (!is_null($payment)) {
                 return to_route('team.dashboard');
             }
-        } elseif ($request->routeIs('team.work*') || $request->routeIs('team.dashboard')) {
+        }
+
+        if ($request->routeIs('team.work*') || $request->routeIs('team.dashboard')) {
             if (is_null($leader)) {
                 return to_route('frontend.landing');
-            } elseif ($memberCount === 0) {
+            }
+
+            if ($memberCount === 0) {
                 return to_route('team-members');
-            } elseif (is_null($payment)) {
+            }
+
+            if (is_null($payment)) {
                 return to_route('payment-team');
-            } elseif (!is_null($payment) && $payment?->status == 'pending' && $request->routeIs('team.work*')) {
+            }
+
+            if (!is_null($payment) && $payment?->status == 'pending' && $request->routeIs('team.work*')) {
                 return to_route('team.dashboard');
             }
         }

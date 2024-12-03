@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Rules\MinimumTeamMember;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TeamRequest extends FormRequest
@@ -22,9 +23,7 @@ class TeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data' => ['required', 'array'],
-            'data.0.member' => ['required', 'string', 'max:150'],
-            'data.0.card' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
+            'data' => ['required', 'array', new MinimumTeamMember],
             'data.*.member' => ['nullable', 'string', 'max:150'],
             'data.*.card' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
         ];
@@ -38,10 +37,9 @@ class TeamRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'data.*.member.required' => 'Anggota tim harus di isi.',
+            'data.required' => 'Data array is required.',
             'data.*.member.string' => 'Anggota tim harus berupa string.',
             'data.*.member.max' => 'Anggota tim tidak boleh melebihi 150 karakter.',
-            'data.*.card.required' => 'Kartu pelajar/kartu mahasiswa anggota tim harus diunggah.',
             'data.*.card.image' => 'Kartu pelajar/kartu mahasiswa anggota tim harus berupa gambar.',
             'data.*.card.mimes' => 'Kartu pelajar/kartu mahasiswa anggota tim harus berupa gambar dengan format jpg, jpeg, atau png.',
             'data.*.card.extensions' => 'Kartu pelajar/kartu mahasiswa anggota tim harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
