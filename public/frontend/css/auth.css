@@ -1,3 +1,10 @@
+.input-helpertext {
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0 4px;
+}
+
 .steps {
     display: flex;
     justify-content: space-between;
