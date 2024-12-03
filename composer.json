@@ -22,7 +22,7 @@
         "renatomarinho/laravel-page-speed": "dev-l11-compatibility",
         "spatie/laravel-activitylog": "^4.9",
         "spatie/laravel-csp": "^2.10",
-        "spatie/laravel-image-optimizer": "^1.8",
+        "spatie/laravel-honeypot": "^4.5",
         "spatie/laravel-permission": "^6.10",
         "spatie/laravel-sitemap": "^7.2",
         "yajra/laravel-datatables": "11.0",

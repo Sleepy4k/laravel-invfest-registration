@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27b4c4bfca5a6c2239b20dc2597eb9f4",
+    "content-hash": "7ffda2e4387cc8f650fd00b9f8ef65c2",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -4748,61 +4748,6 @@
             "time": "2024-07-31T10:46:19+00:00"
         },
         {
-            "name": "spatie/image-optimizer",
-            "version": "1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/image-optimizer.git",
-                "reference": "4fd22035e81d98fffced65a8c20d9ec4daa9671c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/4fd22035e81d98fffced65a8c20d9ec4daa9671c",
-                "reference": "4fd22035e81d98fffced65a8c20d9ec4daa9671c",
-                "shasum": ""
-            },
-            "require": {
-                "ext-fileinfo": "*",
-                "php": "^7.3|^8.0",
-                "psr/log": "^1.0 | ^2.0 | ^3.0",
-                "symfony/process": "^4.2|^5.0|^6.0|^7.0"
-            },
-            "require-dev": {
-                "pestphp/pest": "^1.21",
-                "phpunit/phpunit": "^8.5.21|^9.4.4",
-                "symfony/var-dumper": "^4.2|^5.0|^6.0|^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\ImageOptimizer\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Easily optimize images using PHP",
-            "homepage": "https://github.com/spatie/image-optimizer",
-            "keywords": [
-                "image-optimizer",
-                "spatie"
-            ],
-            "support": {
-                "issues": "https://github.com/spatie/image-optimizer/issues",
-                "source": "https://github.com/spatie/image-optimizer/tree/1.8.0"
-            },
-            "time": "2024-11-04T08:24:54+00:00"
-        },
-        {
             "name": "spatie/laravel-activitylog",
             "version": "4.9.1",
             "source": {
@@ -4976,42 +4921,50 @@
             "time": "2024-09-20T13:39:37+00:00"
         },
         {
-            "name": "spatie/laravel-image-optimizer",
-            "version": "1.8.0",
+            "name": "spatie/laravel-honeypot",
+            "version": "4.5.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spatie/laravel-image-optimizer.git",
-                "reference": "024752cba691fee3cd1800000b6aa3da3b8b2474"
+                "url": "https://github.com/spatie/laravel-honeypot.git",
+                "reference": "57727836997ae7351a4f56008bbaf4e2801ce4a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-image-optimizer/zipball/024752cba691fee3cd1800000b6aa3da3b8b2474",
-                "reference": "024752cba691fee3cd1800000b6aa3da3b8b2474",
+                "url": "https://api.github.com/repos/spatie/laravel-honeypot/zipball/57727836997ae7351a4f56008bbaf4e2801ce4a0",
+                "reference": "57727836997ae7351a4f56008bbaf4e2801ce4a0",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/encryption": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/http": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/validation": "^8.0|^9.0|^10.0|^11.0",
+                "nesbot/carbon": "^2.0|^3.0",
                 "php": "^8.0",
-                "spatie/image-optimizer": "^1.2.0"
+                "spatie/laravel-package-tools": "^1.9",
+                "symfony/http-foundation": "^5.1.2|^6.0|^7.0"
             },
             "require-dev": {
+                "livewire/livewire": "^2.10|^3.0",
                 "orchestra/testbench": "^6.23|^7.0|^8.0|^9.0",
-                "phpunit/phpunit": "^9.4|^10.5"
+                "pestphp/pest-plugin-livewire": "^1.0|^2.1",
+                "phpunit/phpunit": "^9.6|^10.5",
+                "spatie/pest-plugin-snapshots": "^1.1|^2.1",
+                "spatie/phpunit-snapshot-assertions": "^4.2|^5.1",
+                "spatie/test-time": "^1.2.1"
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
-                        "Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider"
-                    ],
-                    "aliases": {
-                        "ImageOptimizer": "Spatie\\LaravelImageOptimizer\\Facades\\ImageOptimizer"
-                    }
+                        "Spatie\\Honeypot\\HoneypotServiceProvider"
+                    ]
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Spatie\\LaravelImageOptimizer\\": "src"
+                    "Spatie\\Honeypot\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -5026,14 +4979,14 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Optimize images in your Laravel app",
-            "homepage": "https://github.com/spatie/laravel-image-optimizer",
+            "description": "Preventing spam submitted through forms",
+            "homepage": "https://github.com/spatie/laravel-honeypot",
             "keywords": [
-                "laravel-image-optimizer",
+                "laravel-honeypot",
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-image-optimizer/tree/1.8.0"
+                "source": "https://github.com/spatie/laravel-honeypot/tree/4.5.3"
             },
             "funding": [
                 {
@@ -5041,7 +4994,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-02-29T10:55:08+00:00"
+            "time": "2024-09-20T13:45:00+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
