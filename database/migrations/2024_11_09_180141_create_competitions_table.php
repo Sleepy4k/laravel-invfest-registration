@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\CompetitionLevel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name', 150);
             $table->string('slug', 150);
-            $table->foreignUuid('level_id')->constrained('competition_levels', 'id')->cascadeOnDelete();
+            $table->foreignIdFor(CompetitionLevel::class, 'level_id')->constrained()->cascadeOnDelete();
             $table->text('description')->nullable();
             $table->string('poster')->nullable();
             $table->string('guidebook')->nullable();
