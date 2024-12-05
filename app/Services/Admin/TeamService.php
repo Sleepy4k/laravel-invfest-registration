@@ -4,9 +4,9 @@ namespace App\Services\Admin;
 
 use App\Contracts\Models;
 use App\Enums\PaymentStatus;
+use App\Foundations\Service;
 use App\Notifications\TeamApproved;
 use App\Notifications\TeamRejected;
-use App\Services\Service;
 
 class TeamService extends Service
 {
@@ -68,14 +68,14 @@ class TeamService extends Service
     public function update(array $request, string $id): void
     {
         try {
-            $payment = $this->paymentInterface->get(['id'], true, [], [['team_id', '=', $id]]);
-            if ($payment == null) {
+            $payment = $this->paymentInterface->findByCustomId([['team_id', '=', $id]], ['id', 'team_id']);
+            if (is_null($payment)) {
                 toast('ID tim tidak ditemukan pada system atau belum melakukan pembayaran', 'error');
                 return;
             }
 
             $this->paymentInterface->update($payment->id, ['status' => $request['status']]);
-            $user = $this->userInterface->get(['*'], true, [], [['email', '=', $request['email']]]);
+            $user = $this->userInterface->findByCustomId([['email', '=', $request['email']]]);
 
             if ($request['status'] == PaymentStatus::APPROVE->value) {
                 $user->notify(new TeamApproved($request['whatsapp_link']));

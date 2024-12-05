@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\ModelLogDataTable;
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Services\Admin\ModelLogService;
 
 class ModelLogController extends Controller

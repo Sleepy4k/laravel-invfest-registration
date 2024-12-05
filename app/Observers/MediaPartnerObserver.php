@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Enums\UploadFileType;
 use App\Models\MediaPartner;
 use App\Traits\UploadFile;
-use Illuminate\Support\Str;
 
 class MediaPartnerObserver
 {
@@ -16,10 +15,6 @@ class MediaPartnerObserver
      */
     public function creating(MediaPartner $mediaPartner): void
     {
-        if ($mediaPartner->getKey() === null) {
-            $mediaPartner->setAttribute($mediaPartner->getKeyName(), Str::uuid());
-        }
-
         $mediaPartner->logo = $mediaPartner->logo
             ? $this->saveSingleFile(UploadFileType::IMAGE, $mediaPartner->logo)
             : null;

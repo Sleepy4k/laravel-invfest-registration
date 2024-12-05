@@ -3,7 +3,7 @@
 namespace App\Services\Frontend;
 
 use App\Contracts\Models;
-use App\Services\Service;
+use App\Foundations\Service;
 use ErrorException;
 
 class CompetitionService extends Service
@@ -20,7 +20,7 @@ class CompetitionService extends Service
     public function index(): array
     {
         $level = request('level', '####');
-        $competitions = $this->competitionInterface->all(['id', 'name'], [], [['level_id', '=', $level]]);
+        $competitions = $this->competitionInterface->all(['id', 'name'], wheres: [['level_id', '=', $level]]);
 
         return compact('competitions');
     }

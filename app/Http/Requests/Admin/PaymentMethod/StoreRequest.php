@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin\PaymentMethod;
 
+use App\Models\PaymentMethod;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -22,8 +24,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:50'],
-            'logo' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg,gif,svg', 'max:8192'],
+            'name' => ['required', 'string', 'max:50', Rule::unique(PaymentMethod::class, 'name')],
+            'logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
             'number' => ['required', 'string', 'max:50'],
             'owner' => ['required', 'string', 'max:150'],
         ];
@@ -38,7 +40,7 @@ class StoreRequest extends FormRequest
             'name.required' => 'Nama media partner tidak boleh kosong',
             'name.string' => 'Nama media partner harus berupa string.',
             'name.max' => 'Nama media partner tidak boleh lebih dari 50 karakter.',
-            'logo.required' => 'Logo media partner tidak boleh kosong',
+            'name.unique' => 'Nama media partner sudah ada.',
             'logo.image' => 'Logo media partner harus berupa gambar',
             'logo.mimes' => 'Logo media partner harus berupa gambar dengan format jpeg, png, atau jpg.',
             'logo.extensions' => 'Logo media partner harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',

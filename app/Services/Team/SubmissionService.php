@@ -3,7 +3,7 @@
 namespace App\Services\Team;
 
 use App\Contracts\Models;
-use App\Services\Service;
+use App\Foundations\Service;
 
 class SubmissionService extends Service
 {
@@ -44,7 +44,7 @@ class SubmissionService extends Service
     {
         try {
             $request['team_id'] = auth('web')->user()->leader?->team?->id ?? null;
-            if ($request['team_id'] == null) {
+            if (is_null($request['team_id'])) {
                 alert('Gagal', 'Karya gagal ditambahkan, silahkan refresh halaman anda', 'error');
                 return;
             }

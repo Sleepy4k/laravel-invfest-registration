@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Enums\UploadFileType;
 use App\Models\Setting;
 use App\Traits\UploadFile;
-use Illuminate\Support\Str;
 
 class SettingObserver
 {
@@ -16,10 +15,6 @@ class SettingObserver
      */
     public function creating(Setting $setting): void
     {
-        if ($setting->getKey() === null) {
-            $setting->setAttribute($setting->getKeyName(), Str::uuid());
-        }
-
         if (in_array(strtolower($setting->key), ['nav_logo', 'twibbon', 'mascot'])) {
             $setting->value = $setting->value
                 ? $this->saveSingleFile(UploadFileType::IMAGE, $setting->value)

@@ -23,7 +23,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:100'],
-            'description' => ['required', 'string'],
+            'description' => ['nullable', 'string'],
             'date' => ['required', 'date', 'after_or_equal:' . now()]
         ];
     }
@@ -39,7 +39,6 @@ class UpdateRequest extends FormRequest
             'title.required'        => 'Nama Schedule timeline harus diisi.',
             'title.string'          => 'Nama Schedule timeline harus berupa string.',
             'title.max'             => 'Nama Schedule timeline tidak boleh lebih dari 100 karakter.',
-            'description.required'  => 'Deskripsi timeline harus diisi.',
             'description.string'    => 'Deskripsi timeline harus berupa string.',
             'date.required'         => 'Tanggal timeline harus diisi.',
             'date.date'             => 'Format tanggal tidak sesuai.',

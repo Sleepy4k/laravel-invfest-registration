@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Enums\UploadFileType;
 use App\Models\TeamLeader;
 use App\Traits\UploadFile;
-use Illuminate\Support\Str;
 
 class TeamLeaderObserver
 {
@@ -16,10 +15,6 @@ class TeamLeaderObserver
      */
     public function creating(TeamLeader $teamLeader): void
     {
-        if ($teamLeader->getKey() === null) {
-            $teamLeader->setAttribute($teamLeader->getKeyName(), Str::uuid());
-        }
-
         $teamLeader->card = $teamLeader->card
             ? $this->saveSingleFile(UploadFileType::IMAGE, $teamLeader->card)
             : null;

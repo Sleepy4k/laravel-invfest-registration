@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Enums\UploadFileType;
 use App\Models\Submission;
 use App\Traits\UploadFile;
-use Illuminate\Support\Str;
 
 class SubmissionObserver
 {
@@ -16,10 +15,6 @@ class SubmissionObserver
      */
     public function creating(Submission $submission): void
     {
-        if ($submission->getKey() === null) {
-            $submission->setAttribute($submission->getKeyName(), Str::uuid());
-        }
-
         $submission->file = $submission->file
             ? $this->saveSingleFile(UploadFileType::FILE, $submission->file)
             : null;

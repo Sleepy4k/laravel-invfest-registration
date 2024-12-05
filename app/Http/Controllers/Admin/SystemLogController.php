@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\SystemLogDataTable;
 use App\DataTables\Admin\SystemLogDetailDataTable;
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Services\Admin\SystemLogService;
 
 class SystemLogController extends Controller

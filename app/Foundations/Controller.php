@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Foundations;
 
 use App\Enums\ReportLogType;
 use App\Traits\SystemLog;

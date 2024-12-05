@@ -3,8 +3,8 @@
 namespace App\Services\Admin;
 
 use App\Contracts\Models;
+use App\Foundations\Service;
 use App\Models\Setting;
-use App\Services\Service;
 
 class SettingService extends Service
 {

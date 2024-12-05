@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Services\Frontend\LandingService;
 
 class LandingController extends Controller

@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Admin\Competition;
 
+use App\Models\Competition;
+use App\Models\CompetitionLevel;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -23,8 +26,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:150'],
-            'level_id' => ['required', 'string', 'exists:competition_levels,id'],
+            'name' => ['required', 'string', 'max:150', Rule::unique(Competition::class, 'name')->ignore($this->competition)],
+            'slug' => ['required', 'string', 'max:150', Rule::unique(Competition::class, 'slug')->ignore($this->competition)],
+            'level_id' => ['required', 'string', Rule::exists(CompetitionLevel::class, 'id')],
             'description' => ['required', 'string'],
             'poster' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
             'guidebook' => ['nullable', 'file', 'mimes:doc,docx,pdf', 'extensions:doc,docx,pdf', 'max:8192'],
@@ -44,8 +48,10 @@ class UpdateRequest extends FormRequest
             'name.required' => 'Nama kompetisi harus diisi.',
             'name.string' => 'Nama kompetisi harus berupa string.',
             'name.max' => 'Nama kompetisi tidak boleh lebih dari 150 karakter.',
+            'name.unique' => 'Nama kompetisi sudah ada.',
             'slug.required' => 'Nama kompetisi harus diisi.',
             'slug.string' => 'Nama kompetisi harus berupa string.',
+            'slug.max' => 'Nama kompetisi tidak boleh lebih dari 150 karakter.',
             'slug.unique' => 'Nama kompetisi sudah ada.',
             'level_id.required' => 'Tingkat kompetisi harus diisi.',
             'level_id.string' => 'Tingkat kompetisi harus berupa string.',

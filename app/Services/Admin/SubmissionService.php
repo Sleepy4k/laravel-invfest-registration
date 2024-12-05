@@ -3,7 +3,7 @@
 namespace App\Services\Admin;
 
 use App\Contracts\Models;
-use App\Services\Service;
+use App\Foundations\Service;
 
 class SubmissionService extends Service
 {

@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Enums\UploadFileType;
 use App\Models\Payment;
 use App\Traits\UploadFile;
-use Illuminate\Support\Str;
 
 class PaymentObserver
 {
@@ -16,10 +15,6 @@ class PaymentObserver
      */
     public function creating(Payment $payment): void
     {
-        if ($payment->getKey() === null) {
-            $payment->setAttribute($payment->getKeyName(), Str::uuid());
-        }
-
         $payment->proof = $payment->proof
             ? $this->saveSingleFile(UploadFileType::IMAGE, $payment->proof)
             : null;

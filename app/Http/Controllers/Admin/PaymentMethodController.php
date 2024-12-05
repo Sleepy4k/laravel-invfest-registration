@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\PaymentMethodDataTable;
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Http\Requests\Admin\PaymentMethod\StoreRequest;
 use App\Http\Requests\Admin\PaymentMethod\UpdateRequest;
 use App\Services\Admin\PaymentMethodService;

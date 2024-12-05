@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Enums\UploadFileType;
 use App\Models\Sponsorship;
 use App\Traits\UploadFile;
-use Illuminate\Support\Str;
 
 class SponsorshipObserver
 {
@@ -16,10 +15,6 @@ class SponsorshipObserver
      */
     public function creating(Sponsorship $sponsorship): void
     {
-        if ($sponsorship->getKey() === null) {
-            $sponsorship->setAttribute($sponsorship->getKeyName(), Str::uuid());
-        }
-
         $sponsorship->logo = $sponsorship->logo
             ? $this->saveSingleFile(UploadFileType::IMAGE, $sponsorship->logo)
             : null;

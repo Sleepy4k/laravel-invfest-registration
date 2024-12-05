@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\AuthLogDataTable;
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Services\Admin\AuthLogService;
 
 class AuthLogController extends Controller

@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Admin\Sponsorship;
 
+use App\Models\Sponsorship;
+use App\Models\SponsorshipTier;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -22,10 +25,10 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:50'],
+            'name' => ['required', 'string', 'max:50', Rule::unique(Sponsorship::class, 'name')->ignore($this->sponsorship)],
             'logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg,gif,svg', 'extensions:png,jpg,jpeg,gif,svg', 'max:8192'],
             'link' => ['required', 'url', 'max:255'],
-            'tier_id' => ['required', 'string', 'exists:sponsorship_tiers,id']
+            'tier_id' => ['required', 'string', Rule::exists(SponsorshipTier::class, 'id')],
         ];
     }
 

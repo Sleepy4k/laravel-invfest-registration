@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Enums\PaymentStatus;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,7 +26,7 @@ class TeamRequest extends FormRequest
     {
         return [
             'status' => ['required', Rule::enum(PaymentStatus::class)->only([PaymentStatus::APPROVE, PaymentStatus::REJECT])],
-            'email' => ['required', 'email', 'exists:users,email'],
+            'email' => ['required', 'email', Rule::exists(User::class, 'email')],
             'whatsapp_link' => ['nullable', 'string', Rule::requiredIf(fn () => request()->input('status') === PaymentStatus::APPROVE->value)]
         ];
     }

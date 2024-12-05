@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Timeline;
-use Illuminate\Support\Str;
 
 class TimelineObserver
 {
@@ -12,10 +11,6 @@ class TimelineObserver
      */
     public function creating(Timeline $timeline): void
     {
-        if ($timeline->getKey() === null) {
-            $timeline->setAttribute($timeline->getKeyName(), Str::uuid());
-        }
-
         $timeline->date = date('Y-m-d', strtotime($timeline->date ?? now()));
     }
 

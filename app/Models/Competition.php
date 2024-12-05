@@ -2,33 +2,18 @@
 
 namespace App\Models;
 
+use App\Concerns\HasUuid;
+use App\Concerns\UnIncreaseAble;
 use App\Enums\ActivityEventType;
-use App\Observers\CompetitionObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-#[ObservedBy(CompetitionObserver::class)]
 class Competition extends Model
 {
-    use HasFactory, LogsActivity, Cacheable;
-
-    /**
-     * Indicates if the model's ID is auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * The data type of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
+    use HasFactory, HasUuid, UnIncreaseAble, LogsActivity, Cacheable;
 
     /**
      * The attributes that are mass assignable.

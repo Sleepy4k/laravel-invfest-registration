@@ -3,7 +3,7 @@
 namespace App\Services\Auth;
 
 use App\Contracts\Models;
-use App\Services\Service;
+use App\Foundations\Service;
 
 class TeamService extends Service
 {

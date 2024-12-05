@@ -3,9 +3,10 @@
 namespace App\Services\Admin;
 
 use App\Contracts\Models;
+use App\Exports\Admin\DashboardExport;
+use App\Foundations\Service;
 use App\Models\Competition;
 use App\Models\Team;
-use App\Services\Service;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
@@ -22,17 +23,16 @@ class DashboardService extends Service
     ) {}
 
     /**
-     * Handle the incoming request.
+     * Get the base data for the dashboard.
      *
      * @return array
      */
-    public function invoke(): array
+    private function getBaseData(): array
     {
-        $name = Str::ucfirst(auth('web')->user()->roles?->first()?->name ?? 'Admin');
         $totalTeam = $this->teamInterface->count();
-        $totalTeamPending = count($this->paymentInterface->all(['id'], [], [['status', '=', 'pending']]) ?? []);
-        $totalTeamReject = count($this->paymentInterface->all(['id'], [], [['status', '=', 'reject']]) ?? []);
-        $totalTeamApprove = count($this->paymentInterface->all(['id'], [], [['status', '=', 'approve']]) ?? []);
+        $totalTeamPending = count($this->paymentInterface->all(['id'], wheres: [['status', '=', 'pending']]) ?? []);
+        $totalTeamReject = count($this->paymentInterface->all(['id'], wheres: [['status', '=', 'reject']]) ?? []);
+        $totalTeamApprove = count($this->paymentInterface->all(['id'], wheres: [['status', '=', 'approve']]) ?? []);
         $totalTeamUnPaid = Team::doesntHave('payment')->count();
         $totalSponsorship = $this->sponsorshipInterface->count();
         $totalMediaPartner = $this->mediaPartnerInterface->count();
@@ -40,6 +40,30 @@ class DashboardService extends Service
         $competitionChart = json_encode($competitions->map(function ($competition) {
             return [$competition?->name, $competition->team_count];
         })->toArray());
+
+        return compact('totalTeam', 'totalTeamPending', 'totalTeamApprove', 'totalTeamReject', 'totalTeamUnPaid', 'totalSponsorship', 'totalMediaPartner', 'competitions', 'competitionChart');
+    }
+
+    /**
+     * Handle the incoming request.
+     *
+     * @return array
+     */
+    public function invoke(): array
+    {
+        $baseData = $this->getBaseData();
+        $totalTeam = $baseData['totalTeam'];
+        $totalTeamPending = $baseData['totalTeamPending'];
+        $totalTeamReject = $baseData['totalTeamReject'];
+        $totalTeamApprove = $baseData['totalTeamApprove'];
+        $totalTeamUnPaid = $baseData['totalTeamUnPaid'];
+        $totalSponsorship = $baseData['totalSponsorship'];
+        $totalMediaPartner = $baseData['totalMediaPartner'];
+        $competitions = $baseData['competitions'];
+        $competitionChart = json_encode($competitions->map(function ($competition) {
+            return [$competition?->name, $competition->team_count];
+        })->toArray());
+        $name = Str::ucfirst(auth('web')->user()->roles?->first()?->name ?? 'Admin');
 
         $rawData = Team::select('id', 'competition_id', 'created_at')
                     ->with('competition:id,name')
@@ -77,5 +101,16 @@ class DashboardService extends Service
         $teamCharts = json_encode($teamCharts);
 
         return compact('name', 'totalTeam', 'totalTeamPending', 'totalTeamApprove', 'totalTeamReject', 'totalTeamUnPaid', 'totalSponsorship', 'totalMediaPartner', 'competitions', 'competitionChart', 'teamCharts');
+    }
+
+    /**
+     * Export the dashboard data.
+     *
+     * @return DashboardExport
+     */
+    public function export()
+    {
+        $baseData = $this->getBaseData();
+        return new DashboardExport($baseData);
     }
 }

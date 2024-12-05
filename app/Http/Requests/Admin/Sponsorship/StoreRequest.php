@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Admin\Sponsorship;
 
+use App\Models\Sponsorship;
+use App\Models\SponsorshipTier;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -22,10 +25,10 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:50'],
-            'logo' => ['required', 'image', 'mimes:png,jpg,jpeg,gif,svg', 'extensions:png,jpg,jpeg,gif,svg', 'max:8192'],
+            'name' => ['required', 'string', 'max:50', Rule::unique(Sponsorship::class, 'name')],
+            'logo' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
             'link' => ['required', 'url', 'max:255'],
-            'tier_id' => ['required', 'string', 'exists:sponsorship_tiers,id']
+            'tier_id' => ['required', 'string', Rule::exists(SponsorshipTier::class, 'id')],
         ];
     }
 
@@ -38,10 +41,11 @@ class StoreRequest extends FormRequest
             'name.required' => 'Nama sponsor tidak boleh kosong',
             'name.string' => 'Nama sponsor harus berupa string.',
             'name.max' => 'Nama sponsor tidak boleh lebih dari 50 karakter.',
+            'name.unique' => 'Nama sponsor sudah ada.',
             'logo.required' => 'Logo sponsor tidak boleh kosong',
             'logo.image' => 'Logo sponsor harus berupa gambar',
-            'logo.mimes' => 'Logo sponsor harus berupa gambar dengan format jpeg, png, jpg, gif, atau svg',
-            'logo.extensions' => 'Logo sponsor harus berupa gambar dengan ekstensi file jpg, jpeg, png, gif, atau svg.',
+            'logo.mimes' => 'Logo sponsor harus berupa gambar dengan format jpeg, png, atau jpg.',
+            'logo.extensions' => 'Logo sponsor harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
             'logo.max' => 'Logo sponsor tidak boleh lebih dari 8MB',
             'link.required' => 'Link sponsor tidak boleh kosong',
             'link.url' => 'Link sponsor harus berupa url',

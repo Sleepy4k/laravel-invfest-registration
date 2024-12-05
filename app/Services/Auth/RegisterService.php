@@ -3,8 +3,8 @@
 namespace App\Services\Auth;
 
 use App\Contracts\Models;
+use App\Foundations\Service;
 use App\Notifications\TeamOTPVerification;
-use App\Services\Service;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterService extends Service
@@ -106,7 +106,7 @@ class RegisterService extends Service
 
         $otpPayload = [
             'user_id' => $user->id,
-            'otp' => substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 0, 6),
+            'otp' => generateOTPCode(),
             'expired_at' => now()->addHours(3)
         ];
         $otp = $this->otpInterface->create($otpPayload);

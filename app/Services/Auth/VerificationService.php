@@ -3,7 +3,8 @@
 namespace App\Services\Auth;
 
 use App\Contracts\Models;
-use App\Services\Service;
+use App\Foundations\Service;
+use App\Notifications\TeamOTPVerification;
 use Illuminate\Support\Facades\Auth;
 
 class VerificationService extends Service
@@ -31,13 +32,11 @@ class VerificationService extends Service
 
             if ($user?->otp?->otp == null) {
                 alert('OTP tidak ditemukan', '', 'error');
-
                 return false;
             }
 
             if ($user?->otp?->otp != $request['otp']) {
                 alert('OTP yang anda masukan salah', '', 'error');
-
                 return false;
             }
 
@@ -45,6 +44,21 @@ class VerificationService extends Service
                 alert('OTP yang anda masukan sudah kadaluarsa', '', 'error');
                 $id = $this->otpInterface->findByCustomId([['otp', '=', $user->otp->otp]], ['id'])->id;
                 $this->otpInterface->deleteById($id);
+
+                $otpPayload = [
+                    'user_id' => $user->id,
+                    'otp' => generateOTPCode(8),
+                    'expired_at' => now()->addHours(3)
+                ];
+                $otp = $this->otpInterface->create($otpPayload);
+
+                if (!$otp) {
+                    alert('Pendaftaran Gagal', 'system gagal membuat ulang kode otp', 'error');
+                    return false;
+                }
+
+                alert('Kode OTP sudah dikirim ulang', 'Silahkan cek email anda', 'success');
+                $user->notify(new TeamOTPVerification($otpPayload['otp']));
 
                 return false;
             }

@@ -6,7 +6,7 @@ use App\Enums\ActivityEventType;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
 
-class LogLogoutUser
+class LogUserLogout
 {
     /**
      * The request.

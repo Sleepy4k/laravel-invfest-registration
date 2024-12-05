@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Team;
 
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Http\Requests\Team\SubmissionRequest;
 use App\Services\Team\SubmissionService;
 

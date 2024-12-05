@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\PaymentMethod;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PaymentRequest extends FormRequest
 {
@@ -22,7 +24,7 @@ class PaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_method_id' => ['required', 'exists:payment_methods,id'],
+            'payment_method_id' => ['required', Rule::exists(PaymentMethod::class, 'id')],
             'proof' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
         ];
     }

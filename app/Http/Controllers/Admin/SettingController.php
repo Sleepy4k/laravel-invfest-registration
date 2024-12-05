@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Http\Requests\Admin\SettingRequest;
 use App\Services\Admin\SettingService;
 

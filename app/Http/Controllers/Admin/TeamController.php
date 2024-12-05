@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\TeamDataTable;
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Http\Requests\Admin\TeamRequest;
 use App\Services\Admin\TeamService;
 

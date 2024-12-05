@@ -2,7 +2,7 @@
 
 namespace App\Services\Frontend;
 
-use App\Services\Service;
+use App\Foundations\Service;
 
 class LandingService extends Service
 {

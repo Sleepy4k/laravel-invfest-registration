@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\MediaPartnerDataTable;
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Http\Requests\Admin\MediaPartner\StoreRequest;
 use App\Http\Requests\Admin\MediaPartner\UpdateRequest;
 use App\Services\Admin\MediaPartnerService;

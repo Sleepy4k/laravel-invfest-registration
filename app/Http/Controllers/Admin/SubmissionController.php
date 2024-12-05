@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\SubmissionDataTable;
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Services\Admin\SubmissionService;
 use Illuminate\Http\Request;
 

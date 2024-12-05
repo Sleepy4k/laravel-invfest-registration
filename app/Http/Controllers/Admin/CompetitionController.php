@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\CompetitionDataTable;
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Http\Requests\Admin\Competition\StoreRequest;
 use App\Http\Requests\Admin\Competition\UpdateRequest;
 use App\Services\Admin\CompetitionService;

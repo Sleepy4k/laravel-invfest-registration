@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Foundations\Controller;
 use App\Services\Admin\DashboardService;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
 {
@@ -24,5 +25,13 @@ class DashboardController extends Controller
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }
+    }
+
+    /**
+     * Handle the incoming request for export.
+     */
+    public function export()
+    {
+        return Excel::download($this->service->export(), 'dashboard_'.date('YmdHis').'.xlsx');
     }
 }

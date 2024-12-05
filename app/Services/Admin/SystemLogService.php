@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin;
 
-use App\Services\Service;
+use App\Foundations\Service;
 
 class SystemLogService extends Service
 {

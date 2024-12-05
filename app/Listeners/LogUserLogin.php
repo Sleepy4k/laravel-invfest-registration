@@ -6,7 +6,7 @@ use App\Enums\ActivityEventType;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
 
-class LogLoginUser
+class LogUserLogin
 {
     /**
      * The request.

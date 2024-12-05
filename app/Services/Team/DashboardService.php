@@ -3,7 +3,9 @@
 namespace App\Services\Team;
 
 use App\Contracts\Models;
-use App\Services\Service;
+use App\Exports\User\DashboardExport;
+use App\Foundations\Service;
+use Illuminate\Database\Eloquent\Model;
 
 class DashboardService extends Service
 {
@@ -15,14 +17,15 @@ class DashboardService extends Service
     ) {}
 
     /**
-     * Handle the incoming request.
+     * Get the team data.
      *
-     * @return array
+     * @param int $uid
+     *
+     * @return Model
      */
-    public function invoke(): array
+    private function getTeam($uid): Model
     {
-        $uid = auth('web')->user()->id;
-        $user = $this->userInterface->findById($uid, ['id', 'email'], [
+        return $this->userInterface->findById($uid, ['id', 'email'], [
             'leader:id,team_id,user_id,name,phone,card',
             'leader.team:id,competition_id,name,institution',
             'leader.team.member:id,team_id,name,card',
@@ -32,7 +35,31 @@ class DashboardService extends Service
             'leader.team.competition:id,name,level_id,whatsapp_group',
             'leader.team.competition.level:id,display_as'
         ]);
+    }
+
+    /**
+     * Handle the incoming request.
+     *
+     * @return array
+     */
+    public function invoke(): array
+    {
+        $uid = auth('web')->user()->id;
+        $user = $this->getTeam($uid);
 
         return compact('user');
+    }
+
+    /**
+     * Export the dashboard data.
+     *
+     * @return DashboardExport
+     */
+    public function export()
+    {
+        $uid = auth('web')->user()->id;
+        $user = $this->getTeam($uid);
+
+        return new DashboardExport($user);
     }
 }

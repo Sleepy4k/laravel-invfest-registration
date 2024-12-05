@@ -9,9 +9,12 @@ use Spatie\Honeypot\SpamResponder\SpamResponder;
 class HoneyPotResponse implements SpamResponder
 {
     /**
-     * Generate csp no once key
+     * Respond to the spam request.
      *
-     * @return string
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     *
+     * @return mixed
      */
     public function respond(Request $request, Closure $next)
     {

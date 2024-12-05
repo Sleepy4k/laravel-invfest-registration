@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Competition;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RegisterRequest extends FormRequest
 {
@@ -22,7 +24,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'competition_id' => ['required', 'string', 'exists:competitions,id'],
+            'competition_id' => ['required', 'string', Rule::exists(Competition::class, 'id')],
             'team_name' => ['required', 'string', 'max:100'],
             'institution' => ['required', 'string', 'max:150'],
             'leader_name' => ['required', 'string', 'max:150'],

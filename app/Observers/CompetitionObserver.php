@@ -16,10 +16,6 @@ class CompetitionObserver
      */
     public function creating(Competition $competition): void
     {
-        if ($competition->getKey() === null) {
-            $competition->setAttribute($competition->getKeyName(), Str::uuid());
-        }
-
         $competition->slug = Str::slug($competition->name);
 
         $competition->poster = $competition->poster

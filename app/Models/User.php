@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Concerns\HasUuid;
+use App\Concerns\UnIncreaseAble;
 use App\Enums\ActivityEventType;
-use App\Observers\UserObserver;
 use ElipZis\Cacheable\Models\Traits\Cacheable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,25 +14,10 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
-#[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, LogsActivity, Cacheable;
-
-    /**
-     * Indicates if the model's ID is auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * The data type of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
+    use HasFactory, HasUuid, UnIncreaseAble, Notifiable, HasRoles, LogsActivity, Cacheable;
 
     /**
      * The attributes that are mass assignable.

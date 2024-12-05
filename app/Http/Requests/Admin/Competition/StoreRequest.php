@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Admin\Competition;
 
+use App\Models\Competition;
+use App\Models\CompetitionLevel;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -23,9 +26,9 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:150'],
-            'slug' => ['required', 'string', 'unique:competitions,slug'],
-            'level_id' => ['required', 'string', 'exists:competition_levels,id'],
+            'name' => ['required', 'string', 'max:150', Rule::unique(Competition::class, 'name')],
+            'slug' => ['required', 'string', 'max:150', Rule::unique(Competition::class, 'slug')],
+            'level_id' => ['required', 'string', Rule::exists(CompetitionLevel::class, 'id')],
             'description' => ['required', 'string'],
             'poster' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
             'guidebook' => ['required', 'file', 'mimes:doc,docx,pdf', 'extensions:doc,docx,pdf', 'max:8192'],
@@ -45,6 +48,7 @@ class StoreRequest extends FormRequest
             'name.required' => 'Nama kompetisi harus diisi.',
             'name.string' => 'Nama kompetisi harus berupa string.',
             'name.max' => 'Nama kompetisi tidak boleh lebih dari 150 karakter.',
+            'name.unique' => 'Nama kompetisi sudah ada.',
             'slug.required' => 'Nama kompetisi harus diisi.',
             'slug.string' => 'Nama kompetisi harus berupa string.',
             'slug.unique' => 'Nama kompetisi sudah ada.',
