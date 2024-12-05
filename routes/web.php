@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
 
             Route::prefix('team')->name('team.')->group(function () {
                 Route::get('/dashboard', Team\DashboardController::class)->name('dashboard');
+                Route::get('/dashboard/export', [Team\DashboardController::class, 'export'])->name('dashboard.export');
                 Route::resource('karya', Team\SubmissionController::class)
                     ->only(['index', 'store'])
                     ->names([
@@ -64,6 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::middleware('role:petugas|admin')->group(function () {
             Route::get('/dashboard', Admin\DashboardController::class)->name('dashboard');
+            Route::get('/dashboard/export', [Admin\DashboardController::class, 'export'])->name('dashboard.export');
             Route::resource('team', Admin\TeamController::class)->except(['create', 'store', 'edit']);
         });
 
