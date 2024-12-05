@@ -165,6 +165,12 @@
                         </td>
                     </tr>
                 </table>
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('team.dashboard.export') }}" class="btn btn-primary">
+                        <i class="fas fa-file-export"></i>
+                        Export Data
+                    </a>
+                </div>
             </div>
         </div>
     @endif

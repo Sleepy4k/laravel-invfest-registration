@@ -3,6 +3,12 @@
         <div>
             <h4 class="mb-3 mb-md-0">Selamat Datang, {{ $name ?? '-' }}</h4>
         </div>
+        <div>
+            <a href="{{ route('admin.dashboard.export') }}" class="btn btn-primary btn-icon-text btn-rounded">
+                <i data-feather="download" class="mr-2"></i>
+                Export Data
+            </a>
+        </div>
     </div>
 
     <div class="row">

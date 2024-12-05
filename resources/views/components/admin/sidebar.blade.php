@@ -20,7 +20,7 @@
                 </a>
             </li>
 
-            <li class="nav-item nav-category">Participants</li>
+            <li class="nav-item nav-category">Peserta</li>
             <li class="nav-item {{ request()->is('admin/team*') ? ' active' : '' }}">
                 <a href="{{ route('admin.team.index') }}" class="nav-link">
                     <i class="link-icon" data-feather="users"></i>
@@ -36,11 +36,11 @@
                     </a>
                 </li>
 
-                <li class="nav-item nav-category">Competition Management</li>
+                <li class="nav-item nav-category">Managemen Kompetisi</li>
                 <li class="nav-item {{ request()->is('admin/competition*') ? ' active' : '' }}">
                     <a href="{{ route('admin.competition.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="award"></i>
-                        <span class="link-title">Manajemen Kompetisi</span>
+                        <span class="link-title">Kompetisi</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->is('admin/timeline*') ? ' active' : '' }}">
@@ -50,7 +50,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item nav-category">Partnerships</li>
+                <li class="nav-item nav-category">Partnership</li>
                 <li class="nav-item {{ request()->is('admin/sponsor*') ? ' active' : '' }}">
                     <a href="{{ route('admin.sponsor.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="dollar-sign"></i>
@@ -64,7 +64,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item nav-category">Settings</li>
+                <li class="nav-item nav-category">Setting</li>
                 <li class="nav-item {{ request()->is('admin/payment-method*') ? ' active' : '' }}">
                     <a href="{{ route('admin.payment-method.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="credit-card"></i>
@@ -78,7 +78,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item nav-category">Logs</li>
+                <li class="nav-item nav-category">Log</li>
                 <li class="nav-item {{ request()->is('admin/log/auth*') ? ' active' : '' }}">
                     <a href="{{ route('admin.auth.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="key"></i>

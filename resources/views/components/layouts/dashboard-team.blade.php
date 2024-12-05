@@ -64,14 +64,14 @@
         <x-frontend.navbar />
 
         <div class="container mt-5">
-            <div class="row">
+            <div class="row mb-5">
                 @include('sweetalert::alert')
 
                 <div class="col-sm-12 col-lg-3 col-md-4">
                     <x-frontend.sidebar-team />
                 </div>
 
-                <div class="col-sm-12 col-lg-9 col-md-8 mt-5 mt-lg-0">
+                <div class="col-sm-12 col-lg-9 col-md-8 mt-5 mt-lg-0 mb-5">
                     <div class="card border-0 shadow-sm  mt-lg-0 mt-md-0">
                         <div class="card-header">
                             {{ $title }}
