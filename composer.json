@@ -47,8 +47,7 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/DateFormatter.php",
-            "app/Helpers/FileSizeFormatter.php"
+            "app/Helpers/helpers.php"
         ]
     },
     "autoload-dev": {
