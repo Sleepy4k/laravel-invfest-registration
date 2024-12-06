@@ -2,7 +2,7 @@
 
 namespace {{ namespace }};
 
-use App\Services\Service;
+App\Foundations\Service;
 
 class {{ class }} extends Service
 {
