@@ -21,10 +21,12 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $currentDate = now()->format('Y-m-d');
+
         return [
             'title' => ['required', 'string', 'max:100'],
             'description' => ['nullable', 'string'],
-            'date' => ['required', 'date', 'after_or_equal:' . now()]
+            'date' => ['required', 'date', 'after_or_equal:'.$currentDate]
         ];
     }
 
@@ -36,13 +38,13 @@ class StoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required'        => 'Nama Schedule timeline harus diisi.',
-            'title.string'          => 'Nama Schedule timeline harus berupa string.',
-            'title.max'             => 'Nama Schedule timeline tidak boleh lebih dari 100 karakter.',
-            'description.string'    => 'Deskripsi timeline harus berupa string.',
-            'date.required'         => 'Tanggal timeline harus diisi.',
-            'date.date'             => 'Format tanggal tidak sesuai.',
-            'date.after_or_equal'   => 'Tanggal timeline harus sama atau lebih dari tanggal sekarang.',
+            'title.required' => 'Nama Schedule timeline harus diisi.',
+            'title.string' => 'Nama Schedule timeline harus berupa string.',
+            'title.max' => 'Nama Schedule timeline tidak boleh lebih dari 100 karakter.',
+            'description.string' => 'Deskripsi timeline harus berupa string.',
+            'date.required' => 'Tanggal timeline harus diisi.',
+            'date.date' => 'Format tanggal tidak sesuai.',
+            'date.after_or_equal' => 'Tanggal timeline harus sama atau lebih dari tanggal sekarang.',
         ];
     }
 }

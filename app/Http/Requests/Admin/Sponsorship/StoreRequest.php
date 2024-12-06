@@ -2,13 +2,17 @@
 
 namespace App\Http\Requests\Admin\Sponsorship;
 
+use App\Enums\CustomValidationType;
 use App\Models\Sponsorship;
 use App\Models\SponsorshipTier;
+use App\Traits\GetCustomValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
+    use GetCustomValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -24,9 +28,12 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $imageMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
+        $imageMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'name' => ['required', 'string', 'max:50', Rule::unique(Sponsorship::class, 'name')],
-            'logo' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
+            'logo' => ['required', 'image', 'mimes:'.$imageMimeType, 'extensions:'.$imageMimeType, 'max:'.$imageMaxSize],
             'link' => ['required', 'url', 'max:255'],
             'tier_id' => ['required', 'string', Rule::exists(SponsorshipTier::class, 'id')],
         ];
@@ -37,6 +44,9 @@ class StoreRequest extends FormRequest
      */
     public function messages(): array
     {
+        $imageMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
+        $imageMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'name.required' => 'Nama sponsor tidak boleh kosong',
             'name.string' => 'Nama sponsor harus berupa string.',
@@ -44,9 +54,9 @@ class StoreRequest extends FormRequest
             'name.unique' => 'Nama sponsor sudah ada.',
             'logo.required' => 'Logo sponsor tidak boleh kosong',
             'logo.image' => 'Logo sponsor harus berupa gambar',
-            'logo.mimes' => 'Logo sponsor harus berupa gambar dengan format jpeg, png, atau jpg.',
-            'logo.extensions' => 'Logo sponsor harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
-            'logo.max' => 'Logo sponsor tidak boleh lebih dari 8MB',
+            'logo.mimes' => 'Logo sponsor harus berupa gambar dengan format '.$imageMimeType.'.',
+            'logo.extensions' => 'Logo sponsor harus berupa gambar dengan ekstensi file '.$imageMimeType.'.',
+            'logo.max' => 'Logo sponsor tidak boleh lebih dari '.$imageMaxSize.'.',
             'link.required' => 'Link sponsor tidak boleh kosong',
             'link.url' => 'Link sponsor harus berupa url',
             'link.max' => 'Link sponsor tidak boleh lebih dari 255 karakter.',

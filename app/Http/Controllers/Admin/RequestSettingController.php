@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Foundations\Controller;
+use App\Http\Requests\Admin\RequestSettingRequest;
 use App\Services\Admin\RequestSettingService;
-use Illuminate\Http\Request;
 
 class RequestSettingController extends Controller
 {
@@ -30,10 +30,10 @@ class RequestSettingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RequestSettingRequest $request)
     {
         try {
-            $this->service->store($request->all());
+            $this->service->store($request->validated());
 
             return to_route('admin.request-settings.index');
         } catch (\Throwable $th) {

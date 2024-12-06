@@ -15,7 +15,7 @@ class RequestSettingService extends Service
     public function index(): array
     {
         $content = [];
-        $path = storage_path('app/request-settings.json');
+        $path = storage_path('request-settings.json');
 
         if (File::exists($path)) {
             $content =  json_decode(File::get($path), true);
@@ -33,8 +33,13 @@ class RequestSettingService extends Service
      */
     public function store(array $request): void
     {
-        $path = storage_path('app/request-settings.json');
+        $path = storage_path('request-settings.json');
+        $result = File::put($path, json_encode($request));
 
-        File::put($path, json_encode($request));
+        if ($result !== false) {
+            toast('Request settings updated successfully', 'success');
+        } else {
+            toast('Failed to update request settings', 'error');
+        }
     }
 }

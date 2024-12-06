@@ -2,14 +2,18 @@
 
 namespace App\Http\Requests\Admin\Competition;
 
+use App\Enums\CustomValidationType;
 use App\Models\Competition;
 use App\Models\CompetitionLevel;
+use App\Traits\GetCustomValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
+    use GetCustomValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -25,13 +29,18 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $imageMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
+        $imageMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+        $fileMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'doc,docx,pdf');
+        $fileMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'name' => ['required', 'string', 'max:150', Rule::unique(Competition::class, 'name')->ignore($this->competition)],
             'slug' => ['required', 'string', 'max:150', Rule::unique(Competition::class, 'slug')->ignore($this->competition)],
             'level_id' => ['required', 'string', Rule::exists(CompetitionLevel::class, 'id')],
             'description' => ['required', 'string'],
-            'poster' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
-            'guidebook' => ['nullable', 'file', 'mimes:doc,docx,pdf', 'extensions:doc,docx,pdf', 'max:8192'],
+            'poster' => ['nullable', 'image', 'mimes:'.$imageMimeType, 'extensions:'.$imageMimeType, 'max:'.$imageMaxSize],
+            'guidebook' => ['nullable', 'file', 'mimes:'.$fileMimeType, 'extensions:'.$fileMimeType, 'max:'.$fileMaxSize],
             'registration_fee' => ['required', 'numeric'],
             'whatsapp_group' => ['required', 'string', 'max:255']
         ];
@@ -44,6 +53,11 @@ class UpdateRequest extends FormRequest
      */
     public function messages(): array
     {
+        $imageMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
+        $imageMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+        $fileMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'doc,docx,pdf');
+        $fileMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'name.required' => 'Nama kompetisi harus diisi.',
             'name.string' => 'Nama kompetisi harus berupa string.',
@@ -59,13 +73,13 @@ class UpdateRequest extends FormRequest
             'description.required' => 'Deskripsi kompetisi harus diisi.',
             'description.string' => 'Deskripsi kompetisi harus berupa string.',
             'poster.image' => 'Poster kompetisi harus berupa gambar',
-            'poster.mimes' => 'Poster kompetisi harus berupa gambar dengan format jpeg, png, atau jpg.',
-            'poster.extensions' => 'Poster kompetisi harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
-            'poster.max' => 'Poster kompetisi tidak boleh lebih dari 8MB',
+            'poster.mimes' => 'Poster kompetisi harus berupa gambar dengan format '.$imageMimeType.'.',
+            'poster.extensions' => 'Poster kompetisi harus berupa gambar dengan ekstensi file '.$imageMimeType.'.',
+            'poster.max' => 'Poster kompetisi tidak boleh lebih dari '.$imageMaxSize.'.',
             'guidebook.file' => 'Guidebook kompetisi harus berupa file',
-            'guidebook.mimes' => 'Guidebook kompetisi harus berupa file dengan format doc, docx, atau pdf.',
-            'guidebook.extensions' => 'Guidebook kompetisi harus berupa file dengan ekstensi file doc, docx, atau pdf.',
-            'guidebook.max' => 'Guidebook kompetisi tidak boleh lebih dari 8MB',
+            'guidebook.mimes' => 'Guidebook kompetisi harus berupa file dengan format '.$fileMimeType.'.',
+            'guidebook.extensions' => 'Guidebook kompetisi harus berupa file dengan ekstensi file '.$fileMimeType.'.',
+            'guidebook.max' => 'Guidebook kompetisi tidak boleh lebih dari '.$fileMaxSize.'.',
             'registration_fee.required' => 'Biaya pendaftaran kompetisi harus diisi.',
             'registration_fee.numeric' => 'Biaya pendaftaran kompetisi harus berupa angka.',
             'whatsapp_group.required' => 'Link grup WhatsApp kompetisi harus diisi.',

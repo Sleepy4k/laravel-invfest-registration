@@ -9,23 +9,15 @@ use Illuminate\Http\Request;
 class LogUserLogout
 {
     /**
-     * The request.
-     *
-     * @var \Illuminate\Http\Request
-     */
-    public $request;
-
-    /**
      * Create the event listener.
      *
      * @param  \Illuminate\Http\Request  $request
      *
      * @return void
      */
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
+    public function __construct(
+        public Request $request
+    ) {}
 
     /**
      * Handle the event.

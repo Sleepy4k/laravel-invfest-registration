@@ -2,12 +2,16 @@
 
 namespace App\Http\Requests\Admin\MediaPartner;
 
+use App\Enums\CustomValidationType;
 use App\Models\MediaPartner;
+use App\Traits\GetCustomValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
+    use GetCustomValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,9 +27,12 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $imageMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
+        $imageMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'name' => ['required', 'string', 'max:50', Rule::unique(MediaPartner::class, 'name')],
-            'logo' => ['required', 'image', 'mimes:png,jpg,jpeg,gif,svg', 'extensions:png,jpg,jpeg,gif,svg', 'max:8192'],
+            'logo' => ['required', 'image', 'mimes:'.$imageMimeType, 'extensions:'.$imageMimeType, 'max:'.$imageMaxSize],
             'link' => ['nullable', 'url', 'max:255']
         ];
     }
@@ -35,6 +42,9 @@ class StoreRequest extends FormRequest
      */
     public function messages(): array
     {
+        $imageMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
+        $imageMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'name.required' => 'Nama media partner tidak boleh kosong',
             'name.string' => 'Nama media partner harus berupa string.',
@@ -42,9 +52,9 @@ class StoreRequest extends FormRequest
             'name.unique' => 'Nama media partner sudah ada.',
             'logo.required' => 'Logo media partner tidak boleh kosong',
             'logo.image' => 'Logo media partner harus berupa gambar',
-            'logo.mimes' => 'Logo media partner harus berupa gambar dengan format jpeg, png, jpg, gif, atau svg',
-            'logo.extensions' => 'Logo media partner harus berupa gambar dengan ekstensi file jpg, jpeg, png, gif, atau svg.',
-            'logo.max' => 'Logo media partner tidak boleh lebih dari 8MB',
+            'logo.mimes' => 'Logo media partner harus berupa gambar dengan format '.$imageMimeType.'.',
+            'logo.extensions' => 'Logo media partner harus berupa gambar dengan ekstensi file '.$imageMimeType.'.',
+            'logo.max' => 'Logo media partner tidak boleh lebih dari '.$imageMaxSize.'.',
             'link.url' => 'Link media partner harus berupa url',
             'link.max' => 'Link media partner tidak boleh lebih dari 255 karakter.',
         ];
