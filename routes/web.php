@@ -80,6 +80,9 @@ Route::middleware('auth')->group(function () {
                 ->only(['index', 'store'])
                 ->parameter('website-configuration', 'id');
 
+            Route::resource('request-settings', Admin\RequestSettingController::class)
+                ->only(['index', 'store']);
+
             Route::prefix('log')->group(function () {
                 Route::resource('auth', Admin\AuthLogController::class)->only(['index', 'show']);
                 Route::resource('model', Admin\ModelLogController::class)->only(['index', 'show']);
