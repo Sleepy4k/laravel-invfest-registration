@@ -2,12 +2,16 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enums\CustomValidationType;
 use App\Models\Competition;
+use App\Traits\GetCustomValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class RegisterRequest extends FormRequest
 {
+    use GetCustomValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,15 +27,18 @@ class RegisterRequest extends FormRequest
      */
     public function rules(): array
     {
+        $imageMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
+        $imageMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'competition_id' => ['required', 'string', Rule::exists(Competition::class, 'id')],
             'team_name' => ['required', 'string', 'max:100'],
             'institution' => ['required', 'string', 'max:150'],
             'leader_name' => ['required', 'string', 'max:150'],
             'leader_phone' => ['required', 'string', 'max:50'],
-            'leader_card' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
+            'leader_card' => ['required', 'image', 'mimes:'.$imageMimeType, 'extensions:'.$imageMimeType, 'max:'.$imageMaxSize],
             'companion_name' => ['nullable', 'string', 'max:150'],
-            'companion_card' => ['required_unless:companion_name,null', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
+            'companion_card' => ['required_unless:companion_name,null', 'image', 'mimes:'.$imageMimeType, 'extensions:'.$imageMimeType, 'max:'.$imageMaxSize],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
@@ -44,6 +51,9 @@ class RegisterRequest extends FormRequest
      */
     public function messages(): array
     {
+        $imageMimeType = $this->getValidationMessage(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
+        $imageMaxSize = $this->getValidationMessage(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'competition_id.required' => 'Lomba harus dipilih.',
             'competition_id.string' => 'Lomba harus berupa string.',
@@ -62,15 +72,15 @@ class RegisterRequest extends FormRequest
             'leader_phone.max' => 'Nomor telepon ketua tim tidak boleh lebih dari 50 karakter.',
             'leader_card.required' => 'Kartu pelajar/kartu mahasiswa ketua tim harus diunggah.',
             'leader_card.image' => 'Kartu pelajar/kartu mahasiswa ketua tim harus berupa gambar.',
-            'leader_card.mimes' => 'Kartu pelajar/kartu mahasiswa ketua tim harus berupa gambar dengan format jpg, jpeg, atau png.',
-            'leader_card.extensions' => 'Kartu pelajar/kartu mahasiswa ketua tim harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
-            'leader_card.max' => 'Kartu pelajar/kartu mahasiswa ketua tim tidak boleh lebih dari 8 MB.',
+            'leader_card.mimes' => 'Kartu pelajar/kartu mahasiswa ketua tim harus berupa gambar dengan format '.$imageMimeType.'.',
+            'leader_card.extensions' => 'Kartu pelajar/kartu mahasiswa ketua tim harus berupa gambar dengan ekstensi file '.$imageMimeType.'.',
+            'leader_card.max' => 'Kartu pelajar/kartu mahasiswa ketua tim tidak boleh lebih dari '.$imageMaxSize.'.',
             'companion_name.string' => 'Nama pendamping tim harus berupa string.',
             'companion_card.required_unless' => 'Kartu pendamping tim harus berupa di diunggah jika melampirkan pendamping tim.',
             'companion_card.image' => 'Kartu pendamping tim harus berupa gambar.',
-            'companion_card.mimes' => 'Kartu pendamping tim harus berupa gambar dengan format jpg, jpeg, atau png.',
-            'companion_card.extensions' => 'Kartu pendamping tim harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
-            'companion_card.max' => 'Kartu pendamping tim tidak boleh lebih dari 8 MB.',
+            'companion_card.mimes' => 'Kartu pendamping tim harus berupa gambar dengan format '.$imageMimeType.'.',
+            'companion_card.extensions' => 'Kartu pendamping tim harus berupa gambar dengan ekstensi file '.$imageMimeType.'.',
+            'companion_card.max' => 'Kartu pendamping tim tidak boleh lebih dari '.$imageMaxSize.'.',
             'email.required' => 'Email harus diisi.',
             'email.email' => 'Email tidak valid.',
             'email.unique' => 'Email sudah terdaftar.',

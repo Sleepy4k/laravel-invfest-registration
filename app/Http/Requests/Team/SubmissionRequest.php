@@ -2,10 +2,14 @@
 
 namespace App\Http\Requests\Team;
 
+use App\Enums\CustomValidationType;
+use App\Traits\GetCustomValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SubmissionRequest extends FormRequest
 {
+    use GetCustomValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -21,9 +25,12 @@ class SubmissionRequest extends FormRequest
      */
     public function rules(): array
     {
+        $fileMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'doc,docx,pdf');
+        $fileMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'title' => ['required', 'string', 'max:200'],
-            'zip_file' => ['required', 'file', 'mimes:doc,docx,pdf', 'extensions:doc,docx,pdf'],
+            'zip_file' => ['required', 'file', 'mimes:'.$fileMimeType, 'extensions:'.$fileMimeType, 'max:'.$fileMaxSize],
         ];
     }
 
@@ -34,14 +41,18 @@ class SubmissionRequest extends FormRequest
      */
     public function messages(): array
     {
+        $fileMimeType = $this->getValidationMessage(CustomValidationType::IMAGE_MIMES, 'doc,docx,pdf');
+        $fileMaxSize = $this->getValidationMessage(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'title.required' => 'Judul karya tidak boleh kosong.',
             'title.string' => 'Judul karya harus berupa string.',
             'title.max' => 'Judul karya tidak boleh lebih dari 200 karakter.',
             'zip_file.required' => 'File karya tidak boleh kosong.',
             'zip_file.file' => 'File karya harus berupa file.',
-            'zip_file.mimes' => 'File karya harus berupa file dengan format doc, docx atau pdf.',
-            'zip_file.extensions' => 'File karya harus berupa file dengan ekstensi file doc, docx atau pdf.',
+            'zip_file.mimes' => 'File karya harus berupa file dengan format '.$fileMimeType.'.',
+            'zip_file.extensions' => 'File karya harus berupa file dengan ekstensi file '.$fileMimeType.'.',
+            'zip_file.max' => 'File karya tidak boleh lebih dari '.$fileMaxSize.'.',
         ];
     }
 }

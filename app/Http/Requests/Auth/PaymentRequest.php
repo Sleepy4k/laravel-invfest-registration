@@ -2,12 +2,16 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enums\CustomValidationType;
 use App\Models\PaymentMethod;
+use App\Traits\GetCustomValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class PaymentRequest extends FormRequest
 {
+    use GetCustomValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,9 +27,12 @@ class PaymentRequest extends FormRequest
      */
     public function rules(): array
     {
+        $imageMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
+        $imageMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'payment_method_id' => ['required', Rule::exists(PaymentMethod::class, 'id')],
-            'proof' => ['required', 'image', 'mimes:png,jpg,jpeg', 'extensions:png,jpg,jpeg', 'max:8192'],
+            'proof' => ['required', 'image', 'mimes:'.$imageMimeType, 'extensions:'.$imageMimeType, 'max:'.$imageMaxSize],
         ];
     }
 
@@ -36,14 +43,17 @@ class PaymentRequest extends FormRequest
      */
     public function messages(): array
     {
+        $imageMimeType = $this->getValidationMessage(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
+        $imageMaxSize = $this->getValidationMessage(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+
         return [
             'payment_method_id.required' => 'Metode pembayaran harus dipilih.',
             'payment_method_id.exists' => 'Metode pembayaran tidak ditemukan.',
             'proof.required' => 'Bukti pembayaran harus diunggah.',
             'proof.image' => 'Bukti pembayaran harus berupa gambar.',
-            'proof.mimes' => 'Bukti pembayaran harus berupa gambar dengan format jpg, jpeg, atau png.',
-            'proof.extensions' => 'Bukti pembayaran harus berupa gambar dengan ekstensi file jpg, jpeg, atau png.',
-            'proof.max' => 'Bukti pembayaran tidak boleh lebih dari 8 MB.',
+            'proof.mimes' => 'Bukti pembayaran harus berupa gambar dengan format '.$imageMimeType.'.',
+            'proof.extensions' => 'Bukti pembayaran harus berupa gambar dengan ekstensi file '.$imageMimeType.'.',
+            'proof.max' => 'Bukti pembayaran tidak boleh lebih dari '.$imageMaxSize.'.',
         ];
     }
 }

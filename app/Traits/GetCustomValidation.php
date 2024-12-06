@@ -56,7 +56,7 @@ trait GetCustomValidation
 
         // If key include '_size' then return the message with the size value
         if (strpos($key->value, '_size') !== false) {
-            $size = $settings[$key] ?? 8192;
+            $size = $settings[$key->value] ?? 8192;
             $formattedSize = $size * 1024;
 
             return formatFileSize($formattedSize) ?? $default;
@@ -66,7 +66,7 @@ trait GetCustomValidation
         // so when data like 'pdf,doc,docx' will be converted to 'pdf, doc, atau docx'
         // for the last data always add 'atau' before the last data if the data more than 1
         if (strpos($key->value, '_mimes') !== false) {
-            $mimes = isset($settings[$key]) && is_string($settings[$key]) ? explode(',', $settings[$key]) : [];
+            $mimes = isset($settings[$key->value]) && is_string($settings[$key->value]) ? explode(',', $settings[$key->value]) : [];
             $message = '';
 
             foreach ($mimes as $index => $mime) {
@@ -82,6 +82,6 @@ trait GetCustomValidation
             return $message ?? $default;
         }
 
-        return $settings[$key] ?? $default;
+        return $settings[$key->value] ?? $default;
     }
 }
