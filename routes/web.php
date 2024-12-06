@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\Frontend;
 use App\Http\Controllers\Team;
+use App\Http\Controllers\Tool;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Frontend\LandingController::class, 'index'])->name('frontend.landing');
@@ -87,6 +88,12 @@ Route::middleware('auth')->group(function () {
                 Route::resource('auth', Admin\AuthLogController::class)->only(['index', 'show']);
                 Route::resource('model', Admin\ModelLogController::class)->only(['index', 'show']);
                 Route::resource('system', Admin\SystemLogController::class)->only(['index', 'show']);
+            });
+
+            Route::prefix('tools')->name('tools.')->group(function () {
+                Route::resource('clear-cache', Tool\ClearCacheController::class)->only(['index', 'store']);
+                Route::resource('optimize', Tool\OptimizeController::class)->only(['index', 'store']);
+                Route::resource('sitemap', Tool\SitemapController::class)->only(['index', 'store']);
             });
         });
     });
