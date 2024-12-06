@@ -13,11 +13,11 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <x-admin.card title="Konfigurasi Permintaan">
-                <form action="{{ route('admin.request-settings.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.request-settings.store') }}" method="POST">
                     @csrf
 
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <x-input.text
                                 id="image_mimes"
                                 name="image_mimes"

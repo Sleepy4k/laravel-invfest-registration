@@ -84,6 +84,26 @@
                     </a>
                 </li>
 
+                <li class="nav-item nav-category">Tool</li>
+                <li class="nav-item {{ request()->is('admin/tools/clear-cache*') ? ' active' : '' }}">
+                    <a href="{{ route('admin.tools.clear-cache.index') }}" class="nav-link">
+                        <i class="link-icon" data-feather="credit-card"></i>
+                        <span class="link-title">Clear Cache</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->is('admin/tools/optimize*') ? ' active' : '' }}">
+                    <a href="{{ route('admin.tools.optimize.index') }}" class="nav-link">
+                        <i class="link-icon" data-feather="credit-card"></i>
+                        <span class="link-title">Optimize Cache</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->is('admin/tools/sitemap*') ? ' active' : '' }}">
+                    <a href="{{ route('admin.tools.sitemap.index') }}" class="nav-link">
+                        <i class="link-icon" data-feather="credit-card"></i>
+                        <span class="link-title">Generate Sitemap</span>
+                    </a>
+                </li>
+
                 <li class="nav-item nav-category">Log</li>
                 <li class="nav-item {{ request()->is('admin/log/auth*') ? ' active' : '' }}">
                     <a href="{{ route('admin.auth.index') }}" class="nav-link">
