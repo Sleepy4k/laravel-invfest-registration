@@ -71,10 +71,16 @@
                         <span class="link-title">Metode Pembayaran</span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->is('admin/website-configuration') ? ' active' : '' }}">
+                <li class="nav-item {{ request()->is('admin/website-configuration*') ? ' active' : '' }}">
                     <a href="{{ route('admin.website-configuration.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="settings"></i>
                         <span class="link-title">Konfigurasi Web</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->is('admin/request-settings*') ? ' active' : '' }}">
+                    <a href="{{ route('admin.request-settings.index') }}" class="nav-link">
+                        <i class="link-icon" data-feather="settings"></i>
+                        <span class="link-title">Konfigurasi Permintaan</span>
                     </a>
                 </li>
 
