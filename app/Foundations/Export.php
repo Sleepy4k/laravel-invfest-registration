@@ -53,14 +53,18 @@ class Export implements WithHeadings, WithEvents
     /**
      * Get style coordinate based on headings
      *
-     * @return string
+     * @return string|null
      */
-    private function getStyleCoordinateBasedOnHeadings(): string
+    private function getStyleCoordinateBasedOnHeadings(): string|null
     {
         $coordinate = 'A1';
         $headings = $this->headings;
 
-        if (empty($headings) || count($headings) === 1) {
+        if (empty($headings)) {
+            return null;
+        }
+
+        if (count($headings) === 1) {
             return $coordinate;
         }
 
@@ -76,6 +80,8 @@ class Export implements WithHeadings, WithEvents
     {
         $sheet = $event->sheet->getDelegate();
         $coordinate = $this->getStyleCoordinateBasedOnHeadings();
+
+        if (is_null($coordinate)) return;
 
         $sheet->getStyle($coordinate)
             ->getFill()

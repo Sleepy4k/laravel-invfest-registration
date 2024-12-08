@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\SponsorshipTier;
 
+use App\Models\SponsorshipTier;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class RequestSettingRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +24,7 @@ class RequestSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image_mimes' => ['required', 'string'],
-            'image_max_size' => ['required', 'numeric'],
-            'document_mimes' => ['required', 'string'],
-            'document_max_size' => ['required', 'numeric'],
+            'tier' => ['required', 'string', 'max:50', Rule::unique(SponsorshipTier::class, 'tier')],
         ];
     }
 }

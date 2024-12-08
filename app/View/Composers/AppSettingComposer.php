@@ -7,13 +7,18 @@ use Illuminate\View\View;
 
 class AppSettingComposer
 {
-    protected $settings;
+    /**
+     * The settings data.
+     *
+     * @var array
+     */
+    protected array $settings;
 
     /**
      * Create a new profile composer.
      */
     public function __construct(
-        protected SettingInterface $settingInterface,
+        protected SettingInterface $settingInterface
     ) {
         $data = $this->defaultSettings();
 
@@ -26,7 +31,7 @@ class AppSettingComposer
     }
 
     /**
-     * Set default settings when in case we are miss config or similar
+     * Set default settings in case of missing configuration or similar issues
      *
      * @return array
      */
@@ -57,11 +62,11 @@ class AppSettingComposer
     /**
      * Manipulate settings data into array with constant format
      *
-     * @param mixed $settings
+     * @param \Illuminate\Support\Collection $settings
      *
      * @return array
      */
-    protected function manipulateSetting($settings): array
+    protected function manipulateSetting(\Illuminate\Support\Collection $settings): array
     {
         return $settings->mapWithKeys(function ($setting) {
             return [$setting->key => $setting->value];
@@ -73,6 +78,6 @@ class AppSettingComposer
      */
     public function compose(View $view)
     {
-        return $view->with('appSettings', $this->settings);
+        $view->with('appSettings', $this->settings);
     }
 }

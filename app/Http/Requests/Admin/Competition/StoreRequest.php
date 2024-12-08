@@ -47,49 +47,6 @@ class StoreRequest extends FormRequest
     }
 
     /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        $imageMimeType = $this->getValidationMessage(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
-        $imageMaxSize = $this->getValidationMessage(CustomValidationType::IMAGE_MAX_SIZE, 8192);
-        $fileMimeType = $this->getValidationMessage(CustomValidationType::IMAGE_MIMES, 'doc,docx,pdf');
-        $fileMaxSize = $this->getValidationMessage(CustomValidationType::IMAGE_MAX_SIZE, 8192);
-
-        return [
-            'name.required' => 'Nama kompetisi harus diisi.',
-            'name.string' => 'Nama kompetisi harus berupa string.',
-            'name.max' => 'Nama kompetisi tidak boleh lebih dari 150 karakter.',
-            'name.unique' => 'Nama kompetisi sudah ada.',
-            'slug.required' => 'Nama kompetisi harus diisi.',
-            'slug.string' => 'Nama kompetisi harus berupa string.',
-            'slug.unique' => 'Nama kompetisi sudah ada.',
-            'level_id.required' => 'Tingkat kompetisi harus diisi.',
-            'level_id.string' => 'Tingkat kompetisi harus berupa string.',
-            'level_id.exists' => 'Tingkat kompetisi tidak ditemukan.',
-            'description.required' => 'Deskripsi kompetisi harus diisi.',
-            'description.string' => 'Deskripsi kompetisi harus berupa string.',
-            'poster.required' => 'Poster kompetisi tidak boleh kosong',
-            'poster.image' => 'Poster kompetisi harus berupa gambar',
-            'poster.mimes' => 'Poster kompetisi harus berupa gambar dengan format '.$imageMimeType.'.',
-            'poster.extensions' => 'Poster kompetisi harus berupa gambar dengan ekstensi file '.$imageMimeType.'.',
-            'poster.max' => 'Poster kompetisi tidak boleh lebih dari '.$imageMaxSize.'.',
-            'guidebook.required' => 'Guidebook kompetisi tidak boleh kosong',
-            'guidebook.file' => 'Guidebook kompetisi harus berupa file',
-            'guidebook.mimes' => 'Guidebook kompetisi harus berupa file dengan format '.$fileMimeType.'.',
-            'guidebook.extensions' => 'Guidebook kompetisi harus berupa file dengan ekstensi file '.$fileMimeType.'.',
-            'guidebook.max' => 'Guidebook kompetisi tidak boleh lebih dari '.$fileMaxSize.'.',
-            'registration_fee.required' => 'Biaya pendaftaran kompetisi harus diisi.',
-            'registration_fee.numeric' => 'Biaya pendaftaran kompetisi harus berupa angka.',
-            'whatsapp_group.required' => 'Link grup WhatsApp kompetisi harus diisi.',
-            'whatsapp_group.string' => 'Link grup WhatsApp kompetisi harus berupa string.',
-            'whatsapp_group.max' => 'Link grup WhatsApp kompetisi tidak boleh lebih dari 255 karakter.',
-        ];
-    }
-
-    /**
      * Prepare the data for validation.
      */
     protected function prepareForValidation(): void

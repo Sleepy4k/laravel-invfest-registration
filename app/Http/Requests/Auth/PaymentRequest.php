@@ -35,25 +35,4 @@ class PaymentRequest extends FormRequest
             'proof' => ['required', 'image', 'mimes:'.$imageMimeType, 'extensions:'.$imageMimeType, 'max:'.$imageMaxSize],
         ];
     }
-
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        $imageMimeType = $this->getValidationMessage(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
-        $imageMaxSize = $this->getValidationMessage(CustomValidationType::IMAGE_MAX_SIZE, 8192);
-
-        return [
-            'payment_method_id.required' => 'Metode pembayaran harus dipilih.',
-            'payment_method_id.exists' => 'Metode pembayaran tidak ditemukan.',
-            'proof.required' => 'Bukti pembayaran harus diunggah.',
-            'proof.image' => 'Bukti pembayaran harus berupa gambar.',
-            'proof.mimes' => 'Bukti pembayaran harus berupa gambar dengan format '.$imageMimeType.'.',
-            'proof.extensions' => 'Bukti pembayaran harus berupa gambar dengan ekstensi file '.$imageMimeType.'.',
-            'proof.max' => 'Bukti pembayaran tidak boleh lebih dari '.$imageMaxSize.'.',
-        ];
-    }
 }

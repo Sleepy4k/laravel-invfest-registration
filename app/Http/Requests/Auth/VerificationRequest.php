@@ -25,18 +25,4 @@ class VerificationRequest extends FormRequest
             'otp' => ['required', 'string', 'max:6']
         ];
     }
-
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'otp.required' => 'Kode otp harus diisi.',
-            'otp.string' => 'Kode otp harus berupa string.',
-            'otp.max' => 'Kode otp tidak boleh lebih dari 6 karakter.',
-        ];
-    }
 }

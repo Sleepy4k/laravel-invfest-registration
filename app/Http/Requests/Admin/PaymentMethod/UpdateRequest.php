@@ -37,31 +37,4 @@ class UpdateRequest extends FormRequest
             'owner' => ['required', 'string', 'max:150'],
         ];
     }
-
-    /**
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        $imageMimeType = $this->getValidationMessage(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
-        $imageMaxSize = $this->getValidationMessage(CustomValidationType::IMAGE_MAX_SIZE, 8192);
-
-        return [
-            'name.required' => 'Nama media partner tidak boleh kosong',
-            'name.string' => 'Nama media partner harus berupa string.',
-            'name.max' => 'Nama media partner tidak boleh lebih dari 50 karakter.',
-            'name.unique' => 'Nama media partner sudah ada.',
-            'logo.required' => 'Logo media partner tidak boleh kosong',
-            'logo.image' => 'Logo media partner harus berupa gambar',
-            'logo.mimes' => 'Logo media partner harus berupa gambar dengan format '.$imageMimeType.'.',
-            'logo.extensions' => 'Logo media partner harus berupa gambar dengan ekstensi file '.$imageMimeType.'.',
-            'logo.max' => 'Logo media partner tidak boleh lebih dari '.$imageMaxSize.'.',
-            'number.required' => 'Nomor rekening metode pembayaran tidak boleh kosong',
-            'number.string' => 'Nomor rekening metode pembayaran harus berupa string.',
-            'number.max' => 'Nomor rekening metode pembayaran tidak boleh lebih dari 50 karakter.',
-            'owner.required' => 'Nama pemilik rekening metode pembayaran tidak boleh kosong',
-            'owner.string' => 'Nama pemilik rekening metode pembayaran harus berupa string.',
-            'owner.max' => 'Nama pemilik rekening metode pembayaran tidak boleh lebih dari 150 karakter.',
-        ];
-    }
 }

@@ -28,6 +28,6 @@ class DashboardController extends Controller
      */
     public function export()
     {
-        return Excel::download($this->service->export(), 'dashboard_'.date('YmdHis').'.xlsx');
+        return Excel::download($this->service->export(), 'dashboard_team_'.date('Ymd_His').'.xlsx');
     }
 }

@@ -36,27 +36,4 @@ class StoreRequest extends FormRequest
             'link' => ['nullable', 'url', 'max:255']
         ];
     }
-
-    /**
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        $imageMimeType = $this->getValidationMessage(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
-        $imageMaxSize = $this->getValidationMessage(CustomValidationType::IMAGE_MAX_SIZE, 8192);
-
-        return [
-            'name.required' => 'Nama media partner tidak boleh kosong',
-            'name.string' => 'Nama media partner harus berupa string.',
-            'name.max' => 'Nama media partner tidak boleh lebih dari 50 karakter.',
-            'name.unique' => 'Nama media partner sudah ada.',
-            'logo.required' => 'Logo media partner tidak boleh kosong',
-            'logo.image' => 'Logo media partner harus berupa gambar',
-            'logo.mimes' => 'Logo media partner harus berupa gambar dengan format '.$imageMimeType.'.',
-            'logo.extensions' => 'Logo media partner harus berupa gambar dengan ekstensi file '.$imageMimeType.'.',
-            'logo.max' => 'Logo media partner tidak boleh lebih dari '.$imageMaxSize.'.',
-            'link.url' => 'Link media partner harus berupa url',
-            'link.max' => 'Link media partner tidak boleh lebih dari 255 karakter.',
-        ];
-    }
 }

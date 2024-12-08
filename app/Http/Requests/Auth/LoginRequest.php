@@ -28,21 +28,4 @@ class LoginRequest extends FormRequest
             'password' => ['required', 'string', 'min:8'],
         ];
     }
-
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'email.required' => 'Email harus diisi.',
-            'email.email' => 'Email tidak valid.',
-            'email.exists' => 'Email tidak terdaftar.',
-            'password.required' => 'Password harus diisi.',
-            'password.string' => 'Password harus berupa string.',
-            'password.min' => 'Password minimal 8 karakter.',
-        ];
-    }
 }

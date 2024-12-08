@@ -38,31 +38,4 @@ class StoreRequest extends FormRequest
             'tier_id' => ['required', 'string', Rule::exists(SponsorshipTier::class, 'id')],
         ];
     }
-
-    /**
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        $imageMimeType = $this->getValidationMessage(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
-        $imageMaxSize = $this->getValidationMessage(CustomValidationType::IMAGE_MAX_SIZE, 8192);
-
-        return [
-            'name.required' => 'Nama sponsor tidak boleh kosong',
-            'name.string' => 'Nama sponsor harus berupa string.',
-            'name.max' => 'Nama sponsor tidak boleh lebih dari 50 karakter.',
-            'name.unique' => 'Nama sponsor sudah ada.',
-            'logo.required' => 'Logo sponsor tidak boleh kosong',
-            'logo.image' => 'Logo sponsor harus berupa gambar',
-            'logo.mimes' => 'Logo sponsor harus berupa gambar dengan format '.$imageMimeType.'.',
-            'logo.extensions' => 'Logo sponsor harus berupa gambar dengan ekstensi file '.$imageMimeType.'.',
-            'logo.max' => 'Logo sponsor tidak boleh lebih dari '.$imageMaxSize.'.',
-            'link.required' => 'Link sponsor tidak boleh kosong',
-            'link.url' => 'Link sponsor harus berupa url',
-            'link.max' => 'Link sponsor tidak boleh lebih dari 255 karakter.',
-            'tier_id.required' => 'Level sponsor tidak boleh kosong',
-            'tier_id.string' => 'Level sponsor harus berupa string.',
-            'tier_id.exists' => 'Level sponsor tidak ditemukan.',
-        ];
-    }
 }

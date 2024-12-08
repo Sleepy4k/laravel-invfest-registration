@@ -31,21 +31,4 @@ class TeamRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'status.required' => 'Status diperlukan.',
-            'status.in' => 'Status harus berupa: Approve atau Reject.',
-            'email.required' => 'Email diperlukan.',
-            'email.email' => 'Email harus berupa alamat email yang valid.',
-            'email.exists' => 'Email tidak ditemukan di database pengguna.',
-            'whatsapp_link.required_if' => 'Tautan WhatsApp diperlukan ketika status adalah Approve.',
-            'whatsapp_link.string' => 'Tautan WhatsApp harus berupa string.',
-        ];
-    }
 }

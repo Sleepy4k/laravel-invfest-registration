@@ -29,9 +29,6 @@ class ServerReCacheCommand extends Command
         $this->call('optimize:clear');
 
         // Cache all data
-        $this->call('config:cache');
-        $this->call('event:cache');
-        $this->call('view:cache');
-        $this->call('route:cache');
+        $this->call('optimize');
     }
 }
