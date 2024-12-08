@@ -52,6 +52,7 @@
                                     <x-input.file
                                         name="data[0][card]"
                                         label="Kartu Pelajar/KTM Anggota 1"
+                                        accept="image/*"
                                     />
                                     <x-input.text
                                         label="Anggota 2"
@@ -63,6 +64,7 @@
                                     <x-input.file
                                         label="Kartu Pelajar/KTM Anggota 2"
                                         name="data[1][card]"
+                                        accept="image/*"
                                     />
                                     <x-button.primary class="w-100 mb-3" type="submit">
                                         Lanjutkan ke Pembayaran

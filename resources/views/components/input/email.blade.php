@@ -1,10 +1,28 @@
+@php
+    $name = $attributes->get('name') ?? '';
+    $class = $attributes->merge([
+        'class' => 'form-control' . ($errors->has($name) ? ' is-invalid' : '')
+    ])->get('class');
+@endphp
+
 <div class="mb-3">
-    <label for="{{ $attributes->get('name') }}" class="form-label">Email</label>
-    <input type="email" name="{{ $attributes->get('name') }}" value="{{ $attributes->get('value') }}"
-        {{ $attributes->merge(['class' => 'form-control' . ($errors->has($attributes->get('name')) ? ' is-invalid' : '')]) }}>
-    @if ($errors->has($attributes->get('name')))
+    <label
+        class="form-label"
+        for="{{ $name }}"
+    >
+        Email
+    </label>
+    <input
+        class="{{ $class }}"
+        type="email"
+        id="{{ $name }}"
+        name="{{ $name }}"
+        value="{{ $attributes->get('value') ?? old($name) }}"
+    />
+    {{-- Display error message if validation fails --}}
+    @if ($errors->has($name))
         <div class="invalid-feedback">
-            {{ $errors->first($attributes->get('name')) }}
+            {{ $errors->first($name) }}
         </div>
     @endif
 </div>

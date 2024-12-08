@@ -72,7 +72,7 @@
                                             </option>
                                         @endforeach
                                     </x-input.select>
-                                    <x-input.file name="proof" value="" label="Bukti Pembayaran" />
+                                    <x-input.file name="proof" value="" label="Bukti Pembayaran" accept="image/*" />
                                     <x-button.primary class="w-100 mb-3" type="submit">
                                         Bayar
                                     </x-button.primary>

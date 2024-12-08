@@ -1,4 +1,4 @@
-<div class="card card-hero" data-aos="fade-down">
+<div class="card card-hero">
     <div class="card-body text-white">
         <h2 class="text-center">
             {{ $appSettings['title'] }}

@@ -18,7 +18,7 @@
                     class="info-desc"
                     data-aos="fade-up"
                 >
-                    {!! $appSettings['description'] !!}
+                    {{ $appSettings['description'] }}
                 </p>
                 <br>
                 <a
@@ -100,7 +100,7 @@
                     width="100%"
                     height="500px"
                     loading="lazy"
-                    src={{ $appSettings['video_tutorial'] ?? '#' }}
+                    src="{{ $appSettings['video_tutorial'] ?? '#' }}"
                     title="Video tutorial pendaftaran {{ $appSettings['title'] ?? '#' }}"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

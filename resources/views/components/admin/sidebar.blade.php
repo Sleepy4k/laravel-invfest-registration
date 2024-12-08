@@ -43,6 +43,12 @@
                         <span class="link-title">Kompetisi</span>
                     </a>
                 </li>
+                <li class="nav-item {{ request()->is('admin/level*') ? ' active' : '' }}">
+                    <a href="{{ route('admin.level.index') }}" class="nav-link">
+                        <i class="link-icon" data-feather="chevrons-up"></i>
+                        <span class="link-title">Level Kompetisi</span>
+                    </a>
+                </li>
                 <li class="nav-item {{ request()->is('admin/timeline*') ? ' active' : '' }}">
                     <a href="{{ route('admin.timeline.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="clock"></i>
@@ -57,10 +63,30 @@
                         <span class="link-title">Sponsorship</span>
                     </a>
                 </li>
+                <li class="nav-item {{ request()->is('admin/tier*') ? ' active' : '' }}">
+                    <a href="{{ route('admin.tier.index') }}" class="nav-link">
+                        <i class="link-icon" data-feather="chevrons-up"></i>
+                        <span class="link-title">Tingkat Sponsor</span>
+                    </a>
+                </li>
                 <li class="nav-item {{ request()->is('admin/media-partner*') ? ' active' : '' }}">
                     <a href="{{ route('admin.media-partner.index') }}" class="nav-link">
                         <i class="link-icon" data-feather="share-2"></i>
                         <span class="link-title">Media Partner</span>
+                    </a>
+                </li>
+
+                <li class="nav-item nav-category">Pengguna</li>
+                <li class="nav-item {{ request()->is('admin/user*') ? ' active' : '' }}">
+                    <a href="{{ route('admin.user') }}" class="nav-link">
+                        <i class="link-icon" data-feather="users"></i>
+                        <span class="link-title">User Data</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->is('admin/otp*') ? ' active' : '' }}">
+                    <a href="{{ route('admin.otp') }}" class="nav-link">
+                        <i class="link-icon" data-feather="hash"></i>
+                        <span class="link-title">User OTP</span>
                     </a>
                 </li>
 

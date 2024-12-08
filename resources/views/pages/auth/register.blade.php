@@ -70,6 +70,7 @@
                                         name="leader_card"
                                         label="Kartu Identitas Ketua"
                                         value="{{ old('leader_card') }}"
+                                        accept="image/*"
                                     />
                                     <x-input.text
                                         name="companion_name"
@@ -80,6 +81,7 @@
                                         name="companion_card"
                                         label="Kartu Identitas Pendamping (Hanya untuk SMA/SMK)"
                                         id="companion_card"
+                                        accept="image/*"
                                     />
                                     <x-input.text
                                         name="email"
