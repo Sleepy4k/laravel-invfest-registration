@@ -71,10 +71,14 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::middleware('role:admin')->group(function () {
+            Route::get('/user', Admin\UserController::class)->name('user');
+            Route::get('/otp', Admin\OtpController::class)->name('otp');
             Route::resource('work', Admin\SubmissionController::class)->only(['index', 'update']);
             Route::resource('competition', Admin\CompetitionController::class);
+            Route::resource('level', Admin\CompetitionLevelController::class)->except('show');
             Route::resource('timeline', Admin\TimelineController::class);
             Route::resource('sponsor', Admin\SponsorshipController::class)->except('show');
+            Route::resource('tier', Admin\SponsorshipTierController::class)->except('show');
             Route::resource('media-partner', Admin\MediaPartnerController::class)->except('show');
             Route::resource('payment-method', Admin\PaymentMethodController::class)->except('show');
             Route::resource('website-configuration', Admin\SettingController::class)
