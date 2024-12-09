@@ -7,11 +7,11 @@ Route::get('/', [Frontend\LandingController::class, 'index'])->name('frontend.la
 Route::get('/competition/{slug}', [Frontend\CompetitionController::class, 'show'])
     ->name('frontend.competition.show');
 
-Route::middleware('guest')->group(function () {
-    Route::get('/competition', [Frontend\CompetitionController::class, 'index'])
-        ->name('frontend.competition.index');
-});
+Route::get('/competition', [Frontend\CompetitionController::class, 'index'])
+    ->middleware('guest')
+    ->name('frontend.competition.index');
 
+// Instead of registering each route file, we can use glob to include all files in the directory
 foreach (glob(dirname(__FILE__).'/web/*.php', GLOB_NOSORT) as $route_file) {
     include_once $route_file;
 }
