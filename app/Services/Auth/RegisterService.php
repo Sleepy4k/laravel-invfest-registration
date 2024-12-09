@@ -2,9 +2,10 @@
 
 namespace App\Services\Auth;
 
+use App\Actions\SendOTPVerificationAction;
 use App\Contracts\Models;
+use App\Enums\OTPVerificationType;
 use App\Foundations\Service;
-use App\Notifications\TeamOTPVerification;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterService extends Service
@@ -20,6 +21,7 @@ class RegisterService extends Service
         private Models\TeamCompanionInterface $teamCompanionInterface,
         private Models\CompetitionInterface $competitionInterface,
         private Models\CompetitionLevelInterface $competitionLevelInterface,
+        private SendOTPVerificationAction $sendOTPVerificationAction,
     ) {}
 
     /**
@@ -43,23 +45,21 @@ class RegisterService extends Service
      */
     public function store(array $request): mixed
     {
-        $userPayload = [
+        $user = $this->userInterface->create([
             'email' => $request['email'],
             'password' => $request['password'],
-        ];
-        $user = $this->userInterface->create($userPayload);
+        ]);
 
         if (!$user) {
             alert('Pendaftaran Gagal', 'system gagal memproses data pengguna', 'error');
             return false;
         }
 
-        $teamPayload = [
+        $team = $this->teamInterface->create([
             'competition_id' => $request['competition_id'],
             'name' => $request['team_name'],
             'institution' => $request['institution'],
-        ];
-        $team = $this->teamInterface->create($teamPayload);
+        ]);
 
         if (!$team) {
             $this->userInterface->deleteById($user->id);
@@ -68,12 +68,11 @@ class RegisterService extends Service
         }
 
         if (!is_null($request['companion_name'] ?? null) && !is_null($request['companion_card'] ?? null)) {
-            $companionPayload = [
+            $companion = $this->teamCompanionInterface->create([
                 'team_id' => $team->id,
                 'name' => $request['companion_name'] ?? '-',
                 'card' => $request['companion_card'] ?? '-',
-            ];
-            $companion = $this->teamCompanionInterface->create($companionPayload);
+            ]);
 
             if (!$companion) {
                 $this->teamInterface->deleteById($team->id);
@@ -82,14 +81,13 @@ class RegisterService extends Service
             }
         }
 
-        $leaderPayload = [
+        $leader = $this->teamLeaderInterface->create([
             'team_id' => $team->id,
             'user_id' => $user->id,
             'name' => $request['leader_name'],
             'phone' => $request['leader_phone'],
             'card' => $request['leader_card'] ?? null,
-        ];
-        $leader = $this->teamLeaderInterface->create($leaderPayload);
+        ]);
 
         if (!$leader) {
             $this->teamInterface->deleteById($team->id);
@@ -104,20 +102,13 @@ class RegisterService extends Service
 
         Auth::login($user);
 
-        $otpPayload = [
-            'user_id' => $user->id,
-            'otp' => generateOTPCode(),
-            'expired_at' => now()->addHours(3)
-        ];
-        $otp = $this->otpInterface->create($otpPayload);
+        $otp = $this->sendOTPVerificationAction->execute($user, OTPVerificationType::REGISTER);
 
         if (!$otp) {
             $this->teamLeaderInterface->deleteById($leader->id);
             alert('Pendaftaran Gagal', 'system gagal membuat kode otp', 'error');
             return false;
         }
-
-        $user->notify(new TeamOTPVerification($otpPayload['otp']));
 
         return $team;
     }

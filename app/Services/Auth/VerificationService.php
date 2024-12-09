@@ -2,9 +2,10 @@
 
 namespace App\Services\Auth;
 
+use App\Actions\SendOTPVerificationAction;
 use App\Contracts\Models;
+use App\Enums\OTPVerificationType;
 use App\Foundations\Service;
-use App\Notifications\TeamOTPVerification;
 use Illuminate\Support\Facades\Auth;
 
 class VerificationService extends Service
@@ -15,6 +16,7 @@ class VerificationService extends Service
     public function __construct(
         private Models\OtpInterface $otpInterface,
         private Models\UserInterface $userInterface,
+        private SendOTPVerificationAction $sendOTPVerificationAction
     ) {}
 
     /**
@@ -45,12 +47,7 @@ class VerificationService extends Service
                 $id = $this->otpInterface->findByCustomId([['otp', '=', $user->otp->otp]], ['id'])->id;
                 $this->otpInterface->deleteById($id);
 
-                $otpPayload = [
-                    'user_id' => $user->id,
-                    'otp' => generateOTPCode(8),
-                    'expired_at' => now()->addHours(3)
-                ];
-                $otp = $this->otpInterface->create($otpPayload);
+                $otp = $this->sendOTPVerificationAction->execute($user, OTPVerificationType::RESEND);
 
                 if (!$otp) {
                     alert('Pendaftaran Gagal', 'system gagal membuat ulang kode otp', 'error');
@@ -58,7 +55,6 @@ class VerificationService extends Service
                 }
 
                 alert('Kode OTP sudah dikirim ulang', 'Silahkan cek email anda', 'success');
-                $user->notify(new TeamOTPVerification($otpPayload['otp']));
 
                 return false;
             }
