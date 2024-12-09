@@ -4,6 +4,12 @@ This project is a registration portal that allows user to register and submit th
 
 ## Overview
 
+### Team Dashboard
+
+- User can see their dashboard including team member, institution, and much more
+- Submit their submission easily only with some step on submission form
+- Current team status: User can see their payment status whatever it types
+
 ### Admin Dashboard
 
 - The heart of the system, where authorized users can log in and access powerful tools.
@@ -18,7 +24,7 @@ This project is a registration portal that allows user to register and submit th
 
 ## Tech Stack
 
-**Frontend:** Laravel Blade Engine
+**Frontend:** Blade Engine
 
 **Backend:** Laravel
 
@@ -106,10 +112,7 @@ run this command and dont forget to clear all cache before.
 
 ~~~bash
 php artisan optimize:clear
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-php artisan event:cache
+php artisan optimize
 ~~~
 
 or you could do simply with this command
