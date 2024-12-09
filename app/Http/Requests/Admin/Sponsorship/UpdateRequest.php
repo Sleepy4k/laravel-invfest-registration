@@ -32,7 +32,7 @@ class UpdateRequest extends FormRequest
         $imageMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
 
         return [
-            'name' => ['required', 'string', 'max:50', Rule::unique(Sponsorship::class, 'name')->ignore($this->sponsorship)],
+            'name' => ['required', 'string', 'max:50', Rule::unique(Sponsorship::class, 'name')->ignore($this->sponsor)],
             'logo' => ['nullable', 'image', 'mimes:'.$imageMimeType, 'extensions:'.$imageMimeType, 'max:'.$imageMaxSize],
             'link' => ['required', 'url', 'max:255'],
             'tier_id' => ['required', 'string', Rule::exists(SponsorshipTier::class, 'id')],

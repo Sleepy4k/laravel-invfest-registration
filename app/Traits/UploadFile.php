@@ -129,9 +129,7 @@ trait UploadFile
     protected function deleteFile(UploadFileType $type, $file)
     {
         try {
-            if (!$this->checkFile($type, $file)) {
-                return false;
-            }
+            if (!$this->checkFile($type, $file)) return false;
 
             $parsedFile = $this->parseImage($file);
             Storage::delete($this->storageDisk($type) . $parsedFile);
@@ -197,9 +195,7 @@ trait UploadFile
     protected function updateSingleFile(UploadFileType $type, $file, $old_file)
     {
         try {
-            if (is_null($file)) {
-                return null;
-            }
+            if (is_null($file)) return null;
 
             if (!$this->checkFile($type, $old_file)) {
                 return $this->putFile($type, $file);

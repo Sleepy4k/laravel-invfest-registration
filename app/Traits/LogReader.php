@@ -24,10 +24,15 @@ trait LogReader
             $logPath = storage_path('logs');
 
             $files = match ($type) {
-                LogReaderType::DAILY => collect(glob("{$logPath}/{$channel}-*.log")),
-                LogReaderType::SINGLE => collect(glob("{$logPath}/{$channel}.log")),
-                default => collect(glob("{$logPath}/{$channel}.log")),
+                LogReaderType::DAILY => glob("{$logPath}/{$channel}-*.log"),
+                LogReaderType::SINGLE => glob("{$logPath}/{$channel}.log"),
+                default => glob("{$logPath}/{$channel}.log"),
             };
+
+            $files = collect($files);
+            $files = $files->filter(function ($file) {
+                return File::isFile($file);
+            });
 
             return $files->map(function ($file) use ($logPath) {
                 $name = basename($file);
@@ -76,7 +81,6 @@ trait LogReader
                     'message' => trim($match['message']),
                 ];
             })->toArray();
-
         } catch (\Throwable $th) {
             $this->sendReportLog(ReportLogType::ERROR, $th->getMessage());
             return [];

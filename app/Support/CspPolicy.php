@@ -44,6 +44,11 @@ class CspPolicy extends BasePolicy
             ->addDirectivesForDataTablesCDN();
     }
 
+    /**
+     * Add general directives to the policy
+     *
+     * @return self
+     */
     protected function addGeneralDirectives(): self
     {
         return $this
@@ -71,6 +76,11 @@ class CspPolicy extends BasePolicy
             ->addDirective(Directive::BLOCK_ALL_MIXED_CONTENT, Value::NO_VALUE);
     }
 
+    /**
+     * Add directives for Google Fonts to the policy
+     *
+     * @return self
+     */
     protected function addDirectivesForGoogleFonts(): self
     {
         return $this
@@ -85,17 +95,32 @@ class CspPolicy extends BasePolicy
             ]);
     }
 
+    /**
+     * Add directives for YouTube to the policy
+     *
+     * @return self
+     */
     protected function addDirectivesForYouTube(): self
     {
         return $this->addDirective(Directive::FRAME, '*.youtube.com');
     }
 
+    /**
+     * Add directives for Tailwindcss CDN to the policy
+     *
+     * @return self
+     */
     protected function addDirectivesForTailwindcssCDN(): self
     {
         return $this
             ->addDirective(Directive::SCRIPT, 'cdn.tailwindcss.com');
     }
 
+    /**
+     * Add directives for DataTables CDN to the policy
+     *
+     * @return self
+     */
     protected function addDirectivesForDataTablesCDN(): self
     {
         return $this

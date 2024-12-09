@@ -2,7 +2,7 @@
 
 namespace App\View\Components\Frontend\Card;
 
-use App\Contracts\Models\SponsorshipInterface;
+use App\Contracts\Models\SponsorshipTierInterface;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -12,15 +12,15 @@ class Sponsor extends Component
     /**
      * Save sponsors data
      */
-    public $sponsors;
+    public $sponsorsTiers;
 
     /**
      * Create a new component instance.
      */
     public function __construct(
-        protected SponsorshipInterface $sponsorshipInterface,
+        protected SponsorshipTierInterface $sponsorshipTierInterface
     ) {
-        $this->sponsors = $sponsorshipInterface->all(['name', 'logo']);
+        $this->sponsorsTiers = $sponsorshipTierInterface->all(['id', 'tier'], ['sponsorship:id,tier_id,name,logo']);
     }
 
     /**
@@ -28,6 +28,6 @@ class Sponsor extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.frontend.card.sponsor', $this->sponsors);
+        return view('components.frontend.card.sponsor', $this->sponsorsTiers);
     }
 }

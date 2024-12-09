@@ -20,6 +20,8 @@ class AppSettingComposer
     public function __construct(
         protected SettingInterface $settingInterface
     ) {
+        if (!empty($this->settings)) return;
+
         $data = $this->defaultSettings();
 
         if ($settingInterface->count() > 0) {
@@ -40,7 +42,7 @@ class AppSettingComposer
         $logo = asset('images/logo.png');
 
         return [
-            'title' => 'INVFEST X IST 9.0',
+            'title' => 'INVFEST X ISF 9.0',
             'slogan' => 'Spark the Vision, Light the World',
             'heading' => 'Time to Shine: Spark the Vision, Light the World, panggilan buat kamu yang siap tampil all-out! Saatnya menunjukkan inovasi yang bisa menginspirasi dan membawa perubahan nyata. Ini waktunya kamu bersinar dengan ide segar yang bisa menginspirasi dan mengubah dunia',
             'description' => 'INVFEST X ISF 9.0 ini merupakan gabungan keren antara Informatics Innovation Festival (INVFEST) dan Informatics Sport Festival (ISF)! Acara tahunan ini adalah kompetisi teknologi nasional yang digelar oleh Himpunan Mahasiswa Teknik Informatika, tempat kamu bisa berkreasi dan bersaing di bidang teknologi, e-sports, dan olahraga. INVFEST X ISF 9.0 memiliki tema Time to Shine: Spark the Vision, Light the World, panggilan buat kamu yang siap tampil all-out! Saatnya menunjukkan inovasi yang bisa menginspirasi dan membawa perubahan nyata. Ini waktunya kamu bersinar dengan ide segar yang bisa menginspirasi dan mengubah dunia',
