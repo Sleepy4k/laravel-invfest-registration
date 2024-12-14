@@ -2,6 +2,7 @@
 
 namespace App\DataTables\Admin;
 
+use App\Facades\Format;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\EloquentDataTable;
@@ -42,7 +43,7 @@ class AuthLogDataTable extends DataTable
                 return $query->properties->toJson();
             })
             ->editColumn('created_at', function ($query) {
-                return date('d M Y H:m:s', strtotime($query->created_at));
+                return Format::formatDate($query->created_at, 'd M Y H:m:s');
             })
             ->rawColumns(['action'])
             ->setRowId('id');

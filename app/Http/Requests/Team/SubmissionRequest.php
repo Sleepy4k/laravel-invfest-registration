@@ -25,8 +25,8 @@ class SubmissionRequest extends FormRequest
      */
     public function rules(): array
     {
-        $fileMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'doc,docx,pdf');
-        $fileMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+        $fileMimeType = $this->getValidationRules(CustomValidationType::FILE_MIMES, 'doc,docx,pdf');
+        $fileMaxSize = $this->getValidationRules(CustomValidationType::FILE_MAX_SIZE, 8192);
 
         return [
             'title' => ['required', 'string', 'max:200'],

@@ -3,20 +3,18 @@
 namespace App\Observers;
 
 use App\Enums\UploadFileType;
+use App\Facades\File;
 use App\Models\TeamCompanion;
-use App\Traits\UploadFile;
 
 class TeamCompanionObserver
 {
-    use UploadFile;
-
     /**
      * Handle the TeamCompanion "creating" event.
      */
     public function creating(TeamCompanion $teamCompanion): void
     {
         $teamCompanion->card = $teamCompanion->card
-            ? $this->saveSingleFile(UploadFileType::IMAGE, $teamCompanion->card)
+            ? File::saveSingleFile(UploadFileType::IMAGE, $teamCompanion->card)
             : null;
     }
 
@@ -30,12 +28,12 @@ class TeamCompanionObserver
 
             if ($oldCard == null) {
                 $teamCompanion->card = $teamCompanion->card
-                    ? $this->saveSingleFile(UploadFileType::IMAGE, $teamCompanion->card)
+                    ? File::saveSingleFile(UploadFileType::IMAGE, $teamCompanion->card)
                     : null;
             } else {
                 $teamCompanion->card = $teamCompanion->card
-                    ? $this->updateSingleFile(UploadFileType::IMAGE, $teamCompanion->card, $oldCard)
-                    : $this->deleteFile(UploadFileType::IMAGE, $oldCard);
+                    ? File::updateSingleFile(UploadFileType::IMAGE, $teamCompanion->card, $oldCard)
+                    : File::deleteFile(UploadFileType::IMAGE, $oldCard);
             }
         }
     }
@@ -46,7 +44,7 @@ class TeamCompanionObserver
     public function deleting(TeamCompanion $teamCompanion): void
     {
         $teamCompanion->card
-            ? $this->deleteFile(UploadFileType::IMAGE, $teamCompanion->card)
+            ? File::deleteFile(UploadFileType::IMAGE, $teamCompanion->card)
             : null;
     }
 }

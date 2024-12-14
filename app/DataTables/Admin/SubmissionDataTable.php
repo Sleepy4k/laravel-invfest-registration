@@ -21,14 +21,10 @@ class SubmissionDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                if ($query->is_reviewed) {
-                    return '<span>-</span>';
-                }
+                if ($query->is_reviewed) return '<span>-</span>';
 
-                $updateUrl = route('admin.work.update', $query->id);
-                return '<form action="'.$updateUrl.'" method="POST">'
-                    . csrf_field()
-                    . method_field("PUT")
+                return '<form action="'.route('admin.work.update', $query->id).'" method="POST">'
+                    . csrf_field() . method_field("PUT")
                     . '<input type="hidden" name="is_reviewed" value="1">'
                     . '<button class="btn btn-sm btn-success" type="submit">'
                     . '<i data-feather="check"></i>Tandai Sudah Direview</button></form>';

@@ -28,7 +28,7 @@ class DashboardService extends Service
         return $this->userInterface->findById($uid, ['id', 'email'], [
             'leader:id,team_id,user_id,name,phone,card',
             'leader.team:id,competition_id,name,institution',
-            'leader.team.member:id,team_id,name,card',
+            'leader.team.members:id,team_id,name,card',
             'leader.team.companion:id,team_id,name,card',
             'leader.team.payment:id,team_id,method_id,proof,status',
             'leader.team.payment.method:id,name,number,owner',
@@ -44,7 +44,7 @@ class DashboardService extends Service
      */
     public function invoke(): array
     {
-        $uid = auth('web')->user()->id;
+        $uid = auth('web')->id();
         $user = $this->getTeam($uid);
 
         return compact('user');
@@ -57,7 +57,7 @@ class DashboardService extends Service
      */
     public function export()
     {
-        $uid = auth('web')->user()->id;
+        $uid = auth('web')->id();
         $user = $this->getTeam($uid);
 
         return new DashboardExport($user);

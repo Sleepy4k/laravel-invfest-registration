@@ -25,42 +25,22 @@ class EnsureRegistrationComplete
         $payment = $team ? $team->payment : null;
         $memberCount = 0;
 
-        if ($team && $team->member) {
-            $memberCount = $team->member->count();
-        }
+        if ($team && $team->members) $memberCount = $team->members->count();
 
         if ($request->routeIs('team-members*')) {
-            if (is_null($leader)) {
-                return to_route('frontend.landing');
-            }
-
-            if ($memberCount > 0) {
-                return to_route('payment-team');
-            }
+            if (is_null($leader)) return to_route('frontend.landing');
+            if ($memberCount > 0) return to_route('payment-team');
         }
 
         if ($request->routeIs('payment-team*')) {
-            if ($memberCount === 0) {
-                return to_route('team-members');
-            }
-
-            if (!is_null($payment)) {
-                return to_route('team.dashboard');
-            }
+            if ($memberCount === 0) return to_route('team-members');
+            if (!is_null($payment)) return to_route('team.dashboard');
         }
 
         if ($request->routeIs('team.work*') || $request->routeIs('team.dashboard')) {
-            if (is_null($leader)) {
-                return to_route('frontend.landing');
-            }
-
-            if ($memberCount === 0) {
-                return to_route('team-members');
-            }
-
-            if (is_null($payment)) {
-                return to_route('payment-team');
-            }
+            if (is_null($leader)) return to_route('frontend.landing');
+            if ($memberCount === 0) return to_route('team-members');
+            if (is_null($payment)) return to_route('payment-team');
 
             if (!is_null($payment) && $payment?->status == 'pending' && $request->routeIs('team.work*')) {
                 return to_route('team.dashboard');

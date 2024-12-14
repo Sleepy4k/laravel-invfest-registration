@@ -2,7 +2,8 @@
 
 namespace App\DataTables\Admin;
 
-use App\Traits\LogReader;
+use App\Facades\Format;
+use App\Facades\LogReader;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -11,8 +12,6 @@ use Yajra\DataTables\Services\DataTable;
 
 class SystemLogDetailDataTable extends DataTable
 {
-    use LogReader;
-
     /**
      * Init log file.
      *
@@ -22,7 +21,7 @@ class SystemLogDetailDataTable extends DataTable
     {
         $name = basename(request()->path());
 
-        return $this->getFileContent($name);
+        return LogReader::getFileContent($name);
     }
 
     /**
@@ -35,7 +34,7 @@ class SystemLogDetailDataTable extends DataTable
         return datatables()
             ->of($this->customData())
             ->editColumn('timestamp', function ($query) {
-                return date('d F Y H:m:s', strtotime($query['timestamp']));
+                return Format::formatDate($query['timestamp'], 'd F Y H:m:s');
             })
             ->setRowId('id');
     }

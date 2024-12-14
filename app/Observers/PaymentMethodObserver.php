@@ -3,20 +3,18 @@
 namespace App\Observers;
 
 use App\Enums\UploadFileType;
+use App\Facades\File;
 use App\Models\PaymentMethod;
-use App\Traits\UploadFile;
 
 class PaymentMethodObserver
 {
-    use UploadFile;
-
     /**
      * Handle the PaymentMethod "creating" event.
      */
     public function creating(PaymentMethod $paymentMethod): void
     {
         $paymentMethod->logo = $paymentMethod->logo
-            ? $this->saveSingleFile(UploadFileType::IMAGE, $paymentMethod->logo)
+            ? File::saveSingleFile(UploadFileType::IMAGE, $paymentMethod->logo)
             : null;
     }
 
@@ -30,12 +28,12 @@ class PaymentMethodObserver
 
             if ($oldLogo == null) {
                 $paymentMethod->logo = $paymentMethod->logo
-                    ? $this->saveSingleFile(UploadFileType::IMAGE, $paymentMethod->logo)
+                    ? File::saveSingleFile(UploadFileType::IMAGE, $paymentMethod->logo)
                     : null;
             } else {
                 $paymentMethod->logo = $paymentMethod->logo
-                    ? $this->updateSingleFile(UploadFileType::IMAGE, $paymentMethod->logo, $oldLogo)
-                    : $this->deleteFile(UploadFileType::IMAGE, $oldLogo);
+                    ? File::updateSingleFile(UploadFileType::IMAGE, $paymentMethod->logo, $oldLogo)
+                    : File::deleteFile(UploadFileType::IMAGE, $oldLogo);
             }
         }
     }
@@ -46,7 +44,7 @@ class PaymentMethodObserver
     public function deleting(PaymentMethod $paymentMethod): void
     {
         $paymentMethod->logo
-            ? $this->deleteFile(UploadFileType::IMAGE, $paymentMethod->logo)
+            ? File::deleteFile(UploadFileType::IMAGE, $paymentMethod->logo)
             : null;
     }
 }

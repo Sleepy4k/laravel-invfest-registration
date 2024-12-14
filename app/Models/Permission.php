@@ -2,24 +2,20 @@
 
 namespace App\Models;
 
-use ElipZis\Cacheable\Models\Traits\Cacheable;
+use App\Concerns\Loggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
 class Permission extends SpatiePermission
 {
-    use HasFactory, Cacheable;
+    use HasFactory, Loggable;
 
     /**
-     * The cacheable properties that should be cached.
+     * Set the cache prefix.
      *
-     * @return array
+     * @return string
      */
-    public function getCacheableProperties(): array {
-        $overrided = [
-            'prefix' => 'permission.cache',
-        ];
-
-        return array_merge(config('cacheable'), $overrided);
+    public function setCachePrefix(): string {
+        return 'permission.cache';
     }
 }

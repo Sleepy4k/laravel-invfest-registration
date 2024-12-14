@@ -24,7 +24,7 @@ class PaymentService extends Service
      */
     public function index(): array
     {
-        $uid = auth('web')->user()->id;
+        $uid = auth('web')->id();
         $paymentMethods = $this->paymentMethodInterface->all(['id', 'name', 'number', 'owner', 'logo']);
         $user = $this->userInterface->findById($uid, ['id'], [
             'leader:id,team_id,user_id',

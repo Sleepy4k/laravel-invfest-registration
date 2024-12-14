@@ -40,8 +40,7 @@ class CspPolicy extends BasePolicy
             ->addGeneralDirectives()
             ->addDirectivesForGoogleFonts()
             ->addDirectivesForYouTube()
-            ->addDirectivesForTailwindcssCDN()
-            ->addDirectivesForDataTablesCDN();
+            ->addDirectivesForTailwindcssCDN();
     }
 
     /**
@@ -114,17 +113,5 @@ class CspPolicy extends BasePolicy
     {
         return $this
             ->addDirective(Directive::SCRIPT, 'cdn.tailwindcss.com');
-    }
-
-    /**
-     * Add directives for DataTables CDN to the policy
-     *
-     * @return self
-     */
-    protected function addDirectivesForDataTablesCDN(): self
-    {
-        return $this
-            ->addDirective(Directive::STYLE, 'cdn.datatables.net')
-            ->addDirective(Directive::SCRIPT, 'cdn.datatables.net');
     }
 }

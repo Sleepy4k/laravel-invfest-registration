@@ -3,20 +3,18 @@
 namespace App\Observers;
 
 use App\Enums\UploadFileType;
+use App\Facades\File;
 use App\Models\MediaPartner;
-use App\Traits\UploadFile;
 
 class MediaPartnerObserver
 {
-    use UploadFile;
-
     /**
      * Handle the MediaPartner "creating" event.
      */
     public function creating(MediaPartner $mediaPartner): void
     {
         $mediaPartner->logo = $mediaPartner->logo
-            ? $this->saveSingleFile(UploadFileType::IMAGE, $mediaPartner->logo)
+            ? File::saveSingleFile(UploadFileType::IMAGE, $mediaPartner->logo)
             : null;
     }
 
@@ -30,12 +28,12 @@ class MediaPartnerObserver
 
             if ($oldLogo == null) {
                 $mediaPartner->logo = $mediaPartner->logo
-                    ? $this->saveSingleFile(UploadFileType::IMAGE, $mediaPartner->logo)
+                    ? File::saveSingleFile(UploadFileType::IMAGE, $mediaPartner->logo)
                     : null;
             } else {
                 $mediaPartner->logo = $mediaPartner->logo
-                    ? $this->updateSingleFile(UploadFileType::IMAGE, $mediaPartner->logo, $oldLogo)
-                    : $this->deleteFile(UploadFileType::IMAGE, $oldLogo);
+                    ? File::updateSingleFile(UploadFileType::IMAGE, $mediaPartner->logo, $oldLogo)
+                    : File::deleteFile(UploadFileType::IMAGE, $oldLogo);
             }
         }
     }
@@ -46,7 +44,7 @@ class MediaPartnerObserver
     public function deleting(MediaPartner $mediaPartner): void
     {
         $mediaPartner->logo
-            ? $this->deleteFile(UploadFileType::IMAGE, $mediaPartner->logo)
+            ? File::deleteFile(UploadFileType::IMAGE, $mediaPartner->logo)
             : null;
     }
 }

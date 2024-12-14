@@ -14,6 +14,19 @@ use Yajra\DataTables\Services\DataTable;
 class TeamDataTable extends DataTable
 {
     /**
+     * Create a new TeamDataTable instance.
+     */
+    public function __construct(
+        protected mixed $settings = [],
+        protected string|null $userRole = null,
+        protected string|null $lineBreaker = null,
+    ) {
+        $this->lineBreaker = $lineBreaker ?? urlencode("\n");
+        $this->userRole = auth('web')->user()?->roles?->first()?->name;
+        $this->settings = Setting::whereIn('key', ['phone', 'title'])->pluck('value', 'key');
+    }
+
+    /**
      * Convert a phone number to ensure it starts with '62'.
      *
      * @param string $number The phone number to be converted.
@@ -41,32 +54,26 @@ class TeamDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $detailUrl = route("admin.team.show", $query->id);
-                $deleteUrl = route('admin.team.destroy', $query->id);
-
                 $followUpButton = '';
-                $detailButton = '<a href="' . $detailUrl . '" class="btn btn-primary btn-sm me-2">Detail</a>';
-                $deleteButton = '<form action="' . $deleteUrl . '" method="POST" class="d-inline">'
-                    . csrf_field()
-                    . method_field("DELETE")
+                $detailButton = '<a href="'.route("admin.team.show", $query->id).'" class="btn btn-primary btn-sm me-2">Detail</a>';
+                $deleteButton = '<form action="'.route('admin.team.destroy', $query->id).'" method="POST" class="d-inline">'
+                    . csrf_field() . method_field("DELETE")
                     . '<button class="btn btn-danger btn-sm" onclick="return confirm(`Apakah anda yakin ingin menghapus data ini?`)">Hapus</button>'
                     . '</form>';
 
                 if (is_null($query?->payment) || $query->payment->status == 'pending') {
-                    $lnBreak = urlencode("\n");
-                    $settings = Setting::whereIn('key', ['phone', 'title'])->pluck('value', 'key');
-                    $phoneNumber = $settings['phone'] ?? 'xxxx';
-                    $appTitle = $settings['title'] ?? config('app.name');
-                    $userName = auth('web')->user()?->roles?->first()?->name ?? 'admin';
+                    $phoneNumber = $this->settings['phone'] ?? 'xxxx';
+                    $appTitle = $this->settings['title'] ?? config('app.name');
+                    $userName = $this->userRole ?? 'admin';
                     $reason = $query->payment ? 'melakukan crosscheck pembayaran' : 'melakukan pembayaran';
 
                     $followUpButton = '<span class="btn btn-warning btn-sm me-2">'
                         . '<a href="https://api.whatsapp.com/send?phone='.$phoneNumber
-                        . '&text=Halo!'.$lnBreak.'Sebelumnya saya '.$userName.' dari Web '.$appTitle
-                        . ' '.$lnBreak.'Apakah boleh meminta tolong untuk follow up Team '.($query?->name ?? '####')
-                        . ' pada lomba '.$query?->competition?->name.' untuk '.$reason.'?'.$lnBreak
+                        . '&text=Halo!'.$this->lnBreak.'Sebelumnya saya '.$userName.' dari Web '.$appTitle
+                        . ' '.$this->lnBreak.'Apakah boleh meminta tolong untuk follow up Team '.($query?->name ?? '####')
+                        . ' pada lomba '.$query?->competition?->name.' untuk '.$reason.'?'.$this->lnBreak
                         . 'Jika boleh, kontak ketua team pada nomor berikut '.$this->convertTeamNumber($query->leader->phone ?? 'xxxx')
-                        . $lnBreak.'Terima Kasih Banyak!!!" target="_blank" rel="noopener" class="nav-link">'
+                        . $this->lnBreak.'Terima Kasih Banyak!!!" target="_blank" rel="noopener" class="nav-link">'
                         . 'Follow Up</a></span>';
                 }
 
@@ -83,9 +90,7 @@ class TeamDataTable extends DataTable
                     . '</a>';
             })
             ->addColumn('status', function ($query) {
-                if (is_null($query?->payment)) {
-                    return '<span class="badge bg-warning">Pending</span>';
-                }
+                if (is_null($query?->payment)) return '<span class="badge bg-warning">Pending</span>';
 
                 $statusData = match ($query->payment->status) {
                     'reject' => ['class' => 'bg-danger', 'text' => 'Ditolak'],
@@ -107,11 +112,11 @@ class TeamDataTable extends DataTable
             ->editColumn('leader.phone', function ($query) {
                 return $query?->leader?->phone ?? '-';
             })
-            ->editColumn('leader.team.member', function ($query) {
-                return $query->leader && $query->leader->team && $query->leader->team->member
+            ->editColumn('leader.team.members', function ($query) {
+                return $query->leader && $query->leader->team && $query->leader->team->members
                     ? array_map(function($member) {
                         return $member['name'];
-                    }, $query->leader->team->member->toArray())
+                    }, $query->leader->team->members->toArray())
                     : [];
             })
             ->editColumn('competition.name', function ($query) {
@@ -163,7 +168,7 @@ class TeamDataTable extends DataTable
                 'leader:team_id,user_id,name,phone',
                 'leader.user:id,email',
                 'leader.team:id',
-                'leader.team.member:team_id,name'
+                'leader.team.members:team_id,name'
             ]);
     }
 
@@ -225,7 +230,7 @@ class TeamDataTable extends DataTable
                 ->title('No. HP Ketua')
                 ->addClass('text-center')
                 ->hidden(),
-            Column::computed('leader.team.member')
+            Column::computed('leader.team.members')
                 ->title('Anggota')
                 ->printable(false)
                 ->addClass('text-center')

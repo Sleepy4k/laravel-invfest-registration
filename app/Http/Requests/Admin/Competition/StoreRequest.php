@@ -31,8 +31,8 @@ class StoreRequest extends FormRequest
     {
         $imageMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'png,jpg,jpeg');
         $imageMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
-        $fileMimeType = $this->getValidationRules(CustomValidationType::IMAGE_MIMES, 'doc,docx,pdf');
-        $fileMaxSize = $this->getValidationRules(CustomValidationType::IMAGE_MAX_SIZE, 8192);
+        $fileMimeType = $this->getValidationRules(CustomValidationType::FILE_MIMES, 'doc,docx,pdf');
+        $fileMaxSize = $this->getValidationRules(CustomValidationType::FILE_MAX_SIZE, 8192);
 
         return [
             'name' => ['required', 'string', 'max:150', Rule::unique(Competition::class, 'name')],

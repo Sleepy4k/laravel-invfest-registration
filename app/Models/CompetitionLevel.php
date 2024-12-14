@@ -3,17 +3,15 @@
 namespace App\Models;
 
 use App\Concerns\HasUuid;
+use App\Concerns\Loggable;
+use App\Concerns\MakeCacheable;
 use App\Concerns\UnIncreaseAble;
-use App\Enums\ActivityEventType;
-use ElipZis\Cacheable\Models\Traits\Cacheable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class CompetitionLevel extends Model
 {
-    use HasFactory, HasUuid, UnIncreaseAble, LogsActivity, Cacheable;
+    use HasFactory, HasUuid, UnIncreaseAble, Loggable, MakeCacheable;
 
     /**
      * The attributes that are mass assignable.
@@ -40,36 +38,18 @@ class CompetitionLevel extends Model
     }
 
     /**
-     * The cacheable properties that should be cached.
+     * Set the cache prefix.
      *
-     * @return array
+     * @return string
      */
-    public function getCacheableProperties(): array {
-        $overrided = [
-            'prefix' => 'competition.level.cache',
-        ];
-
-        return array_merge(config('cacheable'), $overrided);
-    }
-
-    /**
-     * The spatie log that setting log option.
-     *
-     * @var bool
-     */
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly($this->fillable)
-            ->useLogName(ActivityEventType::MODEL->value)
-            ->setDescriptionForEvent(fn (string $eventName) => sprintf('Model %s berhasil %s', $this->table, $eventName))
-            ->dontSubmitEmptyLogs();
+    public function setCachePrefix(): string {
+        return 'competition.level.cache';
     }
 
     /**
      * Define competition relationship
      */
-    public function competition()
+    public function competitions()
     {
         return $this->hasMany(Competition::class, 'level_id', 'id');
     }

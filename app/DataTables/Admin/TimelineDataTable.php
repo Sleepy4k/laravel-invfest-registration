@@ -2,6 +2,7 @@
 
 namespace App\DataTables\Admin;
 
+use App\Facades\Format;
 use App\Models\Timeline;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -33,7 +34,7 @@ class TimelineDataTable extends DataTable
                 return strlen($text) > 75 ? substr($text, 0, 72) . '...' : $text;;
             })
             ->editColumn('date', function ($query) {
-                return date('d F Y', strtotime($query->date));
+                return Format::formatDate($query->date, 'd F Y');
             })
             ->rawColumns(['action'])
             ->addIndexColumn();

@@ -3,7 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Enums\LogReaderType;
-use App\Traits\LogReader;
+use App\Facades\LogReader;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -12,8 +12,6 @@ use Yajra\DataTables\Services\DataTable;
 
 class SystemLogDataTable extends DataTable
 {
-    use LogReader;
-
     /**
      * Init log file.
      *
@@ -21,8 +19,7 @@ class SystemLogDataTable extends DataTable
      */
     public function customData()
     {
-        // dd((object) $this->getFileList(LogReaderType::DAILY));
-        return $this->getFileList(LogReaderType::DAILY);
+        return LogReader::getFileList(LogReaderType::DAILY);
     }
 
     /**

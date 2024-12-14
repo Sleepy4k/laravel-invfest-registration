@@ -3,20 +3,18 @@
 namespace App\Observers;
 
 use App\Enums\UploadFileType;
+use App\Facades\File;
 use App\Models\TeamLeader;
-use App\Traits\UploadFile;
 
 class TeamLeaderObserver
 {
-    use UploadFile;
-
     /**
      * Handle the TeamLeader "creating" event.
      */
     public function creating(TeamLeader $teamLeader): void
     {
         $teamLeader->card = $teamLeader->card
-            ? $this->saveSingleFile(UploadFileType::IMAGE, $teamLeader->card)
+            ? File::saveSingleFile(UploadFileType::IMAGE, $teamLeader->card)
             : null;
     }
 
@@ -30,12 +28,12 @@ class TeamLeaderObserver
 
             if ($oldCard == null) {
                 $teamLeader->card = $teamLeader->card
-                    ? $this->saveSingleFile(UploadFileType::IMAGE, $teamLeader->card)
+                    ? File::saveSingleFile(UploadFileType::IMAGE, $teamLeader->card)
                     : null;
             } else {
                 $teamLeader->card = $teamLeader->card
-                    ? $this->updateSingleFile(UploadFileType::IMAGE, $teamLeader->card, $oldCard)
-                    : $this->deleteFile(UploadFileType::IMAGE, $oldCard);
+                    ? File::updateSingleFile(UploadFileType::IMAGE, $teamLeader->card, $oldCard)
+                    : File::deleteFile(UploadFileType::IMAGE, $oldCard);
             }
         }
     }
@@ -46,7 +44,7 @@ class TeamLeaderObserver
     public function deleting(TeamLeader $teamLeader): void
     {
         $teamLeader->card
-            ? $this->deleteFile(UploadFileType::IMAGE, $teamLeader->card)
+            ? File::deleteFile(UploadFileType::IMAGE, $teamLeader->card)
             : null;
     }
 }

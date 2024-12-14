@@ -12,19 +12,11 @@ class TeamApproved extends Notification implements ShouldQueue
     use Queueable;
 
     /**
-     * Define whatsapp link var
-     *
-     * @var string
-     */
-    protected $whatsapp_link;
-
-    /**
      * Create a new notification instance.
      */
-    public function __construct(string $whatsapp_link)
-    {
-        $this->whatsapp_link = $whatsapp_link;
-    }
+    public function __construct(
+        protected string $whatsapp_link
+    ) {}
 
     /**
      * Get the notification's delivery channels.

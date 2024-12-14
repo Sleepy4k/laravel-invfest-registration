@@ -60,7 +60,7 @@ class DashboardExport extends Export implements FromCollection
             ],
             [
                 'Title' => 'Anggota',
-                'Data' => $user->leader->team->member->pluck('name')->implode(', '),
+                'Data' => $user->leader->team->members->pluck('name')->implode(', '),
             ],
             [
                 'Title' => 'Pendamping',

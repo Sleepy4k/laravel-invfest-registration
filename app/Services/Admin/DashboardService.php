@@ -20,6 +20,7 @@ class DashboardService extends Service
         private Models\PaymentInterface $paymentInterface,
         private Models\MediaPartnerInterface $mediaPartnerInterface,
         private Models\SponsorshipInterface $sponsorshipInterface,
+        private Models\SubmissionInterface $submissionInterface
     ) {}
 
     /**
@@ -37,11 +38,20 @@ class DashboardService extends Service
         $totalSponsorship = $this->sponsorshipInterface->count();
         $totalMediaPartner = $this->mediaPartnerInterface->count();
         $competitions = Competition::select(['id', 'name'])->withCount('team')->get();
+        $totalSubmissions = $this->submissionInterface->all(['id', 'team_id']);
         $competitionChart = json_encode($competitions->map(function ($competition) {
             return [$competition?->name, $competition->team_count];
         })->toArray());
 
-        return compact('totalTeam', 'totalTeamPending', 'totalTeamApprove', 'totalTeamReject', 'totalTeamUnPaid', 'totalSponsorship', 'totalMediaPartner', 'competitions', 'competitionChart');
+        // Validate if the total submissions team_id is duplicated
+        if (count($totalSubmissions) !== count($totalSubmissions->unique('team_id'))) {
+            $totalSubmissions = $totalSubmissions->unique('team_id');
+        }
+
+        // Count the total submissions
+        $totalSubmissions = count($totalSubmissions);
+
+        return compact('totalTeam', 'totalTeamPending', 'totalTeamApprove', 'totalTeamReject', 'totalTeamUnPaid', 'totalSponsorship', 'totalMediaPartner', 'competitions', 'totalSubmissions', 'competitionChart');
     }
 
     /**
@@ -60,6 +70,7 @@ class DashboardService extends Service
         $totalSponsorship = $baseData['totalSponsorship'];
         $totalMediaPartner = $baseData['totalMediaPartner'];
         $competitions = $baseData['competitions'];
+        $totalSubmissions = $baseData['totalSubmissions'];
         $competitionChart = json_encode($competitions->map(function ($competition) {
             return [$competition?->name, $competition->team_count];
         })->toArray());
@@ -100,7 +111,7 @@ class DashboardService extends Service
 
         $teamCharts = json_encode($teamCharts);
 
-        return compact('name', 'totalTeam', 'totalTeamPending', 'totalTeamApprove', 'totalTeamReject', 'totalTeamUnPaid', 'totalSponsorship', 'totalMediaPartner', 'competitions', 'competitionChart', 'teamCharts');
+        return compact('name', 'totalTeam', 'totalTeamPending', 'totalTeamApprove', 'totalTeamReject', 'totalTeamUnPaid', 'totalSponsorship', 'totalMediaPartner', 'competitions', 'competitionChart', 'totalSubmissions', 'teamCharts');
     }
 
     /**

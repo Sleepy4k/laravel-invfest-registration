@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Traits;
+namespace App\Storage;
 
 use App\Enums\LogReaderType;
 use App\Enums\ReportLogType;
+use App\Facades\Format;
+use App\Traits\SystemLog;
 use Illuminate\Support\Facades\File;
 
-trait LogReader
+class LogReaderManager
 {
     use SystemLog;
 
@@ -18,7 +20,7 @@ trait LogReader
      *
      * @return array
      */
-    protected function getFileList(LogReaderType $type = LogReaderType::SINGLE, string $channel = 'laravel'): array
+    public function getFileList(LogReaderType $type = LogReaderType::SINGLE, string $channel = 'laravel'): array
     {
         try {
             $logPath = storage_path('logs');
@@ -40,7 +42,7 @@ trait LogReader
 
                 return [
                     'name' => $name,
-                    'size' => formatFileSize(File::size($filePath)),
+                    'size' => Format::formatFileSize(File::size($filePath)),
                     'type' => File::type($filePath),
                     'content' => File::mimeType($filePath),
                     'last_updated' => date('Y-m-d H:i:s', File::lastModified($filePath)),
@@ -59,7 +61,7 @@ trait LogReader
      *
      * @return array
      */
-    protected function getFileContent(string $date): array
+    public function getFileContent(string $date): array
     {
         try {
             $logPath = storage_path("logs/{$date}.log");
@@ -96,7 +98,7 @@ trait LogReader
      *
      * @return array
      */
-    protected function getAllFileContent(LogReaderType $type = LogReaderType::SINGLE, string $channel = 'laravel', ?string $date = null): array
+    public function getAllFileContent(LogReaderType $type = LogReaderType::SINGLE, string $channel = 'laravel', ?string $date = null): array
     {
         try {
             $logPath = match ($type) {

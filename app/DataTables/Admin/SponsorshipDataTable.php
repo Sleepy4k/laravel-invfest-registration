@@ -28,8 +28,9 @@ class SponsorshipDataTable extends DataTable
                     . '</form>';
             })
             ->editColumn('logo', function ($query) {
-                return '<a href="'.($query->logo ?? '#').'" data-lightbox="sponsor" data-title="'.$query->name.'">'
-                    . '<img src="'.($query->logo ?? '#').'" alt="'.$query->name.'" class="img-table-lightbox" loading="lazy" height="150" />'
+                $logo = $query->logo ?? '#';
+                return '<a href="'.$logo.'" data-lightbox="sponsor" data-title="'.$query->name.'">'
+                    . '<img src="'.$logo.'" alt="'.$query->name.'" class="img-table-lightbox" loading="lazy" height="150" />'
                     . '</a>';
             })
             ->addColumn('link_logo', function ($query) {

@@ -3,20 +3,18 @@
 namespace App\Observers;
 
 use App\Enums\UploadFileType;
+use App\Facades\File;
 use App\Models\Submission;
-use App\Traits\UploadFile;
 
 class SubmissionObserver
 {
-    use UploadFile;
-
     /**
      * Handle the Submission "creating" event.
      */
     public function creating(Submission $submission): void
     {
         $submission->file = $submission->file
-            ? $this->saveSingleFile(UploadFileType::FILE, $submission->file)
+            ? File::saveSingleFile(UploadFileType::FILE, $submission->file)
             : null;
     }
 
@@ -30,12 +28,12 @@ class SubmissionObserver
 
             if ($oldFile == null) {
                 $submission->file = $submission->file
-                    ? $this->saveSingleFile(UploadFileType::FILE, $submission->file)
+                    ? File::saveSingleFile(UploadFileType::FILE, $submission->file)
                     : null;
             } else {
                 $submission->file = $submission->file
-                    ? $this->updateSingleFile(UploadFileType::FILE, $submission->file, $oldFile)
-                    : $this->deleteFile(UploadFileType::FILE, $oldFile);
+                    ? File::updateSingleFile(UploadFileType::FILE, $submission->file, $oldFile)
+                    : File::deleteFile(UploadFileType::FILE, $oldFile);
             }
         }
     }
@@ -46,7 +44,7 @@ class SubmissionObserver
     public function deleting(Submission $submission): void
     {
         $submission->file
-            ? $this->deleteFile(UploadFileType::FILE, $submission->file)
+            ? File::deleteFile(UploadFileType::FILE, $submission->file)
             : null;
     }
 }

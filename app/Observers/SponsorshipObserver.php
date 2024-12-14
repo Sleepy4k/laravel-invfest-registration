@@ -3,20 +3,18 @@
 namespace App\Observers;
 
 use App\Enums\UploadFileType;
+use App\Facades\File;
 use App\Models\Sponsorship;
-use App\Traits\UploadFile;
 
 class SponsorshipObserver
 {
-    use UploadFile;
-
     /**
      * Handle the Sponsorship "creating" event.
      */
     public function creating(Sponsorship $sponsorship): void
     {
         $sponsorship->logo = $sponsorship->logo
-            ? $this->saveSingleFile(UploadFileType::IMAGE, $sponsorship->logo)
+            ? File::saveSingleFile(UploadFileType::IMAGE, $sponsorship->logo)
             : null;
     }
 
@@ -30,12 +28,12 @@ class SponsorshipObserver
 
             if ($oldLogo == null) {
                 $sponsorship->logo = $sponsorship->logo
-                    ? $this->saveSingleFile(UploadFileType::IMAGE, $sponsorship->logo)
+                    ? File::saveSingleFile(UploadFileType::IMAGE, $sponsorship->logo)
                     : null;
             } else {
                 $sponsorship->logo = $sponsorship->logo
-                    ? $this->updateSingleFile(UploadFileType::IMAGE, $sponsorship->logo, $oldLogo)
-                    : $this->deleteFile(UploadFileType::IMAGE, $oldLogo);
+                    ? File::updateSingleFile(UploadFileType::IMAGE, $sponsorship->logo, $oldLogo)
+                    : File::deleteFile(UploadFileType::IMAGE, $oldLogo);
             }
         }
     }
@@ -46,7 +44,7 @@ class SponsorshipObserver
     public function deleting(Sponsorship $sponsorship): void
     {
         $sponsorship->logo
-            ? $this->deleteFile(UploadFileType::IMAGE, $sponsorship->logo)
+            ? File::deleteFile(UploadFileType::IMAGE, $sponsorship->logo)
             : null;
     }
 }

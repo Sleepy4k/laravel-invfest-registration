@@ -1,24 +1,29 @@
 <?php
 
-namespace App\Traits;
+namespace App\Storage;
 
 use App\Enums\ReportLogType;
 use App\Enums\UploadFileType;
+use App\Traits\SystemLog;
 use Illuminate\Support\Facades\Storage;
 
-trait UploadFile
+class FileManager
 {
     use SystemLog;
 
     /**
      * Set path root when upload file.
+     *
+     * @var string
      */
-    protected $baseDisk = 'public';
+    private string $baseDisk = 'public';
 
     /**
      * Set path root when unkown file.
+     *
+     * @var string
      */
-    protected $unkownPath = 'unkown';
+    private string $unkownPath = 'unkown';
 
     /**
      * Set path for storage when upload file.
@@ -27,7 +32,7 @@ trait UploadFile
      *
      * @return string
      */
-    protected function storageDisk(UploadFileType $type = UploadFileType::IMAGE)
+    private function storageDisk(UploadFileType $type = UploadFileType::IMAGE)
     {
         try {
             $path = match ($type) {
@@ -56,7 +61,7 @@ trait UploadFile
      *
      * @return string
      */
-    protected function transformName($type, $file)
+    private function transformName($type, $file)
     {
         try {
             $baseUrl = request()->getSchemeAndHttpHost() . '/storage';
@@ -79,7 +84,7 @@ trait UploadFile
      *
      * @return string
      */
-    protected function parseImage($file)
+    private function parseImage($file)
     {
         try {
             $parsedUrl = parse_url($file);
@@ -98,7 +103,7 @@ trait UploadFile
      *
      * @return string
      */
-    protected function putFile(UploadFileType $type, $file)
+    private function putFile(UploadFileType $type, $file)
     {
         try {
             $user = auth('web')->user();
@@ -126,7 +131,7 @@ trait UploadFile
      *
      * @return bool
      */
-    protected function deleteFile(UploadFileType $type, $file)
+    public function deleteFile(UploadFileType $type, $file)
     {
         try {
             if (!$this->checkFile($type, $file)) return false;
@@ -150,7 +155,7 @@ trait UploadFile
      *
      * @return bool
      */
-    protected function checkFile(UploadFileType $type, $file, $save = false)
+    public function checkFile(UploadFileType $type, $file, $save = false)
     {
         try {
             $parsedFile = $save ? $file : $this->parseImage($file);
@@ -167,14 +172,12 @@ trait UploadFile
      * @param UploadFileType $type
      * @param UploadedFile $file
      *
-     * @return string
+     * @return string|null
      */
-    protected function saveSingleFile(UploadFileType $type, $file)
+    public function saveSingleFile(UploadFileType $type, $file): string|null
     {
         try {
-            if (is_null($file)) {
-                return null;
-            }
+            if (is_null($file)) return null;
 
             return $this->putFile($type, $file);
         } catch (\Throwable $th) {
@@ -190,9 +193,9 @@ trait UploadFile
      * @param UploadedFile $file
      * @param string $old_file
      *
-     * @return string
+     * @return string|null
      */
-    protected function updateSingleFile(UploadFileType $type, $file, $old_file)
+    public function updateSingleFile(UploadFileType $type, $file, $old_file): string|null
     {
         try {
             if (is_null($file)) return null;

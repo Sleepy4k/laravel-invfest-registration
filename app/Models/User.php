@@ -3,21 +3,19 @@
 namespace App\Models;
 
 use App\Concerns\HasUuid;
+use App\Concerns\Loggable;
+use App\Concerns\MakeCacheable;
 use App\Concerns\UnIncreaseAble;
-use App\Enums\ActivityEventType;
-use ElipZis\Cacheable\Models\Traits\Cacheable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasUuid, UnIncreaseAble, Notifiable, HasRoles, LogsActivity, Cacheable;
+    use HasFactory, HasUuid, UnIncreaseAble, Notifiable, HasRoles, Loggable, MakeCacheable;
 
     /**
      * The attributes that are mass assignable.
@@ -55,30 +53,12 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * The cacheable properties that should be cached.
+     * Set the cache prefix.
      *
-     * @return array
+     * @return string
      */
-    public function getCacheableProperties(): array {
-        $overrided = [
-            'prefix' => 'user.cache',
-        ];
-
-        return array_merge(config('cacheable'), $overrided);
-    }
-
-    /**
-     * The spatie log that setting log option.
-     *
-     * @var bool
-     */
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly($this->fillable)
-            ->useLogName(ActivityEventType::MODEL->value)
-            ->setDescriptionForEvent(fn (string $eventName) => sprintf('Model %s berhasil %s', $this->table, $eventName))
-            ->dontSubmitEmptyLogs();
+    public function setCachePrefix(): string {
+        return 'user.cache';
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Facades\Format;
 use App\Models\Timeline;
 
 class TimelineObserver
@@ -11,7 +12,7 @@ class TimelineObserver
      */
     public function creating(Timeline $timeline): void
     {
-        $timeline->date = date('Y-m-d', strtotime($timeline->date ?? now()));
+        $timeline->date = Format::formatDate($timeline->date ?? now(), 'Y-m-d');
     }
 
     /**
@@ -20,7 +21,7 @@ class TimelineObserver
     public function updating(Timeline $timeline): void
     {
         if ($timeline->isDirty('date')) {
-            $timeline->date = date('Y-m-d', strtotime($timeline->date ?? now()));
+            $timeline->date = Format::formatDate($timeline->date, 'Y-m-d');
         }
     }
 }

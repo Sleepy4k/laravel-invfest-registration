@@ -3,13 +3,11 @@
 namespace App\Observers;
 
 use App\Enums\UploadFileType;
+use App\Facades\File;
 use App\Models\Setting;
-use App\Traits\UploadFile;
 
 class SettingObserver
 {
-    use UploadFile;
-
     /**
      * Handle the Setting "creating" event.
      */
@@ -17,7 +15,7 @@ class SettingObserver
     {
         if (in_array(strtolower($setting->key), ['nav_logo', 'twibbon', 'mascot'])) {
             $setting->value = $setting->value
-                ? $this->saveSingleFile(UploadFileType::IMAGE, $setting->value)
+                ? File::saveSingleFile(UploadFileType::IMAGE, $setting->value)
                 : null;
         }
     }
@@ -33,12 +31,12 @@ class SettingObserver
 
                 if ($oldValue == null) {
                     $setting->value = $setting->value
-                        ? $this->saveSingleFile(UploadFileType::IMAGE, $setting->value)
+                        ? File::saveSingleFile(UploadFileType::IMAGE, $setting->value)
                         : null;
                 } else {
                     $setting->value = $setting->value
-                        ? $this->updateSingleFile(UploadFileType::IMAGE, $setting->value, $oldValue)
-                        : $this->deleteFile(UploadFileType::IMAGE, $oldValue);
+                        ? File::updateSingleFile(UploadFileType::IMAGE, $setting->value, $oldValue)
+                        : File::deleteFile(UploadFileType::IMAGE, $oldValue);
                 }
             }
         }
@@ -51,7 +49,7 @@ class SettingObserver
     {
         if (in_array(strtolower($setting->key), ['nav_logo', 'twibbon', 'mascot'])) {
             $setting->value
-                ? $this->deleteFile(UploadFileType::IMAGE, $setting->value)
+                ? File::deleteFile(UploadFileType::IMAGE, $setting->value)
                 : null;
         }
     }

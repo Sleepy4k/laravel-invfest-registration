@@ -50,7 +50,7 @@ class TeamService extends Service
             'payment.method:id,name,owner,number',
             'leader:id,user_id,team_id,name,phone,card',
             'leader.user:id,email',
-            'member:team_id,name,card',
+            'members:team_id,name,card',
             'companion:id,team_id,name,card'
         ]);
 

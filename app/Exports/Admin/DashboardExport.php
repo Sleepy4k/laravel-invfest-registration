@@ -35,7 +35,7 @@ class DashboardExport extends Export implements FromCollection
      * Get total team each competition
      *
      * @param $competitions
-     * 
+     *
      * @return \Illuminate\Support\Collection
      */
     private function getTotalTeamEachCompetition($competitions)
@@ -61,10 +61,12 @@ class DashboardExport extends Export implements FromCollection
         $totalSponsorship = $this->data['totalSponsorship'];
         $totalMediaPartner = $this->data['totalMediaPartner'];
         $competitions = $this->data['competitions']->count();
+        $totalSubmissions = $this->data['totalSubmissions'];
         $totalTeamEachCompetition = $this->getTotalTeamEachCompetition($this->data['competitions']);
 
         return collect(array_merge([
             ['Title' => 'Jumlah Pendaftar', 'Data' => $totalTeam],
+            ['Title' => 'Jumlah Karya', 'Data' => $totalSubmissions],
             ['Title' => 'Total Sponsor', 'Data' => $totalSponsorship],
             ['Title' => 'Total Media Partner', 'Data' => $totalMediaPartner],
             ['Title' => 'Tim Belum Di Approve', 'Data' => $totalTeamPending],

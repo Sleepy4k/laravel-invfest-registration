@@ -22,7 +22,7 @@ class SubmissionService extends Service
      */
     public function index(): array
     {
-        $uid = auth('web')->user()->id;
+        $uid = auth('web')->id();
         $user = $this->userInterface->findById($uid, ['id'], [
             'leader:id,team_id,user_id',
             'leader.team:id',
@@ -46,6 +46,11 @@ class SubmissionService extends Service
             $request['team_id'] = auth('web')->user()->leader?->team?->id ?? null;
             if (is_null($request['team_id'])) {
                 alert('Gagal', 'Karya gagal ditambahkan, silahkan refresh halaman anda', 'error');
+                return;
+            }
+
+            if ($this->submissionInterface->findByCustomId([['team_id', '=', $request['team_id']]])) {
+                alert('Gagal', 'Karya gagal ditambahkan, kamu sudah mengunggah karya', 'error');
                 return;
             }
 

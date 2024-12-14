@@ -3,14 +3,12 @@
 namespace App\Observers;
 
 use App\Enums\UploadFileType;
+use App\Facades\File;
 use App\Models\Competition;
-use App\Traits\UploadFile;
 use Illuminate\Support\Str;
 
 class CompetitionObserver
 {
-    use UploadFile;
-
     /**
      * Handle the Competition "creating" event.
      */
@@ -19,11 +17,11 @@ class CompetitionObserver
         $competition->slug = Str::slug($competition->name);
 
         $competition->poster = $competition->poster
-            ? $this->saveSingleFile(UploadFileType::IMAGE, $competition->poster)
+            ? File::saveSingleFile(UploadFileType::IMAGE, $competition->poster)
             : null;
 
         $competition->guidebook = $competition->guidebook
-            ? $this->saveSingleFile(UploadFileType::FILE, $competition->guidebook)
+            ? File::saveSingleFile(UploadFileType::FILE, $competition->guidebook)
             : null;
     }
 
@@ -41,12 +39,12 @@ class CompetitionObserver
 
             if ($oldPoster == null) {
                 $competition->poster = $competition->poster
-                    ? $this->saveSingleFile(UploadFileType::IMAGE, $competition->poster)
+                    ? File::saveSingleFile(UploadFileType::IMAGE, $competition->poster)
                     : null;
             } else {
                 $competition->poster = $competition->poster
-                    ? $this->updateSingleFile(UploadFileType::IMAGE, $competition->poster, $oldPoster)
-                    : $this->deleteFile(UploadFileType::IMAGE, $oldPoster);
+                    ? File::updateSingleFile(UploadFileType::IMAGE, $competition->poster, $oldPoster)
+                    : File::deleteFile(UploadFileType::IMAGE, $oldPoster);
             }
         }
 
@@ -55,12 +53,12 @@ class CompetitionObserver
 
             if ($oldGuidebook == null) {
                 $competition->guidebook = $competition->guidebook
-                    ? $this->saveSingleFile(UploadFileType::FILE, $competition->guidebook)
+                    ? File::saveSingleFile(UploadFileType::FILE, $competition->guidebook)
                     : null;
             } else {
                 $competition->guidebook = $competition->guidebook
-                    ? $this->updateSingleFile(UploadFileType::FILE, $competition->guidebook, $oldGuidebook)
-                    : $this->deleteFile(UploadFileType::FILE, $oldGuidebook);
+                    ? File::updateSingleFile(UploadFileType::FILE, $competition->guidebook, $oldGuidebook)
+                    : File::deleteFile(UploadFileType::FILE, $oldGuidebook);
             }
         }
     }
@@ -71,11 +69,11 @@ class CompetitionObserver
     public function deleting(Competition $competition): void
     {
         $competition->poster
-            ? $this->deleteFile(UploadFileType::IMAGE, $competition->poster)
+            ? File::deleteFile(UploadFileType::IMAGE, $competition->poster)
             : null;
 
         $competition->guidebook
-            ? $this->deleteFile(UploadFileType::FILE, $competition->guidebook)
+            ? File::deleteFile(UploadFileType::FILE, $competition->guidebook)
             : null;
     }
 }

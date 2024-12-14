@@ -20,7 +20,7 @@ class Sponsor extends Component
     public function __construct(
         protected SponsorshipTierInterface $sponsorshipTierInterface
     ) {
-        $this->sponsorsTiers = $sponsorshipTierInterface->all(['id', 'tier'], ['sponsorship:id,tier_id,name,logo']);
+        $this->sponsorsTiers = $sponsorshipTierInterface->all(['id', 'tier'], ['sponsorships:id,tier_id,name,logo']);
     }
 
     /**
