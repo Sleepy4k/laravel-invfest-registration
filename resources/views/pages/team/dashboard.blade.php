@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="{{ asset('admin/assets/plugins/lightbox/css/lightbox.css') }}" />
     @endPushOnce
 
-    @if (!isset($team?->member) || count($team?->member) == 0)
+    @if (!isset($team?->members) || count($team?->members) == 0)
         <div class="alert alert-warning">
             <i class="fas fa-exclamation-triangle"></i>
             Anda belum melakukan mendaftarkan anggota team. Silahkan melakukan pendaftaran anggota team terlebih dahulu.
@@ -92,8 +92,8 @@
                         <th>Anggota</th>
                         <td>
                             <ul>
-                                @if (count($team?->member ?? []) > 0)
-                                    @foreach ($team?->member as $member)
+                                @if (count($team?->members ?? []) > 0)
+                                    @foreach ($team?->members as $member)
                                         <li>
                                             {{ $member->name ?? 'Tidak Ada' }}
                                             <a

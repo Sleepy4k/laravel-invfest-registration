@@ -18,6 +18,10 @@
 
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="alert alert-warning mt-3">
+                                <strong>Perhatian!</strong> Pastikan Anda mengatur ukuran maksimum file upload pada konfigurasi hosting Anda.
+                            </div>
+
                             <x-input.text
                                 id="image_mimes"
                                 name="image_mimes"

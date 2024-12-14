@@ -54,7 +54,7 @@
                                 <th>Anggota</th>
                                 <td>
                                     <ul>
-                                        @foreach ($team?->member as $member)
+                                        @foreach ($team?->members as $member)
                                             <li>
                                                 {{ $member->name ?? 'Tidak Ada' }}
                                                 <a

@@ -19,14 +19,22 @@
             $deadline = \Carbon\Carbon::parse($appSettings['deadline']);
             $now = \Carbon\Carbon::now();
             $diff = $now->diff($deadline);
+
+            $years = $diff->y > 0 ? $diff->y . ' tahun ' : '';
+            $months = $diff->m > 0 ? $diff->m . ' bulan ' : '';
+            $days = $diff->d . ' hari ';
+            $hours = $diff->h . ' jam ';
+            $minutes = $diff->i . ' menit ';
+            $seconds = $diff->s . ' detik ';
         @endphp
 
         @if ($diff->invert == 0)
             <div class="alert alert-info">
                 <i class="fas fa-info-circle"></i>
                 Deadline pengumpulan karya {{ $deadline->isoFormat('dddd, D MMMM Y HH:mm') }}. Sisa waktu
-                {{ $diff->d }} hari, {{ $diff->h }} jam, {{ $diff->i }} menit, dan {{ $diff->s }}
-                detik.
+                <span class="text-danger">
+                    {{ $years . $months . $days . $hours . $minutes . $seconds }}
+                </span>
             </div>
             @if ($submission != null)
                 <div class="alert alert-success">
