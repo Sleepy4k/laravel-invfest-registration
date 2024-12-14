@@ -235,7 +235,23 @@ May this helping you out when checking user data and other else, for more spesif
 you had to search data for user that don't had any member(s), for current feature thats filter doesn't
 exists, so you may create it one. good luck
 
-- Environment Variables
+- Forgot Password
+
+For some case, user may forget their password, instead of changing password through databases, i suggesting
+you to adding forgot password feature, due to set minimum of dev work, trust me its better to make it one
+
+- Configuring User Data
+
+On admin dashboard, there is user menu, you can add action button for change manually about
+user data, just in case if user dont know how to change their `forgotten` password, cheers.
+
+- Resend OTP
+
+when user registering their account, user had to verify their email address, this is crucial feature.
+For better user experience, better to add resend otp code on their email address. And for rare case,
+i mean just in case any trouble on user page. you may add resend action on admin dashboard, on OTP menu.
+
+## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
 
