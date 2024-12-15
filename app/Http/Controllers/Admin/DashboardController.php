@@ -18,10 +18,10 @@ class DashboardController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke()
+    public function index()
     {
         try {
-            return view('pages.admin.dashboard', $this->service->invoke());
+            return view('pages.admin.dashboard', $this->service->index());
         } catch (\Throwable $th) {
             return $this->redirectError($th);
         }

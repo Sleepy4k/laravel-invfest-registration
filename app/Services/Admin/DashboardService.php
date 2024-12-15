@@ -59,7 +59,7 @@ class DashboardService extends Service
      *
      * @return array
      */
-    public function invoke(): array
+    public function index(): array
     {
         $baseData = $this->getBaseData();
         $totalTeam = $baseData['totalTeam'];

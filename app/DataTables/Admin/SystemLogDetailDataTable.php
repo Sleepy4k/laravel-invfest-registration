@@ -87,6 +87,6 @@ class SystemLogDetailDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'SystemLogDetail_' . date('YmdHis');
+        return 'System_Log_Detail_' . date('YmdHis');
     }
 }

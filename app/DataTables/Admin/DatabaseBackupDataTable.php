@@ -2,15 +2,15 @@
 
 namespace App\DataTables\Admin;
 
-use App\Enums\LogReaderType;
-use App\Facades\LogReader;
+use App\Facades\DbBackup;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class SystemLogDataTable extends DataTable
+class DatabaseBackupDataTable extends DataTable
 {
     /**
      * Init log file.
@@ -19,7 +19,7 @@ class SystemLogDataTable extends DataTable
      */
     public function customData()
     {
-        return LogReader::getFileList(LogReaderType::DAILY);
+        return DbBackup::getFileList();
     }
 
     /**
@@ -34,7 +34,11 @@ class SystemLogDataTable extends DataTable
             ->addColumn('action', function ($query) {
                 $name = explode('.', $query['name'])[0];
 
-                return '<a href="'.route("admin.system.show", $name).'" class="btn btn-success">Detail</a>';
+                return '<a href="'.route("admin.tools.database.show", $name).'" class="btn btn-info btn-sm me-2">Download</a>'
+                    . '<form action="'.route('admin.tools.database.destroy', $name).'" method="POST" class="d-inline">'
+                    . csrf_field() . method_field('DELETE')
+                    . '<button class="btn btn-danger btn-sm" onclick="return confirm(`Apakah anda yakin ingin menghapus data ini?`)">Hapus</button>'
+                    . '</form>';
             })
             ->setRowId('id');
     }
@@ -45,8 +49,7 @@ class SystemLogDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->serverSide(false)
-                    ->setTableId('systemlog-table')
+                    ->setTableId('databasebackup-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -97,6 +100,6 @@ class SystemLogDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'System_Log_' . date('YmdHis');
+        return 'Database_Backup_' . date('YmdHis');
     }
 }
