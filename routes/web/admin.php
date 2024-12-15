@@ -4,16 +4,19 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Tool;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+Route::prefix('dashboard')->name('admin.')->middleware('auth')->group(function () {
     Route::middleware('role:petugas|admin')->group(function () {
-        Route::get('/dashboard', Admin\DashboardController::class)->name('dashboard');
-        Route::get('/dashboard/export', [Admin\DashboardController::class, 'export'])->name('dashboard.export');
         Route::resource('team', Admin\TeamController::class)->except(['create', 'store', 'edit']);
+        Route::controller(Admin\DashboardController::class)->group(function () {
+            Route::get('/', 'index')->name('dashboard');
+            Route::get('export', 'export')->name('dashboard.export');
+        });
     });
 
     Route::middleware('role:admin')->group(function () {
         Route::get('/user', Admin\UserController::class)->name('user');
         Route::get('/otp', Admin\OtpController::class)->name('otp');
+
         Route::resource('work', Admin\SubmissionController::class)->only(['index', 'update']);
         Route::resource('competition', Admin\CompetitionController::class);
         Route::resource('level', Admin\CompetitionLevelController::class)->except('show');
@@ -39,6 +42,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
             Route::resource('clear-cache', Tool\ClearCacheController::class)->only(['index', 'store']);
             Route::resource('optimize', Tool\OptimizeController::class)->only(['index', 'store']);
             Route::resource('sitemap', Tool\SitemapController::class)->only(['index', 'store']);
+            Route::resource('database', Tool\DatabaseBackupController::class)->except(['store', 'edit', 'update']);
         });
     });
 });

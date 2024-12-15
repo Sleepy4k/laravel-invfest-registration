@@ -18,13 +18,10 @@ Route::middleware('honeypot')->group(function () {
         Route::post('/logout', Auth\LogoutController::class)->name('logout');
 
         Route::middleware('role:team')->group(function () {
-            Route::middleware('verification_email_access')->group(function () {
-                Route::get('/email/verify', [Auth\VerificationController::class, 'index'])
-                    ->name('verification.notice');
-                Route::get('/email/verify/{id}/{hash}', [Auth\VerificationController::class, 'show'])
-                    ->name('verification.verify');
-                Route::post('/email/verification-check', [Auth\VerificationController::class, 'store'])
-                    ->name('verification.send');
+            Route::middleware('verification_email_access')->controller(Auth\VerificationController::class)->group(function () {
+                Route::get('/email/verify', 'index')->name('verification.notice');
+                Route::get('/email/verify/{id}/{hash}', 'show')->name('verification.verify');
+                Route::post('/email/verification-check', 'store')->name('verification.send');
             });
 
             Route::middleware(['verified', 'ensure_registration_complete'])->group(function () {
