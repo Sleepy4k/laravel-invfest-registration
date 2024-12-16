@@ -113,25 +113,25 @@
                 <li class="nav-item nav-category">Tool</li>
                 <li class="nav-item {{ request()->is('dashboard/tools/clear-cache*') ? ' active' : '' }}">
                     <a href="{{ route('admin.tools.clear-cache.index') }}" class="nav-link">
-                        <i class="link-icon" data-feather="credit-card"></i>
+                        <i class="link-icon" data-feather="tool"></i>
                         <span class="link-title">Clear Cache</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->is('dashboard/tools/optimize*') ? ' active' : '' }}">
                     <a href="{{ route('admin.tools.optimize.index') }}" class="nav-link">
-                        <i class="link-icon" data-feather="credit-card"></i>
+                        <i class="link-icon" data-feather="tool"></i>
                         <span class="link-title">Optimize Cache</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->is('dashboard/tools/sitemap*') ? ' active' : '' }}">
                     <a href="{{ route('admin.tools.sitemap.index') }}" class="nav-link">
-                        <i class="link-icon" data-feather="credit-card"></i>
+                        <i class="link-icon" data-feather="map"></i>
                         <span class="link-title">Generate Sitemap</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->is('dashboard/tools/database*') ? ' active' : '' }}">
                     <a href="{{ route('admin.tools.database.index') }}" class="nav-link">
-                        <i class="link-icon" data-feather="credit-card"></i>
+                        <i class="link-icon" data-feather="database"></i>
                         <span class="link-title">Database Backup</span>
                     </a>
                 </li>

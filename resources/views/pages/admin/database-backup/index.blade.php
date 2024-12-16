@@ -16,7 +16,7 @@
 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
-            <x-admin.card title="Data Kompetisi">
+            <x-admin.card title="Data Backup Database">
                 {{ $dataTable->table() }}
             </x-admin.card>
         </div>
