@@ -13,7 +13,7 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        if (Role::query()->withoutCache()->count() == 0) {
+        if (Role::query()->count() == 0) {
             app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
             $roles = [
