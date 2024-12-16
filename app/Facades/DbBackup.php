@@ -2,8 +2,8 @@
 
 namespace App\Facades;
 
-use App\Storage\DatabaseBackupManager;
 use Illuminate\Support\Facades\Facade;
+use Modules\Database\DataBackupManager;
 
 /**
  * @method static array getFileList()
@@ -24,6 +24,6 @@ class DbBackup extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return DatabaseBackupManager::class;
+        return DataBackupManager::class;
     }
 }

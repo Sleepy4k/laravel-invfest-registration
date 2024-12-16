@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Storage;
+namespace Modules\Storage;
 
 use App\Enums\LogReaderType;
 use App\Enums\ReportLogType;
@@ -13,6 +13,13 @@ class LogReaderManager
     use SystemLog;
 
     /**
+     * Set path root when unkown file.
+     *
+     * @var string
+     */
+    private static string $filePath = 'logs';
+
+    /**
      * Get file list from Laravel app log.
      *
      * @param LogReaderType $type
@@ -23,7 +30,7 @@ class LogReaderManager
     public function getFileList(LogReaderType $type = LogReaderType::SINGLE, string $channel = 'laravel'): array
     {
         try {
-            $logPath = storage_path('logs');
+            $logPath = storage_path(self::$filePath);
 
             $files = match ($type) {
                 LogReaderType::DAILY => glob("{$logPath}/{$channel}-*.log"),
@@ -64,7 +71,7 @@ class LogReaderManager
     public function getFileContent(string $date): array
     {
         try {
-            $logPath = storage_path("logs/{$date}.log");
+            $logPath = storage_path(self::$filePath."/{$date}.log");
 
             if (!File::exists($logPath)) {
                 throw new \Exception('File not found in our storage, please double check it.');
@@ -102,9 +109,9 @@ class LogReaderManager
     {
         try {
             $logPath = match ($type) {
-                LogReaderType::DAILY => storage_path("logs/{$channel}-" . ($date ?? now()->format('Y-m-d')) . '.log'),
-                LogReaderType::SINGLE => storage_path("logs/{$channel}.log"),
-                default => storage_path("logs/{$channel}.log"),
+                LogReaderType::DAILY => storage_path(self::$filePath."/{$channel}-" . ($date ?? now()->format('Y-m-d')) . '.log'),
+                LogReaderType::SINGLE => storage_path(self::$filePath."/{$channel}.log"),
+                default => storage_path(self::$filePath."/{$channel}.log"),
             };
 
             if (!File::exists($logPath)) {

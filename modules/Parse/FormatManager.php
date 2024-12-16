@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parse;
+namespace Modules\Parse;
 
 use Illuminate\Support\Carbon;
 

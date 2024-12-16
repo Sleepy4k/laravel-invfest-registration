@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Storage;
+namespace Modules\Storage;
 
 use App\Enums\ReportLogType;
 use App\Enums\UploadFileType;
@@ -12,18 +12,11 @@ class FileManager
     use SystemLog;
 
     /**
-     * Set path root when upload file.
-     *
-     * @var string
-     */
-    private string $baseDisk = 'public';
-
-    /**
      * Set path root when unkown file.
      *
      * @var string
      */
-    private string $unkownPath = 'unkown';
+    private static string $unkownPath = 'unkown';
 
     /**
      * Set path for storage when upload file.
@@ -39,7 +32,7 @@ class FileManager
                 UploadFileType::IMAGE => '' . UploadFileType::IMAGE->value . '/',
                 UploadFileType::FILE => '/' . UploadFileType::FILE->value . '/',
                 UploadFileType::SETTING => '/' . UploadFileType::SETTING->value . '/',
-                default => '/' . $this->unkownPath . '/',
+                default => '/' . self::$unkownPath . '/',
             };
 
             if (!Storage::exists(explode('/', $path)[1])) {
@@ -69,7 +62,7 @@ class FileManager
                 UploadFileType::IMAGE => $baseUrl . '/' . UploadFileType::IMAGE->value . '/' . $file,
                 UploadFileType::FILE => $baseUrl . '/' . UploadFileType::FILE->value . '/' . $file,
                 UploadFileType::SETTING => $baseUrl . '/' . UploadFileType::SETTING->value . '/' . $file,
-                default => $baseUrl . '/' . $this->unkownPath . '/' . $file,
+                default => $baseUrl . '/' . self::$unkownPath . '/' . $file,
             };
         } catch (\Throwable $th) {
             $this->sendReportLog(ReportLogType::ERROR, $th->getMessage());

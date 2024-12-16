@@ -2,8 +2,8 @@
 
 namespace App\Facades;
 
-use App\Storage\FileManager;
 use Illuminate\Support\Facades\Facade;
+use Modules\Storage\FileManager;
 
 /**
  * @method static bool deleteFile(UploadFileType $type, UploadedFile $file)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Storage;
+namespace Modules\Database;
 
 use App\Enums\ReportLogType;
 use App\Facades\Format;
@@ -8,7 +8,7 @@ use App\Traits\SystemLog;
 use Spatie\DbDumper\Databases\MySql;
 use Illuminate\Support\Facades\File;
 
-class DatabaseBackupManager
+class DataBackupManager
 {
     use SystemLog;
 
