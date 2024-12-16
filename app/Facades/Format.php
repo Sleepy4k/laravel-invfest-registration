@@ -2,8 +2,8 @@
 
 namespace App\Facades;
 
-use App\Parse\FormatManager;
 use Illuminate\Support\Facades\Facade;
+use Modules\Parse\FormatManager;
 
 /**
  * @method static string formatFileSize(int|float $bytes, int $precision)

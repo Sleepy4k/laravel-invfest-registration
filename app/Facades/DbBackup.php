@@ -2,8 +2,8 @@
 
 namespace App\Facades;
 
-use App\Storage\DatabaseBackupManager;
 use Illuminate\Support\Facades\Facade;
+use Modules\Storage\DatabaseBackupManager;
 
 /**
  * @method static array getFileList()

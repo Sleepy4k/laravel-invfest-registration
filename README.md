@@ -288,6 +288,7 @@ To run this project, you will need to add the following environment variables to
 - [Role and Permissions](https://spatie.be/docs/laravel-permission/v6/introduction)
 - [Sitemap Generator](https://github.com/spatie/laravel-sitemap)
 - [Data Tables](https://yajrabox.com/docs/laravel-datatables/11.0)
+- [Database Dumper](https://github.com/spatie/db-dumper)
 
 ## Feedback
 

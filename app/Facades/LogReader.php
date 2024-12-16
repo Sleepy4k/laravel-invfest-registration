@@ -2,8 +2,8 @@
 
 namespace App\Facades;
 
-use App\Storage\LogReaderManager;
 use Illuminate\Support\Facades\Facade;
+use Modules\Storage\LogReaderManager;
 
 /**
  * @method static array getFileList(LogReaderType $type, string $channel)
