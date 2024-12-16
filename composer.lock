@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c47f2e18f01967d2b9fe0b7df8246a46",
+    "content-hash": "7cd6fc8a68a7b6242e8faf0eea555f8b",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -4586,12 +4586,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "RealRashid\\SweetAlert\\SweetAlertServiceProvider"
-                    ],
                     "aliases": {
                         "Alert": "RealRashid\\SweetAlert\\Facades\\Alert"
-                    }
+                    },
+                    "providers": [
+                        "RealRashid\\SweetAlert\\SweetAlertServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -4794,16 +4794,16 @@
         },
         {
             "name": "spatie/browsershot",
-            "version": "5.0.2",
+            "version": "5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/browsershot.git",
-                "reference": "8a1e3476a9c07b72ace4d4747bac7c58dbc1c066"
+                "reference": "aae8a337f73f63fc41c4c759fc397ce725312367"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/browsershot/zipball/8a1e3476a9c07b72ace4d4747bac7c58dbc1c066",
-                "reference": "8a1e3476a9c07b72ace4d4747bac7c58dbc1c066",
+                "url": "https://api.github.com/repos/spatie/browsershot/zipball/aae8a337f73f63fc41c4c759fc397ce725312367",
+                "reference": "aae8a337f73f63fc41c4c759fc397ce725312367",
                 "shasum": ""
             },
             "require": {
@@ -4850,7 +4850,7 @@
                 "webpage"
             ],
             "support": {
-                "source": "https://github.com/spatie/browsershot/tree/5.0.2"
+                "source": "https://github.com/spatie/browsershot/tree/5.0.3"
             },
             "funding": [
                 {
@@ -4858,7 +4858,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-12-13T16:10:26+00:00"
+            "time": "2024-12-16T09:46:16+00:00"
         },
         {
             "name": "spatie/crawler",
@@ -8629,16 +8629,16 @@
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "11.x-dev"
-                },
                 "laravel": {
-                    "providers": [
-                        "Yajra\\DataTables\\DataTablesServiceProvider"
-                    ],
                     "aliases": {
                         "DataTables": "Yajra\\DataTables\\Facades\\DataTables"
-                    }
+                    },
+                    "providers": [
+                        "Yajra\\DataTables\\DataTablesServiceProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-master": "11.x-dev"
                 }
             },
             "autoload": {
