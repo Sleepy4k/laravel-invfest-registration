@@ -4,6 +4,12 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+// If .htaccess file is not present, show error message
+if (!file_exists('.htaccess')) {
+    echo 'The .htaccess file is missing. Please make sure that the .htaccess file is present in the public directory.';
+    exit;
+}
+
 // Define the base path for the application, so that we can use it in the future (e.g. for deployment)
 $BASE_PATH = __DIR__.'/..';
 
