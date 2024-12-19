@@ -11,7 +11,7 @@ Route::controller(Frontend\CompetitionController::class)->name('frontend.competi
 
 // Instead of registering each route file, we can use glob to include all files in the directory
 foreach (glob(dirname(__FILE__).'/web/*.php', GLOB_NOSORT) as $route_file) {
-    include_once $route_file;
+    require $route_file;
 }
 
 // Don't disabled this for checking uptime and overriding default uptime status endpoint
