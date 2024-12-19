@@ -77,6 +77,7 @@
         <script src="{{ asset('js/warning.js') }}" nonce="{{ csp_nonce() }}"></script>
         <script src="{{ asset('admin/js/app.js') }}" nonce="{{ csp_nonce() }}"></script>
         <script src="{{ asset('admin/assets/plugins/feather-icons/feather.min.js') }}"></script>
+        <script src="{{ asset('admin/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}" nonce="{{ csp_nonce() }}"></script>
 
         @stack('plugin-scripts')
 
