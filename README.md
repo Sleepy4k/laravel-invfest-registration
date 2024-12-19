@@ -187,6 +187,13 @@ will takes server resources, second when you using inertia or api based,
 you will exposed all fields on public, even for the unused fields.
 just select for the fields that you needed.
 
+- Database Backup
+
+Sometimes on development or production server mysql dumper may not be provided
+due lack of resource, for this issue, contact server owner to enable mysql dumper
+although you don't need this feature so much, but trust me better enable this
+feature instead of backuping your client data manually.
+
 ## Security Things
 
 - Content Security Policy (CSP)
