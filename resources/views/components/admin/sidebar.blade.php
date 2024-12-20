@@ -13,7 +13,7 @@
     <div class="sidebar-body">
         <ul class="nav">
             <li class="nav-item nav-category">Main</li>
-            <li class="nav-item {{ request()->is('dashboard/dashboard') ? ' active' : '' }}">
+            <li class="nav-item {{ request()->is('dashboard') ? ' active' : '' }}">
                 <a href="{{ route('admin.dashboard') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Dashboard</span>
