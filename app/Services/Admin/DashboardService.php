@@ -30,10 +30,11 @@ class DashboardService extends Service
      */
     private function getBaseData(): array
     {
-        $totalTeam = $this->teamInterface->count();
-        $totalTeamPending = count($this->paymentInterface->all(['id'], wheres: [['status', '=', 'pending']]) ?? []);
-        $totalTeamReject = count($this->paymentInterface->all(['id'], wheres: [['status', '=', 'reject']]) ?? []);
-        $totalTeamApprove = count($this->paymentInterface->all(['id'], wheres: [['status', '=', 'approve']]) ?? []);
+        $teams = $this->teamInterface->get(['id'], relations: ['payment:id,team_id,status']);
+        $totalTeam = !empty($teams) ? count($teams) : 0;
+        $totalTeamPending = !empty($teams) ? count($teams->where('payment.status', 'pending')) : 0;
+        $totalTeamApprove = !empty($teams) ? count($teams->where('payment.status', 'approve')) : 0;
+        $totalTeamReject = !empty($teams) ? count($teams->where('payment.status', 'reject')) : 0;
         $totalTeamUnPaid = Team::doesntHave('payment')->count();
         $totalSponsorship = $this->sponsorshipInterface->count();
         $totalMediaPartner = $this->mediaPartnerInterface->count();
